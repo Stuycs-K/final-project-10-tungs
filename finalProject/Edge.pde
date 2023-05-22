@@ -1,5 +1,4 @@
 
-public class Edge {
-
-
+class Edge {
+  Node 
 }

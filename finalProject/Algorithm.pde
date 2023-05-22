@@ -1,5 +1,5 @@
 
-public class Algorithm {
+class Algorithm {
 
 
 }
