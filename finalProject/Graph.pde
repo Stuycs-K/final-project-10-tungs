@@ -9,6 +9,8 @@ class Graph {
   ArrayList<Node> nodes;
   ArrayList<Edge> edges;
   
+  boolean undirected; 
+  
   // Constructor
   public Graph(){
     // For existence of a node, check exists[] array 
@@ -21,7 +23,31 @@ class Graph {
     nodes = new ArrayList<Node>(); 
     edges = new ArrayList<Edge>(); 
   }
+  
+  public Graph(boolean undirected){
+    this(); 
+    this.undirected = undirected;
+  }
   // --------------
+  
+  // Helper functions
+public void removeEdges(Node node){
+ 
+}
+
+public Edge findEdge(Node a, Node b){
+  for (int i = edges.size() - 1; i >= 0; i--){
+    Edge e = edges.get(i);
+     
+    if ((!bidirectional && (e.a == a && e.b == b))
+       || (bidirectional && ( (e.a == a && e.b == b) || (e.a == b && e.b == a)))){
+          println("Edge found"); return e; 
+        }
+  }
+  return null; 
+}
+  
+  // ---------------
   
   // Utility functions
   public boolean addNode(int id){
@@ -30,7 +56,7 @@ class Graph {
    // Make the node existent
    exists[id] = true;
    
-   return false; 
+   return true; 
   }
   
   public boolean deleteNode(int id){
@@ -40,7 +66,8 @@ class Graph {
     return false; 
   }
   
-  public boolean addEdge(){
+  public boolean addEdge(Node a, Node b){
+    
     return false; 
   }
   
