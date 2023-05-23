@@ -5,13 +5,18 @@ class Edge {
   
   Node a, b;
   PVector posA, posB;
-  int size; // technically thickness
+  int size, weight; // technically thickness
   
   // Constructor 
   public Edge(Node a, Node b){
     this.a = a;
     this.b = b; 
-    
+    this.weight = 0; 
+  }
+  
+  public Edge(Node a, Node b, int weight){
+    this(a, b);
+    this.weight = weight; 
   }
   
   // -------------
