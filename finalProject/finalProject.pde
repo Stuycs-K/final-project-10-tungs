@@ -2,6 +2,9 @@
 color initialColor = color(255, 0, 0);
 color backgroundColor = color(255, 255, 255); 
 
+color selectedColor = color(0, 0, 0); // color(0, 255, 0);
+color hoverColor = color(0, 0, 255); 
+
 int border_thickness = 2; 
 
 int initialSize = 50; 
@@ -17,6 +20,7 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 
 // Numerical variables
 int tag = 0;
+int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
 
 // String variables
 String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge"};
@@ -51,9 +55,9 @@ void setup(){
   // Before I make a graph, I'll test node/edge visibility
   // with an arraylist for both in the main program 
   int dx = 30, dy = 30;
-  nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag));
-  nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag));
-  nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag));
+  nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag++));
+  nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag++));
+  nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag++));
   
   for (int i = 0; i < nodes.size() - 1; i++)
     edges.add(new Edge(nodes.get(i), nodes.get(i+1))); 
@@ -65,7 +69,11 @@ void draw(){
   background(backgroundColor); 
   for (int i = 0; i < nodes.size(); i++){
     Node node = nodes.get(i);
+  
+    if (node == current) stroke(selectedColor); 
     node.display(); 
+    stroke(0); // reset stroke color, if node == current 
+    
     //delay(100);
     //println(node.position.x + " " + node.position.y); 
     //println(mouseX + " " + mouseY); 
@@ -87,17 +95,27 @@ void draw(){
 // Event functions
 public void mousePressed(){
   mouseDown = true;
+  int currentMode = mode; // make a reference in case mode changes 
   
   // If you can click on the node 
-  if (current == null){
-    for (int i = 0; i < nodes.size(); i++){
-      Node node = nodes.get(i);
-      if (node.inPosition(mouseX, mouseY)){
-        current = node;
-        return; 
+  // Mode 1: Default
+  if (currentMode == movable)
+    if (current == null){
+      for (int i = 0; i < nodes.size(); i++){
+        Node node = nodes.get(i);
+        if (node.inPosition(mouseX, mouseY)){
+          current = node;
+          return; 
+        }
       }
     }
-  }
+   
+   if (currentMode == addNode){
+     Node node = new Node(initialSize, new PVector(mouseX, mouseY), initialColor, tag++);
+     nodes.add(node); 
+   }
+   
+  
 }
 
 public void mouseReleased(){
