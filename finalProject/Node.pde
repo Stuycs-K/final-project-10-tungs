@@ -15,16 +15,9 @@ class Node {
   
   
   // Utility methods
-  public void renderNode(){
-    
-  }
-  
-  public void moveNode(){
-    
-  }
-  
-  public void checkClicked(){
-    
+  public boolean inPosition(int x, int y){
+    // (x, y) = mouse position
+    return sq(position.x - x) + sq(position.y - y) <= sq(size); 
   }
   // -----------
   
@@ -50,6 +43,4 @@ class Node {
   public void display(){
     circle(position.x, position.y, size); 
   }
-  
-  
 }

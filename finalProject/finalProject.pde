@@ -1,10 +1,17 @@
 // Initial variables
 color intialColor = color(255, 0, 0);
+int border_thickness = 20;
+
+int initialSize = 200; 
 // --------------------
 
 // Essential variables
 ArrayList<Node> nodes;
 ArrayList<Edge> edges;
+
+// Boolean variables
+boolean mouseDown = false;
+int mode = 0; // might be used later for node add/remove, edge add/remove
 
 // State variables
 Node current, selected; // current/selected nodes 
@@ -22,16 +29,23 @@ void setup(){
   nodes = new ArrayList<Node>();
   edges = new ArrayList<Edge>(); 
   
+  strokeWeight(border_thickness);
+  ellipseMode(CENTER);
+  shapeMode(CENTER);
 }
 // -------------
 
 // Update the screen
 void draw(){
-  
+  for (int i = 0; i < nodes.size(); i++){
+    Node node = nodes.get(i);
+    node.display(); 
+  }
 }
 
-void mouseDragged(){
-  
-  // for (int i = 0; i < nodes.size(); i++)
-}
 // -------------
+
+// Event functions
+public void mousePressed(){
+  
+}
