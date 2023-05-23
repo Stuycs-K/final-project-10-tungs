@@ -43,10 +43,16 @@ void setup(){
   ellipseMode(CENTER);
   shapeMode(CENTER);
   
+  
+  // Before I make a graph, I'll test node/edge visibility
+  // with an arraylist for both in the main program 
   int dx = 30, dy = 30;
   nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag));
   nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag));
   nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag));
+  
+  for (int i = 0; i < nodes.size() - 1; i++)
+    edges.add(new Edge(nodes.get(i), nodes.get(i+1))); 
 }
 // -------------
 
@@ -59,8 +65,11 @@ void draw(){
     //delay(100);
     //println(node.position.x + " " + node.position.y); 
     //println(mouseX + " " + mouseY); 
-    
-    
+  }
+  
+  for (int i = 0; i < edges.size(); i++){
+    Edge edge = edges.get(i);
+    edge.display(); 
   }
 }
 

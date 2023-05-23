@@ -17,9 +17,13 @@ class Edge {
   // Display methods
   public void display(){
     fill(EDGE_COLOR); 
-    line(a.position.x, a.position.y, b.position.x, b.position.y);
+    
+    float dx = b.position.x - a.position.x, dy = b.position.y - a.position.y; 
+    float mag = sqrt(sq(dx) + sq(dy)); 
+    dx /= mag; dy /= mag; 
+    
+    line(a.position.x + dx * a.size / 2, a.position.y + dy * a.size / 2,
+         b.position.x - dx * b.size / 2, b.position.y - dy * b.size / 2); 
     fill(DEFAULT); 
   }
-  
-  
 }
