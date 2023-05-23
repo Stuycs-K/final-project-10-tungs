@@ -39,8 +39,17 @@ editing an arraylist in the main program
 
 Current things done:
 - Wrote display function for nodes and edges
-- I can drag nodes around
+- Mode 1: I can drag nodes around
+- Mode 2: I can add new nodes
 */
+
+public void removeEdges(Node node){
+  for (int i = edges.size() - 1; i >= 0; i--){
+    Edge e = edges.get(i);
+    if (e.a == node || e.b == node) edges.remove(i); 
+  }
+}
+
 void setup(){
   size(1000, 500); 
   
@@ -69,7 +78,8 @@ void draw(){
   background(backgroundColor); 
   for (int i = 0; i < nodes.size(); i++){
     Node node = nodes.get(i);
-  
+    
+
     if (node == current) stroke(selectedColor); 
     node.display(); 
     stroke(0); // reset stroke color, if node == current 
@@ -110,10 +120,25 @@ public void mousePressed(){
       }
     }
    
+   // Mode 2: add Node 
    if (currentMode == addNode){
      Node node = new Node(initialSize, new PVector(mouseX, mouseY), initialColor, tag++);
      nodes.add(node); 
    }
+   
+   // Mode 3: delete Node
+   if (currentMode == deleteNode){
+    for (int i = nodes.size() - 1; i >= 0; i--)
+      if (nodes.get(i).inPosition(mouseX, mouseY)){
+        Node node = nodes.get(i); 
+       
+        // Remove all edges connected to node
+        // I would use removeIf, but apparently processing doesn't support lambda expressions
+        removeEdges(node); 
+        nodes.remove(i);
+        return; 
+      }
+  }
    
   
 }
