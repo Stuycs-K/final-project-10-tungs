@@ -103,6 +103,7 @@ void draw(){
 // -------------
 
 // Event functions
+int cnt = 0;
 public void mousePressed(){
   mouseDown = true;
   int currentMode = mode; // make a reference in case mode changes 
@@ -137,6 +138,16 @@ public void mousePressed(){
         removeEdges(node); 
         nodes.remove(i);
         return; 
+      }
+  }
+  
+  // Mode 5: delete Edge
+  if (currentMode == deleteEdge){
+    for (int i = edges.size() - 1; i >= 0; i--)
+      if (edges.get(i).inPosition(mouseX, mouseY)){
+        Edge e = edges.get(i);
+        println(cnt++); 
+        edges.remove(i); 
       }
   }
    
