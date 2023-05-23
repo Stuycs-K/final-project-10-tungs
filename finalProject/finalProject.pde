@@ -11,6 +11,9 @@ int border_thickness = 2;
 int initialSize = 50; 
 // --------------------
 
+// Mode/Algorithm variables
+boolean bidirectional = true; 
+
 // Essential variables
 ArrayList<Node> nodes;
 ArrayList<Edge> edges;
@@ -48,8 +51,20 @@ Current things done:
 public void removeEdges(Node node){
   for (int i = edges.size() - 1; i >= 0; i--){
     Edge e = edges.get(i);
-    if (e.a == node || e.b == node) edges.remove(i); 
+    if (e.a == node || e.b == node) {edges.remove(i); return;}
   }
+}
+
+public Edge findEdge(Node a, Node b){
+  for (int i = edges.size() - 1; i >= 0; i--){
+    Edge e = edges.get(i);
+     
+    if ((!bidirectional && (e.a == a && e.b == b))
+       || (bidirectional && ( (e.a == a && e.b == b) || (e.a == b && e.b == a)))){
+          println("Edge found"); return e; 
+        }
+  }
+  return null; 
 }
 
 void setup(){
@@ -178,11 +193,11 @@ public void mousePressed(){
     
     // If there are two nodes selected, make an edge between the nodes
     if (edge_pair.size() == 2){
-      Edge edge = new Edge(edge_pair.get(0), edge_pair.get(1));
-      
       // Add the edge if and only if the edge does not already exist 
-      if (edges.indexOf(edge) == -1) edges.add(edge); 
-  
+      Node a = edge_pair.get(0), b = edge_pair.get(1); 
+      Edge e = findEdge(a, b); 
+      if (e == null) edges.add(new Edge(a, b)); 
+      
       for (int i = edge_pair.size() - 1; i >= 0; i--){
         edge_pair.get(i).selected = false;
         edge_pair.remove(i); 
