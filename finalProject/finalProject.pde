@@ -1,8 +1,10 @@
 // Initial variables
-color intialColor = color(255, 0, 0);
-int border_thickness = 20;
+color initialColor = color(255, 0, 0);
+color backgroundColor = color(255, 255, 255); 
 
-int initialSize = 200; 
+int border_thickness = 2; 
+
+int initialSize = 50; 
 // --------------------
 
 // Essential variables
@@ -12,6 +14,9 @@ ArrayList<Edge> edges;
 // Boolean variables
 boolean mouseDown = false;
 int mode = 0; // might be used later for node add/remove, edge add/remove
+
+// Numerical variables
+int tag = 0;
 
 // State variables
 Node current, selected; // current/selected nodes 
@@ -24,22 +29,38 @@ Current plan (stage 1):
 - When I make the graph class, edge and node addition/deletion
 will be done implicitly by calling graph methods, as opposed to directly
 editing an arraylist in the main program
+
+Current things done:
+- Wrote display function for nodes and edges 
 */
 void setup(){
+  size(1000, 500); 
+  
   nodes = new ArrayList<Node>();
   edges = new ArrayList<Edge>(); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
+  
+  int dx = 30, dy = 30;
+  nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag));
+  nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag));
+  nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag));
 }
 // -------------
 
 // Update the screen
 void draw(){
+  background(backgroundColor); 
   for (int i = 0; i < nodes.size(); i++){
     Node node = nodes.get(i);
     node.display(); 
+    //delay(100);
+    //println(node.position.x + " " + node.position.y); 
+    //println(mouseX + " " + mouseY); 
+    
+    
   }
 }
 
@@ -47,5 +68,32 @@ void draw(){
 
 // Event functions
 public void mousePressed(){
+  mouseDown = true;
+  
+  // If you can click on the node 
+  if (current == null){
+    for (int i = 0; i < nodes.size(); i++){
+      Node node = nodes.get(i);
+      if (node.inPosition(mouseX, mouseY)){
+        current = node;
+        return; 
+      }
+    }
+  }
+}
+
+public void mouseReleased(){
+  //println("released"); 
+  //if (current != null) println("Removing pointer to node"); 
+  mouseDown = false;
+  current = null; 
+}
+
+public void mouseDragged(){
+  if (current == null) return; 
+  
+  // I might also include some sort of interactive mouse hover in this method 
+  current.position.x = mouseX;
+  current.position.y = mouseY;
   
 }
