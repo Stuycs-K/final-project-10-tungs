@@ -28,6 +28,10 @@ class Node {
   }
   // -----------
   
+  
+  
+  // -----------
+  
   // Set state methods 
   public void setState(int state){
     
@@ -38,6 +42,14 @@ class Node {
   }
   
   // ----------
+  
+  
+  // ----------
+  
+  // Display methods
+  public void display(){
+    circle(position.x, position.y, size); 
+  }
   
   
 }

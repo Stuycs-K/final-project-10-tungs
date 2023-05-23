@@ -10,9 +10,17 @@ ArrayList<Edge> edges;
 Node current, selected; // current/selected nodes 
 
 // Setup
+/*
+Current plan (stage 1):
+- First test how edges and nodes work
+- I'll be using arraylists for both as well
+- When I make the graph class, edge and node addition/deletion
+will be done implicitly by calling graph methods, as opposed to directly
+editing an arraylist in the main program
+*/
 void setup(){
   nodes = new ArrayList<Node>();
-  edges = new ArrayList<Edges>();
+  edges = new ArrayList<Edge>(); 
   
 }
 // -------------
