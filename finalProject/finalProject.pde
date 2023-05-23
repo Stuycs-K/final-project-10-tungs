@@ -18,6 +18,9 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 // Numerical variables
 int tag = 0;
 
+// String variables
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge"};
+
 // State variables
 Node current, selected; // current/selected nodes 
 
@@ -31,7 +34,8 @@ will be done implicitly by calling graph methods, as opposed to directly
 editing an arraylist in the main program
 
 Current things done:
-- Wrote display function for nodes and edges 
+- Wrote display function for nodes and edges
+- I can drag nodes around
 */
 void setup(){
   size(1000, 500); 
@@ -71,6 +75,11 @@ void draw(){
     Edge edge = edges.get(i);
     edge.display(); 
   }
+  
+  // Display text
+  fill(0); 
+  text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
+  
 }
 
 // -------------
@@ -104,5 +113,8 @@ public void mouseDragged(){
   // I might also include some sort of interactive mouse hover in this method 
   current.position.x = mouseX;
   current.position.y = mouseY;
-  
+}
+
+public void keyPressed(){
+  mode = (mode + 1) % mode_names.length; 
 }
