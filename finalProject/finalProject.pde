@@ -4,6 +4,7 @@ color backgroundColor = color(255, 255, 255);
 
 color selectedColor = color(0, 0, 0); // color(0, 255, 0);
 color hoverColor = color(0, 0, 255); 
+color clickedColor = color(0, 0, 255); 
 
 int border_thickness = 2; 
 
@@ -27,6 +28,7 @@ String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "A
 
 // State variables
 Node current, selected; // current/selected nodes 
+ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
 
 // Setup
 /*
@@ -55,6 +57,7 @@ void setup(){
   
   nodes = new ArrayList<Node>();
   edges = new ArrayList<Edge>(); 
+  edge_pair = new ArrayList<Node>(); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -80,9 +83,15 @@ void draw(){
     Node node = nodes.get(i);
     
 
+
+    // If dragged currently, display border color 
+    // If selected currently (edge addition candidate), also display border color 
     if (node == current) stroke(selectedColor); 
+    if (node.selected) stroke(clickedColor); 
     node.display(); 
     stroke(0); // reset stroke color, if node == current 
+    
+   
     
     //delay(100);
     //println(node.position.x + " " + node.position.y); 
@@ -102,11 +111,16 @@ void draw(){
 
 // -------------
 
+// Utility functions
+
+// ---------------
+
 // Event functions
 int cnt = 0;
 public void mousePressed(){
   mouseDown = true;
   int currentMode = mode; // make a reference in case mode changes 
+ 
   
   // If you can click on the node 
   // Mode 1: Default
@@ -137,9 +151,47 @@ public void mousePressed(){
         // I would use removeIf, but apparently processing doesn't support lambda expressions
         removeEdges(node); 
         nodes.remove(i);
+        
+    
         return; 
       }
   }
+  
+  // Mode 4: add edge between two nodes
+  if (currentMode == addEdge){
+    Node node = null; 
+    for (int i = 0; i < nodes.size(); i++)
+      if (nodes.get(i).inPosition(mouseX, mouseY))
+        node = nodes.get(i);
+   
+    if (node == null) return; 
+    
+    // If the node is currently selected, deselect it 
+    if (edge_pair.indexOf(node) != -1){
+      edge_pair.remove(node);
+      node.selected = false; 
+      return; 
+    } else {
+      node.selected = true;
+      edge_pair.add(node); 
+    }
+    
+    // If there are two nodes selected, make an edge between the nodes
+    if (edge_pair.size() == 2){
+      Edge edge = new Edge(edge_pair.get(0), edge_pair.get(1));
+      
+      // Add the edge if and only if the edge does not already exist 
+      if (edges.indexOf(edge) == -1) edges.add(edge); 
+  
+      for (int i = edge_pair.size() - 1; i >= 0; i--){
+        edge_pair.get(i).selected = false;
+        edge_pair.remove(i); 
+      }
+    }
+    
+    return; 
+  }
+  
   
   // Mode 5: delete Edge
   if (currentMode == deleteEdge){
@@ -170,5 +222,12 @@ public void mouseDragged(){
 }
 
 public void keyPressed(){
-  mode = (mode + 1) % mode_names.length; 
+  // Reset pointers for adding edges 
+  if (mode == addEdge){
+    for (int i = 0; i < edge_pair.size(); i++)
+      edge_pair.get(i).selected = false;
+    edge_pair.clear(); 
+  }
+  
+  mode = (mode + 1) % mode_names.length;
 }
