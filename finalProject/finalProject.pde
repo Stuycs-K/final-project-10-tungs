@@ -105,6 +105,79 @@ void draw(){
   text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
 }
 
+// -----------------
+
+// Utility functions: Updated to be compatible with graph class
+public void mousePressed(){
+  mouseDown = true;
+  int currentMode = mode; // make reference in case mode changes
+  
+  // If you can click on the node 
+  // Mode 1: Default
+  // Hopefully, since add/remove nodes are done once per mouse press, this won't conflict with other modes
+  if (currentMode == movable)
+    if (current == null){
+      for (int i = 0; i < nodes.size(); i++){
+        Node node = nodes.get(i);
+        if (node.inPosition(mouseX, mouseY)){
+          current = node;
+          return; 
+        }
+      }
+    }
+    
+   // Mode 2: add Node 
+   if (currentMode == addNode){
+     graph.addNode(initialSize, new PVector(mouseX, mouseY), initialColor); 
+     println(graph); 
+     return; 
+   }
+   
+   // Mode 3: delete Node 
+   if (currentMode == deleteNode){
+    for (int i = nodes.size() - 1; i >= 0; i--)
+      if (nodes.get(i).inPosition(mouseX, mouseY)){
+        Node node = nodes.get(i); 
+        
+        // Remove all edges connected to node
+        graph.deleteNode(node);
+        println(graph); 
+        return; 
+      }
+  }
+   
+}
+
+public void mouseReleased(){
+  //println("released"); 
+  //if (current != null) println("Removing pointer to node"); 
+  mouseDown = false;
+  current = null; 
+}
+
+public void mouseDragged(){
+  if (current == null) return; 
+  
+  // I might also include some sort of interactive mouse hover in this method 
+  current.position.x = mouseX;
+  current.position.y = mouseY;
+}
+
+public void keyPressed(){
+  // Reset pointers for adding edges 
+  if (mode == addEdge){
+    for (int i = 0; i < edge_pair.size(); i++)
+      edge_pair.get(i).selected = false;
+    edge_pair.clear(); 
+  }
+  
+  mode = (mode + 1) % mode_names.length;
+}
+
+   
+
+
+
 
 // Everything below here....
 // Currently still in testing! Because I moved all of my methods to the graph class, and I'll need to test that alot. 

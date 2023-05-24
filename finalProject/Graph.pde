@@ -76,7 +76,7 @@ public void removeEdges(Node node){
     ArrayList<Edge> other = adj.get(e.b.id); 
     
     // This specific format allows for removal of both directed/undirected edges 
-    if (findEdge(node, e.b, other) != null) other.remove(e); 
+    if (findEdge(e.b, node, other) != null) other.remove(e); 
     list.remove(i); 
   }
   
