@@ -45,6 +45,19 @@ class Graph {
     return -1;
   }
   
+  public String toString(){
+    String s = "Adjacency list of existent nodes (number = " + nodes.size() + "): \n"; 
+    for (int i = 0; i < MAX_NODES; i++){
+      if (!exists[i]) continue; 
+      String line = "i = " + i + ": ";
+      for (Edge e: adj.get(i))
+        line += e.b + " ";
+      line += "\n"; 
+      s += line; 
+    }
+    return s; 
+  }
+  
   
   // ----------------
   

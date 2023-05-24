@@ -33,7 +33,10 @@ String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "A
 Node current, selected; // current/selected nodes 
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
 
+// The graph
+Graph graph;
 // Setup
+
 /*
 Current plan (stage 1):
 - First test how edges and nodes work
@@ -44,10 +47,45 @@ editing an arraylist in the main program
 
 Current things done:
 - Wrote display function for nodes and edges
-- Mode 1: I can drag nodes around
-- Mode 2: I can add new nodes
+- Wrote all modes (see github commits for info)
+- Wrote graph class
+
+Current plan (stage 1.5):
+- Test graph class and make sure that it works as intended
 */
 
+void setup(){
+  size(1000, 500);
+  
+  graph = new Graph(); 
+  
+  nodes = new ArrayList<Node>();
+  edges = new ArrayList<Edge>(); 
+  edge_pair = new ArrayList<Node>(); 
+  
+  strokeWeight(border_thickness);
+  ellipseMode(CENTER);
+  shapeMode(CENTER);
+  
+  
+  // Before I make a graph, I'll test node/edge visibility
+  // with an arraylist for both in the main program 
+  int dx = 30, dy = 30;
+  nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag++));
+  nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag++));
+  nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag++));
+  
+  for (int i = 0; i < nodes.size() - 1; i++)
+    edges.add(new Edge(nodes.get(i), nodes.get(i+1))); 
+}
+
+
+
+
+
+// Everything below here....
+// Currently still in testing! Because I moved all of my methods to the graph class, and I'll need to test that alot. 
+/*
 public void removeEdges(Node node){
   for (int i = edges.size() - 1; i >= 0; i--){
     Edge e = edges.get(i);
@@ -70,6 +108,8 @@ public Edge findEdge(Node a, Node b){
 void setup(){
   size(1000, 500);
   
+  graph = new Graph(); 
+  
   nodes = new ArrayList<Node>();
   edges = new ArrayList<Edge>(); 
   edge_pair = new ArrayList<Node>(); 
@@ -81,7 +121,7 @@ void setup(){
   
   // Before I make a graph, I'll test node/edge visibility
   // with an arraylist for both in the main program 
-  int dx = 30, dy = 30;
+  int dx = 30, dy = 30; 
   nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag++));
   nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag++));
   nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag++));
@@ -246,3 +286,4 @@ public void keyPressed(){
   
   mode = (mode + 1) % mode_names.length;
 }
+*/
