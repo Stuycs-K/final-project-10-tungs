@@ -68,7 +68,7 @@ public Edge findEdge(Node a, Node b){
 }
 
 void setup(){
-  size(1000, 500); 
+  size(1000, 500);
   
   nodes = new ArrayList<Node>();
   edges = new ArrayList<Edge>(); 
