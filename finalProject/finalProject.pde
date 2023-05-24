@@ -54,33 +54,56 @@ Current plan (stage 1.5):
 - Test graph class and make sure that it works as intended
 */
 
+// Everything below here:
+// I am rewriting the stuff that I commented out (involving user input to customize graph), but using
+// the methods that I moved to my Graph class.
 void setup(){
   size(1000, 500);
   
-  graph = new Graph(); 
-  
-  nodes = new ArrayList<Node>();
-  edges = new ArrayList<Edge>(); 
-  edge_pair = new ArrayList<Node>(); 
+  graph = new Graph();
+  nodes = graph.nodes;
+  edges = graph.edges;
+  edge_pair = new ArrayList<Node>();
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
   
-  
-  // Before I make a graph, I'll test node/edge visibility
-  // with an arraylist for both in the main program 
-  int dx = 30, dy = 30;
-  nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag++));
-  nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag++));
-  nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag++));
+  // Test node/edge visibility
+  int dx = 30, dy = 30; 
+  graph.addNode(initialSize, new PVector(width/2, height/2), initialColor);
+  graph.addNode(initialSize, new PVector(width/2 - dx, height/2), initialColor);
+  graph.addNode(initialSize, new PVector(width/2 + dx, height/2), initialColor);
   
   for (int i = 0; i < nodes.size() - 1; i++)
-    edges.add(new Edge(nodes.get(i), nodes.get(i+1))); 
+    graph.addEdge(nodes.get(i), nodes.get(i+1)); 
+    
+  println(graph); 
 }
 
-
-
+void draw(){
+  background(backgroundColor);
+  
+  // Display nodes
+  for (int i = 0; i < nodes.size(); i++){
+    Node node = nodes.get(i);
+    
+    
+    // If dragged currently, display border color 
+    // If selected currently (edge addition candidate), also display border color 
+    if (node == current) stroke(selectedColor); 
+    if (node.selected) stroke(clickedColor); 
+    node.display(); 
+    stroke(0); // reset stroke color, if node == current 
+  }
+  
+  // Display edges
+  for (Edge e : edges) e.display();
+  
+   // Display text
+  fill(0); 
+  text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
+}
 
 
 // Everything below here....

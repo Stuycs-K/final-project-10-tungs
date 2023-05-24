@@ -16,6 +16,7 @@ class Graph {
   // Constructor
   public Graph(){
     // For existence of a node, check exists[] array 
+    adj = new ArrayList<ArrayList<Edge>>(); 
     for (int i = 0; i < MAX_NODES; i++)
       adj.add(new ArrayList<Edge>());  
 
@@ -50,11 +51,15 @@ class Graph {
     for (int i = 0; i < MAX_NODES; i++){
       if (!exists[i]) continue; 
       String line = "i = " + i + ": ";
-      for (Edge e: adj.get(i))
-        line += e.b + " ";
+      for (Edge e: adj.get(i)){
+        line += e.b.id + " ";
+        println("Hi, edge exists for: " + i); 
+      }
       line += "\n"; 
       s += line; 
     }
+    
+  
     return s; 
   }
   
