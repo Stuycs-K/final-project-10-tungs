@@ -16,7 +16,7 @@ Homework:
   - Wrote edge and node display methods: They display properly (edges change when nodes move) 
 - Current main program involves: Arraylist of nodes and edges that change based on user input.
   - Added both default (setup - e.g. node color) and important (e.g. mode of user input) variables to main program
-  - 
+  
 - Wrote five different modes of user input:
   - 1: Mouse drag / default: User can click and drag nodes around the screen. 
   - 2: Add node: User can click on a location and a node will be added. 
@@ -32,4 +32,9 @@ In terms of how much I tested the five modes:
   - Started formatting methods (addNode, removeNode, etc...)
   
 ### Day 2: Tuesday, May 23rd 
-Classwork
+Classwork:
+- Fixed issue with mode 4, or add edge: Before if you clicked on two nodes already with an edge, a new edge is still created. I've fixed that issue by prohibiting redundant edges (edges are bidirectional for now, but that may change for different algorithms I decide to implement)
+
+- Started to move methods from my main program (findEdge, removeEdges; i.e. helper functions) into the Graph class so that I can call the methods from a graph in main program later on. I also plan to store nodes, edges, etc.. all into the graph class.
+
+Homework:
