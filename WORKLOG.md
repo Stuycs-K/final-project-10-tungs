@@ -37,4 +37,16 @@ Classwork:
 
 - Started to move methods from my main program (findEdge, removeEdges; i.e. helper functions) into the Graph class so that I can call the methods from a graph in main program later on. I also plan to store nodes, edges, etc.. all into the graph class.
 
-Homework:
+Homework - Graph class:
+- Wrote addNode(), deleteNode(), addEdge(), deleteEdge(): I haven't tested them, but I will doing that later. I also wrote some other versions of deleteEdge() and addNode() with different parameters.
+
+- Wrote toString() of adjacency list to help with later debugging 
+
+- My graph class currently relies on these things for information storing:
+ - Nodes have a 1-1 correspondence with integer id
+ - Edges are stored in both adjacency list and array list
+
+- Commented out my main program code except for setup so that I can test my graph class later 
+
+Main Branch: Merge #1
+- At this point, I will merge my demo branch into my main branch, since I've commented out my code (for now) and I'll be testing my graph class later on.
