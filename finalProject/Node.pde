@@ -1,6 +1,7 @@
 
 class Node {
   color DEFAULT = color(255, 255, 255);
+  color TEXT_COLOR = color(0, 0, 0); 
   int size, id, label, number, state; // I'm just going to list some variables 
   PVector position;
   boolean mouseDown, selected, visited;
@@ -44,6 +45,11 @@ class Node {
   public void display(){
     fill(c); 
     circle(position.x, position.y, size); 
+    
+    fill(TEXT_COLOR);
+    text(id + " ", position.x, position.y); 
     fill(DEFAULT); 
+    
+    
   }
 }

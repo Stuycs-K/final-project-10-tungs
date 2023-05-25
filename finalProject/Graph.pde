@@ -53,7 +53,7 @@ class Graph {
       String line = "i = " + i + ": ";
       for (Edge e: adj.get(i)){
         line += e.b.id + " ";
-        println("Hi, edge exists for: " + i); 
+        // println("Hi, edge exists for: " + i); 
       }
       line += "\n"; 
       s += line; 
@@ -76,9 +76,14 @@ public void removeEdges(Node node){
     ArrayList<Edge> other = adj.get(e.b.id); 
     
     // This specific format allows for removal of both directed/undirected edges 
-    if (findEdge(e.b, node, other) != null) other.remove(e); 
-    list.remove(i); 
+    Edge out = findEdge(e.b, node, other); 
+    if (out != null){
+      println("Removed edge (outsource, source): " + e.b.id + " " + node.id); 
+      other.remove(out); 
+    }
+    list.remove(i);
   }
+  assert(list.size() == 0); 
   
   // 2. Remove from edge list 
   for (int i = edges.size() - 1; i >= 0; i--){

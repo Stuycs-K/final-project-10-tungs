@@ -68,6 +68,7 @@ void setup(){
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
+  textMode(CENTER); 
   
   // Test node/edge visibility
   int dx = 30, dy = 30; 
@@ -129,7 +130,7 @@ public void mousePressed(){
    // Mode 2: add Node 
    if (currentMode == addNode){
      graph.addNode(initialSize, new PVector(mouseX, mouseY), initialColor); 
-     println(graph); 
+     // println(graph); 
      return; 
    }
    
