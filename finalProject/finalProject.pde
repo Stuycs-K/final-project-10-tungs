@@ -71,10 +71,13 @@ void setup(){
   textMode(CENTER); 
   
   // Test node/edge visibility
-  int dx = 30, dy = 30; 
-  graph.addNode(initialSize, new PVector(width/2, height/2), initialColor);
-  graph.addNode(initialSize, new PVector(width/2 - dx, height/2), initialColor);
-  graph.addNode(initialSize, new PVector(width/2 + dx, height/2), initialColor);
+  int dx = 100, dy = 30; 
+  int times = 3; 
+  for (int i = 0; i < times; i++){
+    graph.addNode(initialSize, new PVector(width/2 + dx * i, height/2), initialColor);
+    if (i == 0) continue; 
+    graph.addNode(initialSize, new PVector(width/2 - dx * i, height/2), initialColor);
+  }
   
   for (int i = 0; i < nodes.size() - 1; i++)
     graph.addEdge(nodes.get(i), nodes.get(i+1)); 
@@ -135,6 +138,7 @@ public void mousePressed(){
    }
    
    // Mode 3: delete Node 
+   // May want to test this method later 
    if (currentMode == deleteNode){
     for (int i = nodes.size() - 1; i >= 0; i--)
       if (nodes.get(i).inPosition(mouseX, mouseY)){
@@ -143,10 +147,58 @@ public void mousePressed(){
         // Remove all edges connected to node
         graph.deleteNode(node);
         println(graph); 
+        println("Done deleting node: " + node.id); 
         return; 
       }
   }
+  
+  // Mode 4: add Node
+  // May want to test later
+  
+  // Mode 4: add edge between two nodes
+  if (currentMode == addEdge){
+    Node node = null; 
+    for (int i = 0; i < nodes.size(); i++)
+      if (nodes.get(i).inPosition(mouseX, mouseY))
+        node = nodes.get(i);
    
+    if (node == null) return; 
+    
+    // If the node is currently selected, deselect it 
+    if (edge_pair.indexOf(node) != -1){
+      edge_pair.remove(node);
+      node.selected = false; 
+      return; 
+    } else {
+      node.selected = true;
+      edge_pair.add(node); 
+    }
+    
+    // If there are two nodes selected, make an edge between the nodes
+    if (edge_pair.size() == 2){
+      Node a = edge_pair.get(0), b = edge_pair.get(1); 
+      
+      // search for edge between (a, b)
+      // Add edge if and only if the edge does not exist 
+      Edge e = graph.findEdge(a, b);
+      if (e == null){
+        graph.addEdge(a, b);
+        println(graph);
+        println("Added edge between nodes: " + a.id + " " + b.id);
+      } else {
+        println("Tried to add existing edge between nodes: " + a.id + " " + b.id); 
+      }
+      
+      for (int i = edge_pair.size() - 1; i >= 0; i--){
+        edge_pair.get(i).selected = false;
+        edge_pair.remove(i); 
+      }
+    }
+    
+    return; 
+  }
+  
+  // Maybe more methods later 
 }
 
 public void mouseReleased(){
