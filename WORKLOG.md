@@ -50,3 +50,14 @@ Homework - Graph class:
 
 Main Branch: Merge #1
 - At this point, I will merge my demo branch into my main branch, since I've commented out my code (for now) and I'll be testing my graph class later on.
+
+### Day 3: Wednesday, May 24th
+Classwork:
+- Started rewriting user input in the main program to be processed using graph class methods. 
+  - I am currently testing graph.addNode(), addEdge(), removeNode(), and removeEdge() 
+  -
+- Figured out an issue with deleteNode() (Some edges are not removed for some reason), which I will need to fix
+
+Homework:
+- Today was a busy day for me, so I did not have any time to work on the project for homework.
+
