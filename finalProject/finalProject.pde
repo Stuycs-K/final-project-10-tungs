@@ -107,6 +107,20 @@ void draw(){
    // Display text
   fill(0); 
   text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
+  
+  // Handle multithreading requests
+  // i.e. all "sleep" requests
+  // For now I'll test this in the graph class
+  
+  if (graph.waiting){
+    // if (graph.frames >= 60) graph.waiting = false; 
+     graph.debug();
+  }
+  /*
+  if (graph.waiting){
+    if (millis() - graph.start >= graph.delay)
+  }
+  */
 }
 
 // -----------------
@@ -236,9 +250,16 @@ public void keyPressed(){
     edge_pair.clear(); 
   }
   
+  graph.sleep(); 
   mode = (mode + 1) % mode_names.length;
 }
 
+int cnt = 0; 
+public void do_stuff(){
+   delay(1000);
+   cnt++; 
+   println("Waited 1 second, now function is done: " + cnt); 
+}
    
 
 

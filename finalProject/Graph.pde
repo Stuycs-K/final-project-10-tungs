@@ -195,5 +195,32 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
   }
   
   // -----------
+  // Testing sleep function
+  int delay = 0, start = 0; 
+  boolean waiting = false; 
+  void sleep(int t){
+    /*
+    this.delay = t;
+    waiting = true;
+    start = millis(); 
+    */
+  }
   
+  int frames = 0; 
+  void debug(){
+    frames++;
+    if (waiting) return;
+    println("Frames elapsed since last: " + frames);
+    frames = 0; 
+  }
+  
+  void sleep(){
+    thread("do_stuff"); 
+    println("Finished code block"); 
+  }
+  
+   public void do_stuff(){
+    delay(1000);
+    println("Waited 1 second, now function is done"); 
+  }
 }
