@@ -54,31 +54,180 @@ Current plan (stage 1.5):
 - Test graph class and make sure that it works as intended
 */
 
+// Everything below here:
+// I am rewriting the stuff that I commented out (involving user input to customize graph), but using
+// the methods that I moved to my Graph class.
 void setup(){
   size(1000, 500);
   
-  graph = new Graph(); 
-  
-  nodes = new ArrayList<Node>();
-  edges = new ArrayList<Edge>(); 
-  edge_pair = new ArrayList<Node>(); 
+  graph = new Graph();
+  nodes = graph.nodes;
+  edges = graph.edges;
+  edge_pair = new ArrayList<Node>();
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
+  textMode(CENTER); 
   
-  
-  // Before I make a graph, I'll test node/edge visibility
-  // with an arraylist for both in the main program 
-  int dx = 30, dy = 30;
-  nodes.add(new Node(initialSize, new PVector(width/2, height/2), initialColor, tag++));
-  nodes.add(new Node(initialSize, new PVector(width/2 - dx, height/2), initialColor, tag++));
-  nodes.add(new Node(initialSize, new PVector(width/2 + dx, height/2), initialColor, tag++));
+  // Test node/edge visibility
+  int dx = 100, dy = 30; 
+  int times = 3; 
+  for (int i = 0; i < times; i++){
+    graph.addNode(initialSize, new PVector(width/2 + dx * i, height/2), initialColor);
+    if (i == 0) continue; 
+    graph.addNode(initialSize, new PVector(width/2 - dx * i, height/2), initialColor);
+  }
   
   for (int i = 0; i < nodes.size() - 1; i++)
-    edges.add(new Edge(nodes.get(i), nodes.get(i+1))); 
+    graph.addEdge(nodes.get(i), nodes.get(i+1)); 
+    
+  println(graph); 
 }
 
+void draw(){
+  background(backgroundColor);
+  
+  // Display nodes
+  for (int i = 0; i < nodes.size(); i++){
+    Node node = nodes.get(i);
+    
+    
+    // If dragged currently, display border color 
+    // If selected currently (edge addition candidate), also display border color 
+    if (node == current) stroke(selectedColor); 
+    if (node.selected) stroke(clickedColor); 
+    node.display(); 
+    stroke(0); // reset stroke color, if node == current 
+  }
+  
+  // Display edges
+  for (Edge e : edges) e.display();
+  
+   // Display text
+  fill(0); 
+  text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
+}
+
+// -----------------
+
+// Utility functions: Updated to be compatible with graph class
+public void mousePressed(){
+  mouseDown = true;
+  int currentMode = mode; // make reference in case mode changes
+  
+  // If you can click on the node 
+  // Mode 1: Default
+  // Hopefully, since add/remove nodes are done once per mouse press, this won't conflict with other modes
+  if (currentMode == movable)
+    if (current == null){
+      for (int i = 0; i < nodes.size(); i++){
+        Node node = nodes.get(i);
+        if (node.inPosition(mouseX, mouseY)){
+          current = node;
+          return; 
+        }
+      }
+    }
+    
+   // Mode 2: add Node 
+   if (currentMode == addNode){
+     graph.addNode(initialSize, new PVector(mouseX, mouseY), initialColor); 
+     // println(graph); 
+     return; 
+   }
+   
+   // Mode 3: delete Node 
+   // May want to test this method later 
+   if (currentMode == deleteNode){
+    for (int i = nodes.size() - 1; i >= 0; i--)
+      if (nodes.get(i).inPosition(mouseX, mouseY)){
+        Node node = nodes.get(i); 
+        
+        // Remove all edges connected to node
+        graph.deleteNode(node);
+        println(graph); 
+        println("Done deleting node: " + node.id); 
+        return; 
+      }
+  }
+  
+  // Mode 4: add Node
+  // May want to test later
+  
+  // Mode 4: add edge between two nodes
+  if (currentMode == addEdge){
+    Node node = null; 
+    for (int i = 0; i < nodes.size(); i++)
+      if (nodes.get(i).inPosition(mouseX, mouseY))
+        node = nodes.get(i);
+   
+    if (node == null) return; 
+    
+    // If the node is currently selected, deselect it 
+    if (edge_pair.indexOf(node) != -1){
+      edge_pair.remove(node);
+      node.selected = false; 
+      return; 
+    } else {
+      node.selected = true;
+      edge_pair.add(node); 
+    }
+    
+    // If there are two nodes selected, make an edge between the nodes
+    if (edge_pair.size() == 2){
+      Node a = edge_pair.get(0), b = edge_pair.get(1); 
+      
+      // search for edge between (a, b)
+      // Add edge if and only if the edge does not exist 
+      Edge e = graph.findEdge(a, b);
+      if (e == null){
+        graph.addEdge(a, b);
+        println(graph);
+        println("Added edge between nodes: " + a.id + " " + b.id);
+      } else {
+        println("Tried to add existing edge between nodes: " + a.id + " " + b.id); 
+      }
+      
+      for (int i = edge_pair.size() - 1; i >= 0; i--){
+        edge_pair.get(i).selected = false;
+        edge_pair.remove(i); 
+      }
+    }
+    
+    return; 
+  }
+  
+  // Maybe more methods later 
+}
+
+public void mouseReleased(){
+  //println("released"); 
+  //if (current != null) println("Removing pointer to node"); 
+  mouseDown = false;
+  current = null; 
+}
+
+public void mouseDragged(){
+  if (current == null) return; 
+  
+  // I might also include some sort of interactive mouse hover in this method 
+  current.position.x = mouseX;
+  current.position.y = mouseY;
+}
+
+public void keyPressed(){
+  // Reset pointers for adding edges 
+  if (mode == addEdge){
+    for (int i = 0; i < edge_pair.size(); i++)
+      edge_pair.get(i).selected = false;
+    edge_pair.clear(); 
+  }
+  
+  mode = (mode + 1) % mode_names.length;
+}
+
+   
 
 
 

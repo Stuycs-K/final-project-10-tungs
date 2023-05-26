@@ -50,3 +50,30 @@ Homework - Graph class:
 
 Main Branch: Merge #1
 - At this point, I will merge my demo branch into my main branch, since I've commented out my code (for now) and I'll be testing my graph class later on.
+
+### Day 3: Wednesday, May 24th
+Classwork:
+- Started rewriting user input in the main program to be processed using graph class methods. 
+  - I am currently testing graph.addNode(), addEdge(), removeNode(), and removeEdge() 
+  -
+- Figured out an issue with deleteNode() (Some edges are not removed for some reason), which I will need to fix
+
+Homework:
+- Today was a busy day for me, so I did not have any time to work on the project for homework.
+
+### Day 4: Thursday, May 25th
+Classwork:
+- Fixed issue with edges not being properly deleted from graph class, when I call removeEdges() within the class.
+ - I wasn't deleting the correct edge since I did not send the correct reference to the adjacency list, but I've fixed that by editing removeEdges in the graph class.
+
+- Finished adding and testing other user input methods (add node, remove edge, add edge) to be compatible with methods inside the graph class. My graph seems to be functional (for now), but future bugs may or may not occur. (Hopefully not)
+
+- At this point: I'm going to start writing algorithms for my graph visualizer. I started this in class by writing the Algorithm class.
+ - Started organizing Algorithm methods (run(), quit(), etc...)
+ - algorithms will likely extend the Algorithm class
+
+Homework:
+Main Branch: Merge #2
+- Since I've tested my graph methods for compatability with user input and it seems to be functional, I'll merge my demo code into the main branch. 
+- Once I've tested the algorithm class, I'll do another merge, but that'll take a while.
+
