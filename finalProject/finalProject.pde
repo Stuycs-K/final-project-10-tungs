@@ -255,6 +255,8 @@ public void keyPressed(){
 }
 
 int cnt = 0; 
+
+// Multithreading is kind of difficult... 
 public void do_stuff(){
    delay(1000);
    cnt++; 
