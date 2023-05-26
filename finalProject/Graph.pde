@@ -167,9 +167,14 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
     
     // Remove edge from adjacency list 
     // Also account for undirected/directed edges 
-    adj.get(e.a.id).remove(findEdge(e.a, e.b));
-    if (undirected) adj.get(e.b.id).remove(findEdge(e.a, e.b)); 
-    
+    Edge eFront = findEdge(e.a, e.b, adj.get(e.a.id));
+    Edge eBack = findEdge(e.a, e.b, adj.get(e.b.id));
+    if (eFront == null || (undirected && eBack == null)){
+      throw new IllegalStateException("Error: Either node a or b does not contain edge to be deleted in adjacency list");
+    }
+    adj.get(e.a.id).remove(eFront);
+    adj.get(e.b.id).remove(eBack);
+   
     // The edge in edge list is not redundant, i.e. if (a, b) exists, then (b, a) should not exist 
     edges.remove(e); 
     

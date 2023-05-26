@@ -198,6 +198,18 @@ public void mousePressed(){
     return; 
   }
   
+  // Mode 5: delete Edge
+  if (currentMode == deleteEdge){
+    for (int i = edges.size() - 1; i >= 0; i--){
+      Edge e = edges.get(i); 
+      if (e.inPosition(mouseX, mouseY)){
+        graph.deleteEdge(e); 
+        println(graph);
+        println("Deleted edge between nodes: " + e.a.id + " " + e.b.id); 
+      }
+    }
+  }
+   
   // Maybe more methods later 
 }
 

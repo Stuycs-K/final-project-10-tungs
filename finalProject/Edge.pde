@@ -52,7 +52,7 @@ class Edge {
     PVector curr = new PVector(x - posA.x, y - posA.y);
    
     float match = abs(line.dot(curr) /(line.mag() * curr.mag())); // this is cos(angle) in radians
-    float epsilon = 0.001 * Math.max(1.0, border_thickness / 5); 
+    float epsilon = 0.002 * Math.max(1.0, border_thickness / 5); 
     if ( (1 - match) <= epsilon)
        if (Math.max(PVector.dist(mouse, posA), PVector.dist(mouse, posB)) 
            <= PVector.dist(posA, posB)){
