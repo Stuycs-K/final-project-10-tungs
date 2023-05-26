@@ -77,3 +77,12 @@ Main Branch: Merge #2
 - Since I've tested my graph methods for compatability with user input and it seems to be functional, I'll merge my demo code into the main branch. 
 - Once I've tested the algorithm class, I'll do another merge, but that'll take a while.
 
+- Started working on writing Algorithms
+   - Started writing code for Bipartite coloring algorithm
+    - This can be done with DFS + some extra arrays for storing states
+
+- There's a larger issue, though: How do I synchronize the graph visualizer with the execution of my algorithm?
+ - I spent a hour on this issue which is why I didn't commit that much
+   - I figured out that waiting() in the code itself pauses the entire program, whereas I want more of a multithreading effect
+   
+- I'm probably going to have to resort to storing all graph visual transitions in a queue and then updating the graph in the draw() function
