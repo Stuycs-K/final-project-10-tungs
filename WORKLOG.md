@@ -86,3 +86,15 @@ Main Branch: Merge #2
    - I figured out that waiting() in the code itself pauses the entire program, whereas I want more of a multithreading effect
    
 - I'm probably going to have to resort to storing all graph visual transitions in a queue and then updating the graph in the draw() function
+
+### Day 5: Friday, May 26th
+Classwork:
+- Continued writing base code for algorithms -- base code as in the algorithm themselves. I need to write that first before I implement the visual aspect of the algorithm visualizer.
+   - I worked on base code for two algorithms:
+    - Cycle detection (I wrote the code, but didn't test it)
+    - Topological sort (I finished the psuedocode, but didn't get to write the code yet)
+ 
+ - Over the weekend I'll likely write some algorithms and then test them all, before deciding how to visualize the algorithms.
+ 
+ Homework:
+ - It's a Friday and I haven't gotten any rest, so I am not working today.
