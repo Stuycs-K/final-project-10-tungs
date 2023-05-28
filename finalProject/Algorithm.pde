@@ -11,6 +11,7 @@ class Algorithm {
   ArrayList<Transition> current; // current transition arraylist
   
   // Algorithm state variables
+  boolean batchProcessing = true; 
   boolean done = false; 
   
   // Graph visualizer variables
@@ -73,6 +74,10 @@ class Algorithm {
       node.c = node.DEFAULT;
     for (Edge e : edges)
       e.c = e.DEFAULT;
+    
+    // Reset state of nodes
+    for (Node node : nodes)
+      node.state = 0; 
   }
  
   // ------------
@@ -87,11 +92,14 @@ class Algorithm {
   
   // Add a change in state from one to another 
   void addState(Node node, int i, int j){
+    //assert(state_colors[1] == color(255, 0, 0)); 
     addTransition(node, state_colors[i], state_colors[j]); 
+    if (batchProcessing) addBatch(); 
   }
   
   void addState(Edge e, int i, int j){
     addTransition(e, state_colors[i], state_colors[j]); 
+    if (batchProcessing) addBatch(); 
   }
   
   // Add batch of transitions to deque 
@@ -100,11 +108,17 @@ class Algorithm {
       println("Note: Current batch doesn't have any transitions");
       return; 
     }
-    list.addFirst(current);
+    list.addLast(current);
     
     current.clear();
     current = new ArrayList<Transition>(); 
   }
+  
+  void pushTransitions(ArrayDeque<ArrayList<Transition>> target){
+    while (!list.isEmpty())
+      target.addLast(list.removeFirst()); 
+  }
+  
   
   // -------
 }

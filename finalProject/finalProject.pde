@@ -26,9 +26,10 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 // Numerical variables
 int tag = 0;
 int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
+int bipartiteAlgorithm = 5; 
 
 // String variables
-String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge"};
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm"};
 
 // State variables
 Node current, selected; // current/selected nodes 
@@ -43,6 +44,7 @@ ArrayList<Transition> processing;
 
 // The graph
 Graph graph;
+Bipartite bipartite;
 // Setup
 
 /*
@@ -75,6 +77,9 @@ void setup(){
   
   transitions = new ArrayDeque<ArrayList<Transition>>(); 
   processing = new ArrayList<Transition>(); 
+  
+  bipartite = new Bipartite(graph); 
+  
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -128,11 +133,13 @@ void draw(){
   // Currently: Trying to debug transitions and making sure every transition occurs properly
   // Okay, debug is done
   if (!transitions.isEmpty() && !started && !paused){
+    println("Starting"); 
     started = true;
     processing = transitions.removeFirst();
     
     
     for (Transition t : processing){
+      println(t); 
       if (t.node != null){
          // assert(t.node.processing == false); 
          t.node.processing = true;
@@ -298,6 +305,17 @@ public void mousePressed(){
       }
     }
   }
+  
+  // Mode 6 (testing): Bipartite algorithm
+  if (currentMode == bipartiteAlgorithm){
+    bipartite.reset(); 
+    bipartite.begin(); 
+    assert(bipartite.list.size() > 0); 
+    println("Done with bipartite algorithm"); 
+    
+    bipartite.pushTransitions(transitions); 
+    assert(transitions.size() > 0); 
+  }
    
   // Maybe more methods later 
 }
@@ -329,6 +347,7 @@ public void keyPressed(){
   
   
   // Test graph visual transitioning 
+  if (1 + 1 == 2) return; 
   int i = (int)(random(1) * nodes.size());
   if (nodes.get(i).processing == true){
     println("Node already transitioning: " + i);

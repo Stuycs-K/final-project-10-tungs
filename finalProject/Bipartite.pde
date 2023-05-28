@@ -12,8 +12,6 @@ class Bipartite extends Algorithm {
   
   // --------------------
   
-  
-  
   // Constructor
   public Bipartite(Graph graph){
     super(graph);
@@ -35,9 +33,11 @@ class Bipartite extends Algorithm {
   */
   void dfs(int i){
     if (done) return;
+    //println("Visited DFS: " + i); 
     
     ArrayList<Edge> adj = graph.adj.get(i);
     Node curr = graph.rep[i]; 
+    assert(curr.id == i); 
     assert(curr != null); 
     
     for (Edge e : adj){
@@ -69,11 +69,27 @@ class Bipartite extends Algorithm {
     addState(node, 0, node.state);
     
     dfs(node.id); 
+    for (Node i : nodes)
+      if (i.state == 0) dfs(i.id); 
+
+    // Push graph visual transitions
+    
   }
   
   void begin() {
-    int i = (int) (random(1) * nodes.size());
-    begin(nodes.get(i)); 
+    //int i = (int) (random(1) * nodes.size());
+    //begin(nodes.get(i)); 
+    for (Node node : nodes){
+      if (node.state != 0) continue;
+      node.state = (int) (random(2));
+      addState(node, 0, node.state);
+      dfs(node.id); 
+    }
+  }
+  
+  void reset(){
+    super.reset();
+    valid = true; 
   }
   // ---------
 }

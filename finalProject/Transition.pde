@@ -26,4 +26,17 @@ class Transition {
     this.type = EDGE;
     this.edge = edge; 
   }
+  
+  public String colorString(color c){
+    return "( " + red(c) + ", " + green(c) + ", " + blue(c) + ")";
+  }
+  public String toString(){
+    String s = ""; 
+    if (type == NODE) {
+      s = "Node transition: " + node.id + " " + colorString(c1) + " " + colorString(c2); 
+    } else if (type == EDGE){
+      s = "Edge transition: " + edge.a.id + " " + edge.b.id + " " + colorString(c1) + " " + colorString(c2); 
+    }
+    return s; 
+  }
 }
