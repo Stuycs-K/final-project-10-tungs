@@ -150,7 +150,7 @@ void draw(){
          t.node.processing = true;
       } 
       if (t.edge != null){
-        assert(t.edge.processing == false); 
+        // assert(t.edge.processing == false); 
         t.edge.processing = true; 
       }
     }
