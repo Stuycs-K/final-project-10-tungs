@@ -90,6 +90,13 @@ public void removeEdges(Node node){
     Edge e = edges.get(i);
     if (e.a == node || e.b == node) edges.remove(i); 
   }
+  
+  // 3. Remove any edges directed to the node itself
+  for (Node x : nodes){
+    ArrayList<Edge> edges = adj.get(x.id);
+    Edge in = findEdge(x, node, edges);
+    if (in != null) edges.remove(in); 
+  }
 }
 
 // Find edge given two nodes a, b 

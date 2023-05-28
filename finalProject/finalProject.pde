@@ -13,7 +13,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = true; 
+boolean bidirectional = false; 
 
 // Essential variables
 ArrayList<Node> nodes;

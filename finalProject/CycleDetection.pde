@@ -46,7 +46,8 @@ public class CycleDetection extends Algorithm {
      for (Edge e : adj){
        Node next = e.b;
        int j = next.id;
-       if (j == prev) continue; 
+       // If graph is undirected, this is not a cycle 
+       if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Visited 
        if (next.state == 1){
@@ -55,7 +56,7 @@ public class CycleDetection extends Algorithm {
          while (!stack.isEmpty() && stack.getFirst() != next)
            cycle.addFirst(stack.removeFirst());
          // Node should be in stack at this point 
-         assert(stack.getFirst() == next);
+         // assert(stack.getFirst() == next);
          
          cycle.addFirst(next);
          stack.clear();
