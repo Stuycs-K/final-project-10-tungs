@@ -7,6 +7,8 @@ class Bipartite extends Algorithm {
   // Graph visualizer variables
   color group1Color = color(255, 0, 0);
   color group2Color = color(0, 0, 255);
+  color badColor = color(0, 255, 0); 
+  
   
   // int tag[];
   
@@ -54,9 +56,13 @@ class Bipartite extends Algorithm {
         
         dfs(j); 
       } else if (curr.state == next.state) {
+        if (done) return; // This is possible based on DFS traversal
+        
         valid = false; // Bipartite partition cannot exist 
         done = true; 
         
+        println("Odd cycle detected in bipartite"); 
+        addTransition(next, state_colors[next.state], badColor); 
         return; 
       }
     }
@@ -81,6 +87,7 @@ class Bipartite extends Algorithm {
     //begin(nodes.get(i)); 
     for (Node node : nodes){
       if (node.state != 0) continue;
+      if (done) break; // Terminate process if a odd cycle is found
       node.state = 1 + (int) (random(2)); 
       addState(node, 0, node.state);
       dfs(node.id); 

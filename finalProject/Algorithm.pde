@@ -83,23 +83,23 @@ class Algorithm {
   // ------------
   // Graph visualizer methods
   void addTransition(Node node, color c1, color c2){
-    current.add(new Transition(node, c1, c2)); 
+    current.add(new Transition(node, c1, c2));
+    if (batchProcessing) addBatch(); 
   }
   
   void addTransition(Edge e, color c1, color c2){
     current.add(new Transition(e, c1, c2));
+    if (batchProcessing) addBatch(); 
   }
   
   // Add a change in state from one to another 
   void addState(Node node, int i, int j){
     //assert(state_colors[1] == color(255, 0, 0)); 
     addTransition(node, state_colors[i], state_colors[j]); 
-    if (batchProcessing) addBatch(); 
   }
   
   void addState(Edge e, int i, int j){
-    addTransition(e, state_colors[i], state_colors[j]); 
-    if (batchProcessing) addBatch(); 
+    addTransition(e, state_colors[i], state_colors[j]);
   }
   
   // Add batch of transitions to deque 

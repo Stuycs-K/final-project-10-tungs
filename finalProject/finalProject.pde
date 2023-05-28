@@ -188,7 +188,7 @@ void draw(){
     
     assert(start != -1);
     for (Transition t : processing){
-      println("Hello there"); 
+      // println("Hello there"); 
       float dx = (((float) millis()) - start) / delay;
       
       if (t.type == 0){
