@@ -18,6 +18,11 @@ class Edge {
     this.weight = 0; 
   }
   
+  public Edge(Node a, Node b, boolean undirected){
+    this(a, b);
+    this.undirected = undirected; 
+  }
+  
   public Edge(Node a, Node b, int weight){
     this(a, b);
     this.weight = weight; 

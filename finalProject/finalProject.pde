@@ -60,7 +60,7 @@ Current plan (stage 1.5):
 void setup(){
   size(1000, 500);
   
-  graph = new Graph();
+  graph = new Graph(bidirectional); 
   nodes = graph.nodes;
   edges = graph.edges;
   edge_pair = new ArrayList<Node>();
