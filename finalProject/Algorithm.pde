@@ -7,6 +7,9 @@ class Algorithm {
   ArrayList<Node> nodes;
   ArrayList<Edge> edges;
   
+  // Algorithm state variables
+  boolean done = false; 
+  
   
   int delay = 0, start = 0; 
   boolean waiting = false; 

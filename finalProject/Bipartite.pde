@@ -27,8 +27,11 @@ class Bipartite extends Algorithm {
        dfs(neighbor)
   */
   void dfs(int i){
+    if (done) return;
+    
     ArrayList<Edge> adj = graph.adj.get(i);
-    Node curr = nodes.get(i);
+    Node curr = graph.rep[i]; 
+    assert(curr != null); 
     
     for (Edge e : adj){
       Node next = e.b;

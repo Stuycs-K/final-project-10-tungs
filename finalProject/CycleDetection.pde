@@ -34,6 +34,8 @@ public class CycleDetection extends Algorithm {
       Pop the node from the stack 
   */
   void dfs(int i){
+    if (done) return;
+    
     ArrayList<Edge> adj = graph.adj.get(i);
     Node curr = graph.rep[i];  
     assert(curr != null);
@@ -51,6 +53,7 @@ public class CycleDetection extends Algorithm {
         }
         cycle.addLast(stack.removeFirst());
         stack.clear();
+       
         return; 
       } else {
         graph.vis[j] = true;

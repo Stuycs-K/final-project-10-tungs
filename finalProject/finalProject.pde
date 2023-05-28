@@ -69,6 +69,7 @@ void setup(){
   ellipseMode(CENTER);
   shapeMode(CENTER);
   textMode(CENTER); 
+  textAlign(CENTER); 
   
   // Test node/edge visibility
   int dx = 100, dy = 30; 
