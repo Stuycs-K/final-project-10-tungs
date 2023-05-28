@@ -2,7 +2,6 @@ import java.util.ArrayDeque;
 
 public class TopoSort extends Algorithm {
   
-  
    // State variables specific to algorithm
    ArrayDeque<Node> order, stack, cycle; // Nodes in topological sort
   
@@ -23,15 +22,14 @@ public class TopoSort extends Algorithm {
    // Custom function 
    /* Topological sort 
    (Note: the idea is same as cycle detection)
-   Set state of node = 1
    Push node to stack
    
    For every neighbor:
-     set state of node = 1
      if (neighbor.state == 1):
        Cycle found, sort cannot exist
        Output cycle using stack 
      else if (!visited):
+      neighbor.state = 1; 
       dfs(neighbor); 
   
    Remove node from stack
@@ -56,6 +54,8 @@ public class TopoSort extends Algorithm {
            
          cycle.addFirst(next);
          stack.clear();
+         
+         done = true; 
          return; 
        } else if (next.state == 0) {
          next.state = 1; 

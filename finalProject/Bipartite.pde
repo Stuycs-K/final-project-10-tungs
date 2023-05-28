@@ -40,9 +40,11 @@ class Bipartite extends Algorithm {
       // State = 1: First group / 2 : Second group 
       if (next.state == 0){
         next.state = (curr.state == 1) ? 2 : 1; // Assign opposite group to node
-        dfs(next.id); 
+        dfs(j); 
       } else if (curr.state == next.state) {
         valid = false; // Bipartite partition cannot exist 
+        done = true; 
+        
         return; 
       }
     }
