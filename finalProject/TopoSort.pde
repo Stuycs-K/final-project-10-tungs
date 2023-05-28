@@ -1,10 +1,13 @@
 import java.util.ArrayDeque;
+import java.util.Collections;
 
 public class TopoSort extends Algorithm {
   
    // State variables specific to algorithm
    ArrayDeque<Node> order, stack, cycle; // Nodes in topological sort
-  
+   color cycleColor = color(0, 255, 0); 
+   color sortColor = color(0, 100, 100); 
+   boolean valid; // Is there a topological sort
   
    
    // -------------
@@ -46,10 +49,11 @@ public class TopoSort extends Algorithm {
      for (Edge e : adj){
        Node next = e.b;
        int j = next.id;
-       if (j == prev) continue; 
+       if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Processing / 2: Already visited
        if (next.state == 1){
+         if (done) return; 
          while (!stack.isEmpty() && stack.getFirst() != next)
            cycle.addFirst(stack.removeFirst());
            
@@ -57,18 +61,75 @@ public class TopoSort extends Algorithm {
          stack.clear();
          
          done = true; 
+         valid = false;
          return; 
        } else if (next.state == 0) {
          next.state = 1; 
+         
+         // Visual Transitions
+         addState(next, 0, 1); 
+         // ---------
+         
          dfs(j, i); 
        }
      }
+     // Guard clause
+     if (done) return;
+  
      curr.state = 2;
+     // Visual transitions
+     addState(curr, 1, 2); 
+     // --------
+     
      // Push node into topological ordering 
-     order.addFirst(curr);
+     order.addLast(curr);
      assert(stack.getFirst() == curr);
      stack.removeFirst(); 
    }
+   
+   // ---------------
+  
+  // Utility methods
+  void begin() {
+    for (Node node : nodes){
+       if (node.state != 0) continue;
+       if (done) break;
+       node.state = 1;
+       addState(node, 0, node.state);
+       dfs(node.id, -1); 
+    }
+     
+     // If topological sort does not exist, label nodes in cycle 
+     if (!valid){
+       assert(cycle.size() > 0);
+       batchProcessing = false; 
+       while (!cycle.isEmpty()){
+         Node node = cycle.removeFirst();
+         addTransition(node, state_colors[node.state], cycleColor);
+       }
+       
+       // Set batch processing back to true 
+       // Nodes in cycle should be displayed simultaneously 
+       batchProcessing = true;
+       addBatch();
+     } else {
+       while (order.size() > 0){
+         Node node = order.removeFirst(); 
+         addTransition(node, state_colors[node.state], sortColor);
+       }
+     }
+  }
+  
+  void reset(){
+    super.reset();
+    valid = true; 
+    
+    // Clear stacks 
+    stack.clear();
+    cycle.clear(); 
+    order.clear(); 
+  }
+  // ---------
    
    
 }

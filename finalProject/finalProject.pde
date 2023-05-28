@@ -26,10 +26,10 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 // Numerical variables
 int tag = 0;
 int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
-int bipartiteAlgorithm = 5, cycleDetectionAlgorithm = 6;
+int bipartiteAlgorithm = 5, cycleDetectionAlgorithm = 6, topoSortAlgorithm = 7; 
 
 // String variables
-String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm", "Cycle detection algorithm"};
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm", "Cycle detection algorithm", "Topological sort algorithm"};
 
 // State variables
 Node current, selected; // current/selected nodes 
@@ -46,6 +46,7 @@ ArrayList<Transition> processing;
 Graph graph;
 Bipartite bipartite;
 CycleDetection cycle;
+TopoSort topoSort;
 // Setup
 
 /*
@@ -81,6 +82,7 @@ void setup(){
   
   bipartite = new Bipartite(graph); 
   cycle = new CycleDetection(graph);
+  topoSort = new TopoSort(graph); 
   
   
   strokeWeight(border_thickness);
@@ -345,6 +347,15 @@ public void mousePressed(){
     assert(transitions.size() > 0); 
   }
   
+  // Mode 7 (testing): Topological sort algorithm
+  if (currentMode == topoSortAlgorithm){
+    resetTransitions();
+    
+    topoSort.reset();
+    topoSort.begin();
+    
+    topoSort.pushTransitions(transitions); 
+  }
   // Maybe more methods later 
 }
 
