@@ -26,10 +26,10 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 // Numerical variables
 int tag = 0;
 int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
-int bipartiteAlgorithm = 5; 
+int bipartiteAlgorithm = 5, cycleDetectionAlgorithm = 6;
 
 // String variables
-String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm"};
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm", "Cycle detection algorithm"};
 
 // State variables
 Node current, selected; // current/selected nodes 
@@ -45,6 +45,7 @@ ArrayList<Transition> processing;
 // The graph
 Graph graph;
 Bipartite bipartite;
+CycleDetection cycle;
 // Setup
 
 /*
@@ -79,6 +80,7 @@ void setup(){
   processing = new ArrayList<Transition>(); 
   
   bipartite = new Bipartite(graph); 
+  cycle = new CycleDetection(graph);
   
   
   strokeWeight(border_thickness);
@@ -320,6 +322,8 @@ public void mousePressed(){
   
   // Mode 6 (testing): Bipartite algorithm
   if (currentMode == bipartiteAlgorithm){
+    resetTransitions();
+    
     bipartite.reset(); 
     bipartite.begin(); 
     assert(bipartite.list.size() > 0); 
@@ -328,7 +332,19 @@ public void mousePressed(){
     bipartite.pushTransitions(transitions); 
     assert(transitions.size() > 0); 
   }
-   
+  
+  // Mode 6 (testing): Cycle detection algorithm
+  if (currentMode == cycleDetectionAlgorithm){
+    resetTransitions();
+    
+    cycle.reset();
+    cycle.begin();
+    println("Done with cycle detection algorithm");
+    
+    cycle.pushTransitions(transitions);
+    assert(transitions.size() > 0); 
+  }
+  
   // Maybe more methods later 
 }
 

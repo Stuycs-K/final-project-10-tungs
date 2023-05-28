@@ -16,7 +16,7 @@ class Algorithm {
   
   // Graph visualizer variables
   color initialColor = color(255, 0, 0);
-  color processingColor = color(0, 255, 0);
+  color processingColor = color(0, 0, 255);
   color visitedColor = color(0, 0, 255); 
   
   color visited_color = color(0, 0, 255);
