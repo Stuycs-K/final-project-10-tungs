@@ -1,19 +1,22 @@
 
 class Bipartite extends Algorithm {
   
-  // Algorithm state info
-  boolean valid; // Is the bipartite coloring valid
+  // State variables specific to algorithm
+  boolean valid; // Determines if bipartite coloring is valid
+  
+  // int tag[];
+  
+  // --------------------
   
   
-  // Custom state info
-  int tag[]; 
-  // ----
+  
+  // Constructor
   public Bipartite(Graph graph){
-    super(graph); 
-    tag = new int[MAX_NODES]; 
+    super(graph);
   }
+  // ------------
   
-  
+ 
   // Custom function
   /* Bipartite coloring
   For every node:
@@ -25,20 +28,23 @@ class Bipartite extends Algorithm {
   */
   void dfs(int i){
     ArrayList<Edge> adj = graph.adj.get(i);
+    Node curr = nodes.get(i);
+    
     for (Edge e : adj){
       Node next = e.b;
-      int j = next.id; 
-      if (tag[j] == 0){
-        // Assign neighbor node opposite tag
-        tag[j] = (tag[i] == 1) ? 2 : 1;
-        
-        wait(delay);
-        dfs(j); 
-      } else if (tag[i] == tag[j]) {
-        // Bipartite coloring cannot exist 
-      } // If already visited node, do nothing 
+      int j = next.id;
+      
+      // State = 1: First group / 2 : Second group 
+      if (next.state == 0){
+        next.state = (curr.state == 1) ? 2 : 1; // Assign opposite group to node
+        dfs(next.id); 
+      } else if (curr.state == next.state) {
+        valid = false; // Bipartite partition cannot exist 
+        return; 
+      }
     }
   }
+  // ---------------
   
   void transition(){
   }
