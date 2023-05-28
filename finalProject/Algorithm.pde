@@ -109,8 +109,6 @@ class Algorithm {
       return; 
     }
     list.addLast(current);
-    
-    current.clear();
     current = new ArrayList<Transition>(); 
   }
   

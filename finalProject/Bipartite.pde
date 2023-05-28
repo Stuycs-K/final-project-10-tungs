@@ -81,7 +81,7 @@ class Bipartite extends Algorithm {
     //begin(nodes.get(i)); 
     for (Node node : nodes){
       if (node.state != 0) continue;
-      node.state = (int) (random(2));
+      node.state = 1 + (int) (random(2)); 
       addState(node, 0, node.state);
       dfs(node.id); 
     }

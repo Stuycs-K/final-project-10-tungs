@@ -13,7 +13,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = false; 
+boolean bidirectional = true; 
 
 // Essential variables
 ArrayList<Node> nodes;
@@ -136,6 +136,7 @@ void draw(){
     println("Starting"); 
     started = true;
     processing = transitions.removeFirst();
+    assert(processing.size() > 0); 
     
     
     for (Transition t : processing){
@@ -187,6 +188,7 @@ void draw(){
     
     assert(start != -1);
     for (Transition t : processing){
+      println("Hello there"); 
       float dx = (((float) millis()) - start) / delay;
       
       if (t.type == 0){
@@ -202,8 +204,18 @@ void draw(){
       }
     }
   }
-  
 }
+
+// Graph visualizer functions
+void resetTransitions(){
+  processing.clear();
+  transitions.clear();
+  
+  // Hopefully these work as intended
+  started = false;
+  paused = false; 
+}
+// ---------
 
 // -----------------
 
@@ -278,7 +290,7 @@ public void mousePressed(){
       // Add edge if and only if the edge does not exist 
       Edge e = graph.findEdge(a, b);
       if (e == null){
-        graph.addEdge(a, b);
+        graph.addEdge(a, b); 
         println(graph);
         println("Added edge between nodes: " + a.id + " " + b.id);
       } else {
