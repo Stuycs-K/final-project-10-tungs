@@ -3,6 +3,7 @@ class Edge {
   color DEFAULT = color(255, 255, 255);
   color EDGE_COLOR = color(0, 0, 0); 
   float ARROW_SIZE = 10, BUFFER = 0; 
+  float TEXT_BUFFER = 10; 
   
   
   Node a, b;
@@ -12,6 +13,7 @@ class Edge {
   color c;
   float SQRT_3 = sqrt(3); 
   boolean processing; 
+  boolean weighted; 
   
   // Constructor 
   public Edge(Node a, Node b){
@@ -21,6 +23,7 @@ class Edge {
     this.undirected = true; 
     c = DEFAULT; 
     processing = false; 
+    weighted = false; 
   }
   
   public Edge(Node a, Node b, boolean undirected){
@@ -53,6 +56,25 @@ class Edge {
       PVector p2 = PVector.add(p1, PVector.add(PVector.mult(line, -ARROW_SIZE * SQRT_3 / 2), PVector.mult(normal, -ARROW_SIZE * 1/2)));
       PVector p3 = PVector.add(p1, PVector.add(PVector.mult(line, -ARROW_SIZE * SQRT_3 / 2), PVector.mult(normal, +ARROW_SIZE * 1/2)));
       triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y); 
+    }
+    
+    if (weighted){
+      PVector line = (new PVector(b.position.x - a.position.x, b.position.y - a.position.y)).normalize(); 
+      PVector normal = line.copy().rotate(PI/2); 
+      
+      
+      PVector mid = new PVector((a.position.x + b.position.x) / 2, (a.position.y + b.position.y) / 2);
+      PVector pos = PVector.mult(normal, -TEXT_BUFFER);
+     
+      
+      float theta = atan2(line.y, line.x); 
+   
+      translate(mid.x, mid.y); 
+      rotate(theta);
+      text("Weight: " + weight, pos.x, pos.y); 
+     
+      rotate(-theta); 
+      translate(-mid.x, -mid.y); 
     }
          
     fill(DEFAULT); 
