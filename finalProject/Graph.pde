@@ -150,7 +150,7 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
     if (e != null) throw new IllegalArgumentException("Error: Tried to add existing edge in graph");
     if (!exists[a.id] || !exists[b.id]) throw new IllegalArgumentException("Error: Tried to add edge between nonexistent nodes in graph");
     
-    Edge eFront = new Edge(a, b), eBack = new Edge(b, a); 
+    Edge eFront = new Edge(a, b, undirected), eBack = new Edge(b, a, undirected); 
     // Add to adjacency list
     // Add to both lists if edge is undirected 
     adj.get(a.id).add(eFront); 

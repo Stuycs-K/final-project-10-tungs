@@ -7,8 +7,14 @@ class Algorithm {
   ArrayList<Node> nodes;
   ArrayList<Edge> edges;
   
+  ArrayDeque<ArrayList<Transition>> list; // List of visual transitions to be processed 
+  ArrayList<Transition> current; // current transition arraylist
+  
   // Algorithm state variables
   boolean done = false; 
+  
+  // Graph visualizer variables
+  color visited_color = color(0, 0, 255);
   
   
   int delay = 0, start = 0; 
@@ -28,6 +34,9 @@ class Algorithm {
     adj = this.graph.adj;
     nodes = this.graph.nodes;
     edges = this.graph.edges;
+    
+    list = new ArrayDeque<ArrayList<Transition>>(); 
+    current = new ArrayList<Transition>(); 
   }
   
   // Utility methods 
@@ -59,10 +68,25 @@ class Algorithm {
   
  
   // ------------
+  // Graph visualizer methods
+  void addTransition(Node node, color c1, color c2){
+    current.add(new Transition(node, c1, c2)); 
+  }
   
-  // User display methods
-  void transition(){
+  void addTransition(Edge e, color c1, color c2){
+    current.add(new Transition(e, c1, c2));
+  }
+  
+  // Add batch of transitions to deque 
+  void addBatch(){
+    if (current.size() == 0){
+      println("Note: Current batch doesn't have any transitions");
+      return; 
+    }
+    list.addFirst(current);
     
+    current.clear();
+    current = new ArrayList<Transition>(); 
   }
   
   // -------

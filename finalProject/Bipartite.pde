@@ -51,16 +51,10 @@ class Bipartite extends Algorithm {
   }
   // ---------------
   
-  void transition(){
-  }
-  
-  void run(){
+  // Utility methods 
+  void begin(){
     
   }
   
-  void reset(){
-    
-  }
-  
-  
+  // ---------
 }

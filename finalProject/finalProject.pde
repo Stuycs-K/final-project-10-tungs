@@ -13,7 +13,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = true; 
+boolean bidirectional = false; 
 
 // Essential variables
 ArrayList<Node> nodes;
@@ -38,7 +38,7 @@ ArrayList<Node> edge_pair; // pair of nodes to add an edge between
 int delay = 1000; 
 int start = -1; 
 boolean started;
-ArrayDeque<Transition> transitions;
+ArrayDeque<ArrayList<Transition>> transitions;
 ArrayList<Transition> processing;
 
 // The graph
@@ -73,7 +73,7 @@ void setup(){
   edges = graph.edges;
   edge_pair = new ArrayList<Node>();
   
-  transitions = new ArrayDeque<Transition>(); 
+  transitions = new ArrayDeque<ArrayList<Transition>>(); 
   processing = new ArrayList<Transition>(); 
   
   strokeWeight(border_thickness);
