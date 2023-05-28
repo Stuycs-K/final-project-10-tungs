@@ -35,7 +35,7 @@ public class TopoSort extends Algorithm {
    Remove node from stack
    If a topological sort exists, the graph must be a directed acyclic graph 
    */
-   void dfs(int i){
+   void dfs(int i, int prev){
      if (done) return;
      
      ArrayList<Edge> adj = graph.adj.get(i);
@@ -46,6 +46,7 @@ public class TopoSort extends Algorithm {
      for (Edge e : adj){
        Node next = e.b;
        int j = next.id;
+       if (j == prev) continue; 
        
        // State: 0: Not visited / 1: Processing / 2: Already visited
        if (next.state == 1){
@@ -59,7 +60,7 @@ public class TopoSort extends Algorithm {
          return; 
        } else if (next.state == 0) {
          next.state = 1; 
-         dfs(j); 
+         dfs(j, i); 
        }
      }
      curr.state = 2;

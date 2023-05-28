@@ -33,7 +33,7 @@ public class CycleDetection extends Algorithm {
 
    Remove node from stack
   */
-  void dfs(int i){
+  void dfs(int i, int prev){
      if (done) return;
      
      ArrayList<Edge> adj = graph.adj.get(i);
@@ -44,6 +44,7 @@ public class CycleDetection extends Algorithm {
      for (Edge e : adj){
        Node next = e.b;
        int j = next.id;
+       if (j == prev) continue; 
        
        // State: 0: Not visited / 1: Visited 
        if (next.state == 1){
@@ -57,7 +58,7 @@ public class CycleDetection extends Algorithm {
          return; 
        } else if (next.state == 0) {
          next.state = 1; 
-         dfs(j); 
+         dfs(j, i); 
        }
      }
      // Remove the node from stack 
@@ -65,6 +66,4 @@ public class CycleDetection extends Algorithm {
      assert(stack.getFirst() == curr);
      stack.removeFirst(); 
   }
-  
-  
 }
