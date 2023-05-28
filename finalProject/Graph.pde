@@ -150,7 +150,7 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
     if (e != null) throw new IllegalArgumentException("Error: Tried to add existing edge in graph");
     if (!exists[a.id] || !exists[b.id]) throw new IllegalArgumentException("Error: Tried to add edge between nonexistent nodes in graph");
     
-    Edge eFront = new Edge(a, b), eBack = new Edge(b, a); 
+    Edge eFront = new Edge(a, b, undirected), eBack = new Edge(b, a, undirected); 
     // Add to adjacency list
     // Add to both lists if edge is undirected 
     adj.get(a.id).add(eFront); 
@@ -167,9 +167,14 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
     
     // Remove edge from adjacency list 
     // Also account for undirected/directed edges 
-    adj.get(e.a.id).remove(findEdge(e.a, e.b));
-    if (undirected) adj.get(e.b.id).remove(findEdge(e.a, e.b)); 
-    
+    Edge eFront = findEdge(e.a, e.b, adj.get(e.a.id));
+    Edge eBack = findEdge(e.a, e.b, adj.get(e.b.id));
+    if (eFront == null || (undirected && eBack == null)){
+      throw new IllegalStateException("Error: Either node a or b does not contain edge to be deleted in adjacency list");
+    }
+    adj.get(e.a.id).remove(eFront);
+    adj.get(e.b.id).remove(eBack);
+   
     // The edge in edge list is not redundant, i.e. if (a, b) exists, then (b, a) should not exist 
     edges.remove(e); 
     
@@ -190,5 +195,32 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
   }
   
   // -----------
+  // Testing sleep function
+  int delay = 0, start = 0; 
+  boolean waiting = false; 
+  void sleep(int t){
+    /*
+    this.delay = t;
+    waiting = true;
+    start = millis(); 
+    */
+  }
   
+  int frames = 0; 
+  void debug(){
+    frames++;
+    if (waiting) return;
+    println("Frames elapsed since last: " + frames);
+    frames = 0; 
+  }
+  
+  void sleep(){
+    thread("do_stuff"); 
+    println("Finished code block"); 
+  }
+  
+   public void do_stuff(){
+    delay(1000);
+    println("Waited 1 second, now function is done"); 
+  }
 }

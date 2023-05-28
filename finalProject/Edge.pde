@@ -2,16 +2,30 @@
 class Edge {
   color DEFAULT = color(255, 255, 255);
   color EDGE_COLOR = color(0, 0, 0); 
+  float ARROW_SIZE = 10, BUFFER = 0; 
+  
   
   Node a, b;
   PVector posA, posB;
   int size, weight; // technically thickness
+  boolean undirected; 
+  color c;
+  float SQRT_3 = sqrt(3); 
+  boolean processing; 
   
   // Constructor 
   public Edge(Node a, Node b){
     this.a = a;
     this.b = b; 
     this.weight = 0; 
+    this.undirected = true; 
+    c = DEFAULT; 
+    processing = false; 
+  }
+  
+  public Edge(Node a, Node b, boolean undirected){
+    this(a, b);
+    this.undirected = undirected; 
   }
   
   public Edge(Node a, Node b, int weight){
@@ -30,6 +44,16 @@ class Edge {
     
     line(a.position.x + dx * a.size / 2, a.position.y + dy * a.size / 2,
          b.position.x - dx * b.size / 2, b.position.y - dy * b.size / 2); 
+    
+    if (!undirected){
+      PVector line = (new PVector(b.position.x - a.position.x, b.position.y - a.position.y)).normalize(); 
+      PVector normal = line.copy().rotate(PI/2); 
+      
+      PVector p1 = new PVector(b.position.x - dx * (b.size / 2 + BUFFER), b.position.y - dy * (b.size / 2 + BUFFER));
+      PVector p2 = PVector.add(p1, PVector.add(PVector.mult(line, -ARROW_SIZE * SQRT_3 / 2), PVector.mult(normal, -ARROW_SIZE * 1/2)));
+      PVector p3 = PVector.add(p1, PVector.add(PVector.mult(line, -ARROW_SIZE * SQRT_3 / 2), PVector.mult(normal, +ARROW_SIZE * 1/2)));
+      triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y); 
+    }
          
     fill(DEFAULT); 
   }
@@ -52,7 +76,7 @@ class Edge {
     PVector curr = new PVector(x - posA.x, y - posA.y);
    
     float match = abs(line.dot(curr) /(line.mag() * curr.mag())); // this is cos(angle) in radians
-    float epsilon = 0.001 * Math.max(1.0, border_thickness / 5); 
+    float epsilon = 0.002 * Math.max(1.0, border_thickness / 5); 
     if ( (1 - match) <= epsilon)
        if (Math.max(PVector.dist(mouse, posA), PVector.dist(mouse, posB)) 
            <= PVector.dist(posA, posB)){

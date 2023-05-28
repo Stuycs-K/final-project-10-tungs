@@ -1,10 +1,10 @@
 
 class Node {
-  color DEFAULT = color(255, 255, 255);
+  color DEFAULT = color(255, 0, 0); 
   color TEXT_COLOR = color(0, 0, 0); 
   int size, id, label, number, state; // I'm just going to list some variables 
   PVector position;
-  boolean mouseDown, selected, visited;
+  boolean mouseDown, selected, visited, processing;
   color c;
   
   // Constructor
@@ -13,6 +13,7 @@ class Node {
     this.position = position;
     this.c = c;
     this.id = id;
+    processing = false; 
   }
   
   

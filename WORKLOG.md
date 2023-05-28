@@ -77,3 +77,69 @@ Main Branch: Merge #2
 - Since I've tested my graph methods for compatability with user input and it seems to be functional, I'll merge my demo code into the main branch. 
 - Once I've tested the algorithm class, I'll do another merge, but that'll take a while.
 
+- Started working on writing Algorithms
+   - Started writing code for Bipartite coloring algorithm
+    - This can be done with DFS + some extra arrays for storing states
+
+- There's a larger issue, though: How do I synchronize the graph visualizer with the execution of my algorithm?
+ - I spent a hour on this issue which is why I didn't commit that much
+   - I figured out that waiting() in the code itself pauses the entire program, whereas I want more of a multithreading effect
+   
+- I'm probably going to have to resort to storing all graph visual transitions in a queue and then updating the graph in the draw() function
+
+### Day 5: Friday, May 26th
+Classwork:
+- Continued writing base code for algorithms -- base code as in the algorithm themselves. I need to write that first before I implement the visual aspect of the algorithm visualizer.
+   - I worked on base code for two algorithms:
+    - Cycle detection (I wrote the code, but didn't test it)
+    - Topological sort (I finished the psuedocode, but didn't get to write the code yet)
+ 
+ - Over the weekend I'll likely write some algorithms and then test them all, before deciding how to visualize the algorithms.
+ 
+ Homework:
+ - It's a Friday and I haven't gotten any rest, so I am not working today.
+
+### Day 6: Saturday, May 27th
+Classwork: N/A (it's the weekend)
+
+Homework (I did a bunch of stuff, so I'm just going to reiterate what I mentioned in my git commits):
+
+Algorithm classes:
+- Rewrote Bipartite coloring algorithm's DFS - I also decided, at this point, to rely entirely on node instance variables to determine node states,
+  e.g. visited or unvisited, and so on
+
+- Topological sort class: Organized code better, added new variables (arraylists for sorting order), and a recursion
+  stack to display a cycle if it exists. Then I completed the code
+
+- Cycle detection class: It's the same idea as the topological sort, so I used that code and then edited it a bit.
+
+- Technical stuff:
+  - Added "done" variable to Algorithm class so algorithm can end early if it needs to
+
+Visual updates:
+- Wrote code to visualize arrows of directed edges using some vectors -- Also made
+   the "bidirectional" global setting in main program compatible with determining directionality of edges
+
+- Created Transition class for visual updates of graph visualizer
+  - Transition has info: (Node/edge, initial color, target color) and the object will transition colors using linear interpolation
+  - Wrote a feedback loop in draw() function to process transitions sequentially (one transition per time step)
+   - I later modified this to process transitions in "batches" -- all transitions in the same "batch" will simultaneously
+     occur per time step
+
+- In Algorithm:
+ - Added methods addTransition(node or edge), addState(node or edge) -> transitions colors based on change in states, 
+   with each state corresponding to a change in color
+   
+- Added reset() method to reset graph to original state before algorithm occured
+
+### Day 7: Sunday, May 28th
+Classwork: N/A (it's the weekend)
+
+Homework:
+- Made processing transitions in draw() more efficient
+- Added support for Bipartite graph visualization and tested it -- now this algorithm can be
+  visualized on the graph!
+    - The graph colors nodes with 2 colors such that no node has neighbors of the same color
+    - If a bipartite coloring does not exist, the last node will be colored as green 
+
+
