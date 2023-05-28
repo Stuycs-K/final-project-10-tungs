@@ -62,8 +62,17 @@ class Algorithm {
     
   }
   
+  
+  // This could be added upon by specific algorithm 
   void reset(){
+    done = false;
     
+    list.clear();
+    current.clear();
+    for (Node node : nodes)
+      node.c = node.DEFAULT;
+    for (Edge e : edges)
+      e.c = e.DEFAULT;
   }
  
   // ------------

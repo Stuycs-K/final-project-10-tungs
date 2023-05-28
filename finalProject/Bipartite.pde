@@ -4,6 +4,10 @@ class Bipartite extends Algorithm {
   // State variables specific to algorithm
   boolean valid; // Determines if bipartite coloring is valid
   
+  // Graph visualizer variables
+  color group1Color = color(255, 0, 0);
+  color group2Color = color(0, 0, 255);
+  
   // int tag[];
   
   // --------------------
@@ -13,6 +17,9 @@ class Bipartite extends Algorithm {
   // Constructor
   public Bipartite(Graph graph){
     super(graph);
+    
+    state_colors[1] = group1Color; 
+    state_colors[2] = group2Color; 
   }
   // ------------
   
@@ -40,6 +47,11 @@ class Bipartite extends Algorithm {
       // State = 1: First group / 2 : Second group 
       if (next.state == 0){
         next.state = (curr.state == 1) ? 2 : 1; // Assign opposite group to node
+        
+        // Visual transitions
+        addState(next, 0, next.state); 
+        // -----
+        
         dfs(j); 
       } else if (curr.state == next.state) {
         valid = false; // Bipartite partition cannot exist 
@@ -54,6 +66,8 @@ class Bipartite extends Algorithm {
   // Utility methods 
   void begin(Node node){
     node.state = (int) (random(2)); // Assign arbitrary group to starting node
+    addState(node, 0, node.state);
+    
     dfs(node.id); 
   }
   
@@ -61,6 +75,5 @@ class Bipartite extends Algorithm {
     int i = (int) (random(1) * nodes.size());
     begin(nodes.get(i)); 
   }
-  
   // ---------
 }
