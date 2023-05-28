@@ -98,3 +98,48 @@ Classwork:
  
  Homework:
  - It's a Friday and I haven't gotten any rest, so I am not working today.
+
+### Day 6: Saturday, May 27th
+Classwork: N/A (it's the weekend)
+
+Homework (I did a bunch of stuff, so I'm just going to reiterate what I mentioned in my git commits):
+
+Algorithm classes:
+- Rewrote Bipartite coloring algorithm's DFS - I also decided, at this point, to rely entirely on node instance variables to determine node states,
+  e.g. visited or unvisited, and so on
+
+- Topological sort class: Organized code better, added new variables (arraylists for sorting order), and a recursion
+  stack to display a cycle if it exists. Then I completed the code
+
+- Cycle detection class: It's the same idea as the topological sort, so I used that code and then edited it a bit.
+
+- Technical stuff:
+  - Added "done" variable to Algorithm class so algorithm can end early if it needs to
+
+Visual updates:
+- Wrote code to visualize arrows of directed edges using some vectors -- Also made
+   the "bidirectional" global setting in main program compatible with determining directionality of edges
+
+- Created Transition class for visual updates of graph visualizer
+  - Transition has info: (Node/edge, initial color, target color) and the object will transition colors using linear interpolation
+  - Wrote a feedback loop in draw() function to process transitions sequentially (one transition per time step)
+   - I later modified this to process transitions in "batches" -- all transitions in the same "batch" will simultaneously
+     occur per time step
+
+- In Algorithm:
+ - Added methods addTransition(node or edge), addState(node or edge) -> transitions colors based on change in states, 
+   with each state corresponding to a change in color
+   
+- Added reset() method to reset graph to original state before algorithm occured
+
+### Day 7: Sunday, May 28th
+Classwork: N/A (it's the weekend)
+
+Homework:
+- Made processing transitions in draw() more efficient
+- Added support for Bipartite graph visualization and tested it -- now this algorithm can be
+  visualized on the graph!
+    - The graph colors nodes with 2 colors such that no node has neighbors of the same color
+    - If a bipartite coloring does not exist, the last node will be colored as green 
+
+
