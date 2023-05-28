@@ -77,7 +77,7 @@ void setup(){
   for (int i = 0; i < times; i++){
     graph.addNode(initialSize, new PVector(width/2 + dx * i, height/2), initialColor);
     if (i == 0) continue; 
-    graph.addNode(initialSize, new PVector(width/2 - dx * i, height/2), initialColor);
+    //graph.addNode(initialSize, new PVector(width/2 - dx * i, height/2), initialColor);
   }
   
   for (int i = 0; i < nodes.size() - 1; i++)
