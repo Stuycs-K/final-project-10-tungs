@@ -62,7 +62,7 @@ class Algorithm {
     
   }
   
-  
+ 
   // This could be added upon by specific algorithm 
   void reset(){
     done = false;

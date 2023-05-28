@@ -35,9 +35,9 @@ Node current, selected; // current/selected nodes
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
 
 // Graph visualizer variables
-int delay = 1000; 
+int delay = 1000, pause_time = 200;
 int start = -1; 
-boolean started;
+boolean started, paused;
 ArrayDeque<ArrayList<Transition>> transitions;
 ArrayList<Transition> processing;
 
@@ -123,22 +123,41 @@ void draw(){
   
   // Process graph visual transitions 
   // Note to self: Might be helpful to implement handling multithreading requests
-  if (started){
+  
+  if (!transitions.isEmpty() && !paused){
+    started = true;
+    start = millis(); 
+    processing = transitions.removeFirst();
+    
+    for (Transition t : processing){
+      if (t.node != null) t.node.processing = true;
+      if (t.edge != null) t.edge.processing = true; 
+    }
+  }
+  
+  if (paused){
+    if (millis() - start > pause_time) paused = false;
+  }
+  
+  if (started && !paused){
     if (millis() - start > delay){
       started = false;
-      start = -1; 
       
-      for (Transition t : processing)
-        // Type = 0: Node / Type = 1: Edge 
-        if (t.type == 0){
-          assert(t.node.processing == true);
+      for (Transition t : processing){
+        if (t.node != null) {
+          assert(t.node.processing == true); 
           t.node.processing = false; 
-        } else if (t.type == 1){
-          assert(t.edge.processing == true);
+        } 
+        if (t.edge != null){
+           assert(t.edge.processing == true); 
           t.edge.processing = false; 
         }
-      
+      }
+
       processing.clear(); 
+      
+      start = millis(); 
+      paused = true; 
       return; 
     }
     
@@ -292,24 +311,27 @@ public void keyPressed(){
     println("Node already transitioning: " + i);
     return; 
   }
-  color q = color(random(255), random(255), random(255)); 
-  processing.add(new Transition(nodes.get(i), nodes.get(i).c, q)); 
-  started = true;
-  start = millis(); 
-  nodes.get(i).processing = true; 
+  color q = (nodes.get(i).c == color(255, 0, 0)) ? color(0, 0, 255) : color(255, 0, 0); 
   
-  graph.sleep(); 
+  
+  ArrayList<Transition> p = new ArrayList<Transition>(); 
+  p.add(new Transition(nodes.get(i), nodes.get(i).c, q)); 
+  transitions.addFirst(p);
+  
+  // graph.sleep(); 
   mode = (mode + 1) % mode_names.length;
 }
 
 int cnt = 0; 
 
-// Multithreading is kind of difficult... 
+// Multithreading is kind of difficult..
+/*. 
 public void do_stuff(){
    delay(1000);
    cnt++; 
    println("Waited 1 second, now function is done: " + cnt); 
 }
+*/
 
 
 
