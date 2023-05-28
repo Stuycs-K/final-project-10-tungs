@@ -52,8 +52,14 @@ class Bipartite extends Algorithm {
   // ---------------
   
   // Utility methods 
-  void begin(){
-    
+  void begin(Node node){
+    node.state = (int) (random(2)); // Assign arbitrary group to starting node
+    dfs(node.id); 
+  }
+  
+  void begin() {
+    int i = (int) (random(1) * nodes.size());
+    begin(nodes.get(i)); 
   }
   
   // ---------

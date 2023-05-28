@@ -14,7 +14,12 @@ class Algorithm {
   boolean done = false; 
   
   // Graph visualizer variables
+  color initialColor = color(255, 0, 0);
+  color processingColor = color(0, 255, 0);
+  color visitedColor = color(0, 0, 255); 
+  
   color visited_color = color(0, 0, 255);
+  color[] state_colors;
   
   
   int delay = 0, start = 0; 
@@ -37,35 +42,29 @@ class Algorithm {
     
     list = new ArrayDeque<ArrayList<Transition>>(); 
     current = new ArrayList<Transition>(); 
+    
+    state_colors = new color[MAX_NODES]; 
+    
+    // Initial colors for states
+    // These may (or may not) be updated in specific algorithms 
+    state_colors[0] = initialColor;
+    state_colors[1] = processingColor;
+    state_colors[2] = visitedColor; 
+    
   }
   
-  // Utility methods 
-  // Reset graph to default conditions
-  // Also may stop the simulation 
+  // ---------
+ 
+  // Algorithm utility methods
+  
+  // This should be completed by specific algorithm
+  void begin(){
+    
+  }
+  
   void reset(){
     
   }
-  
-  // ---------
-  
-  
-  // Algorithm-specific methods
-  // Or I might just make different algorithms have different functions 
-  void function(){
-    
-  }
-  
-  // ---------
-  
-  // Algorithm utility methods
-  void run(){
-    
-  }
-  
-  void quit(){
-    
-  }
-  
  
   // ------------
   // Graph visualizer methods
@@ -75,6 +74,15 @@ class Algorithm {
   
   void addTransition(Edge e, color c1, color c2){
     current.add(new Transition(e, c1, c2));
+  }
+  
+  // Add a change in state from one to another 
+  void addState(Node node, int i, int j){
+    addTransition(node, state_colors[i], state_colors[j]); 
+  }
+  
+  void addState(Edge e, int i, int j){
+    addTransition(e, state_colors[i], state_colors[j]); 
   }
   
   // Add batch of transitions to deque 
