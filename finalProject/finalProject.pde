@@ -1,3 +1,4 @@
+import java.util.ArrayDeque; 
 // Initial variables
 color initialColor = color(255, 0, 0);
 color backgroundColor = color(255, 255, 255); 
@@ -33,6 +34,13 @@ String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "A
 Node current, selected; // current/selected nodes 
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
 
+// Graph visualizer variables
+int delay = 1000; 
+int start = -1; 
+boolean started;
+ArrayDeque<Transition> transitions;
+ArrayList<Transition> processing;
+
 // The graph
 Graph graph;
 // Setup
@@ -65,11 +73,15 @@ void setup(){
   edges = graph.edges;
   edge_pair = new ArrayList<Node>();
   
+  transitions = new ArrayDeque<Transition>(); 
+  processing = new ArrayList<Transition>(); 
+  
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
   textMode(CENTER); 
   textAlign(CENTER); 
+ 
   
   // Test node/edge visibility
   int dx = 100, dy = 30; 
@@ -109,19 +121,41 @@ void draw(){
   fill(0); 
   text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
   
-  // Handle multithreading requests
-  // i.e. all "sleep" requests
-  // For now I'll test this in the graph class
+  // Process graph visual transitions 
+  // Note to self: Might be helpful to implement handling multithreading requests
+  if (started){
+    if (millis() - start > delay){
+      started = false;
+      start = -1; 
+      
+      for (Transition t : processing)
+        // Type = 0: Node / Type = 1: Edge 
+        if (t.type == 0){
+          assert(t.node.processing == true);
+          t.node.processing = false; 
+        } else if (t.type == 1){
+          assert(t.edge.processing == true);
+          t.edge.processing = false; 
+        }
+      
+      processing.clear(); 
+      return; 
+    }
+    
+    assert(start != -1);
+    for (Transition t : processing){
+      float dx = (((float) millis()) - start) / delay;
+      
+      if (t.type == 0){
+         Node node = t.node;
+         node.c = lerpColor(t.c1, t.c2, dx); 
+      } else if (t.type == 1){
+         Edge e = t.edge; 
+         e.c = lerpColor(t.c1, t.c2, dx); 
+      }
+    }
+  }
   
-  if (graph.waiting){
-    // if (graph.frames >= 60) graph.waiting = false; 
-     graph.debug();
-  }
-  /*
-  if (graph.waiting){
-    if (millis() - graph.start >= graph.delay)
-  }
-  */
 }
 
 // -----------------
@@ -251,6 +285,19 @@ public void keyPressed(){
     edge_pair.clear(); 
   }
   
+  
+  // Test graph visual transitioning 
+  int i = (int)(random(1) * nodes.size());
+  if (nodes.get(i).processing == true){
+    println("Node already transitioning: " + i);
+    return; 
+  }
+  color q = color(random(255), random(255), random(255)); 
+  processing.add(new Transition(nodes.get(i), nodes.get(i).c, q)); 
+  started = true;
+  start = millis(); 
+  nodes.get(i).processing = true; 
+  
   graph.sleep(); 
   mode = (mode + 1) % mode_names.length;
 }
@@ -263,7 +310,6 @@ public void do_stuff(){
    cnt++; 
    println("Waited 1 second, now function is done: " + cnt); 
 }
-   
 
 
 

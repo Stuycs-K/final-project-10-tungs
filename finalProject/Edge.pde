@@ -8,14 +8,19 @@ class Edge {
   Node a, b;
   PVector posA, posB;
   int size, weight; // technically thickness
-  boolean undirected = false; 
+  boolean undirected; 
+  color c;
   float SQRT_3 = sqrt(3); 
+  boolean processing; 
   
   // Constructor 
   public Edge(Node a, Node b){
     this.a = a;
     this.b = b; 
     this.weight = 0; 
+    this.undirected = true; 
+    c = DEFAULT; 
+    processing = false; 
   }
   
   public Edge(Node a, Node b, boolean undirected){
