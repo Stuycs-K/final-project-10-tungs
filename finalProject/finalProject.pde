@@ -35,9 +35,9 @@ Node current, selected; // current/selected nodes
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
 
 // Graph visualizer variables
-int delay = 1000, pause_time = 200;
+int delay = 1000, pause_time = 0; 
 int start = -1; 
-boolean started, paused;
+boolean started = false, paused = false; 
 ArrayDeque<ArrayList<Transition>> transitions;
 ArrayList<Transition> processing;
 
@@ -85,7 +85,7 @@ void setup(){
   
   // Test node/edge visibility
   int dx = 100, dy = 30; 
-  int times = 3; 
+  int times = 2; 
   for (int i = 0; i < times; i++){
     graph.addNode(initialSize, new PVector(width/2 + dx * i, height/2), initialColor);
     if (i == 0) continue; 
@@ -124,36 +124,53 @@ void draw(){
   // Process graph visual transitions 
   // Note to self: Might be helpful to implement handling multithreading requests
   
-  if (!transitions.isEmpty() && !paused){
+  
+  // Currently: Trying to debug transitions and making sure every transition occurs properly
+  // Okay, debug is done
+  if (!transitions.isEmpty() && !started && !paused){
     started = true;
-    start = millis(); 
     processing = transitions.removeFirst();
     
+    
     for (Transition t : processing){
-      if (t.node != null) t.node.processing = true;
-      if (t.edge != null) t.edge.processing = true; 
+      if (t.node != null){
+         // assert(t.node.processing == false); 
+         t.node.processing = true;
+      } 
+      if (t.edge != null){
+        assert(t.edge.processing == false); 
+        t.edge.processing = true; 
+      }
     }
+    start = millis(); 
+    println("Set inactive transitions to active"); 
   }
   
   if (paused){
-    if (millis() - start > pause_time) paused = false;
+    if (millis() - start > pause_time){
+      paused = false;
+      println("Set active transitions to not active"); 
+    }
   }
   
-  if (started && !paused){
+  if (started && !paused && processing.size() > 0){
     if (millis() - start > delay){
       started = false;
+      
       
       for (Transition t : processing){
         if (t.node != null) {
           assert(t.node.processing == true); 
           t.node.processing = false; 
+          t.node.c = t.c2; 
         } 
         if (t.edge != null){
            assert(t.edge.processing == true); 
           t.edge.processing = false; 
+          t.edge.c = t.c2; 
         }
       }
-
+     
       processing.clear(); 
       
       start = millis(); 
@@ -168,9 +185,13 @@ void draw(){
       if (t.type == 0){
          Node node = t.node;
          node.c = lerpColor(t.c1, t.c2, dx); 
+         
+         //if (!node.processing) node.processing = true; 
       } else if (t.type == 1){
          Edge e = t.edge; 
          e.c = lerpColor(t.c1, t.c2, dx); 
+         
+         // if (!e.processing) e.processing = true; 
       }
     }
   }
@@ -304,22 +325,36 @@ public void keyPressed(){
     edge_pair.clear(); 
   }
   
+  mode = (mode + 1) % mode_names.length; 
+  
   
   // Test graph visual transitioning 
   int i = (int)(random(1) * nodes.size());
   if (nodes.get(i).processing == true){
     println("Node already transitioning: " + i);
+    println("States: ");
+    if (started) print("Started ");
+    if (paused) print("Paused ");
     return; 
   }
+  
+  if (!(nodes.get(i).c == color(255, 0, 0) || nodes.get(i).c == color(0, 0, 255)))
+    println("Color of node: " + red(nodes.get(i).c) + " " + green(nodes.get(i).c)  + " " + blue(nodes.get(i).c)); 
+    
   color q = (nodes.get(i).c == color(255, 0, 0)) ? color(0, 0, 255) : color(255, 0, 0); 
   
   
   ArrayList<Transition> p = new ArrayList<Transition>(); 
   p.add(new Transition(nodes.get(i), nodes.get(i).c, q)); 
+  int j = i;
+  // while (j == i) j = (int)(random(1) * nodes.size()); 
+  // p.add(new Transition(nodes.get(j), nodes.get(j).c, (nodes.get(j).c == color(255, 0, 0) ? color(0, 0, 255) : color(255, 0, 0)))); 
   transitions.addFirst(p);
   
+  
+  nodes.get(i).processing = true; 
+  
   // graph.sleep(); 
-  mode = (mode + 1) % mode_names.length;
 }
 
 int cnt = 0; 
