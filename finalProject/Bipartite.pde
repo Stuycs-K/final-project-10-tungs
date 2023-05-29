@@ -49,6 +49,7 @@ class Bipartite extends Algorithm {
       
       // State = 1: First group / 2 : Second group 
       if (next.state == 0){
+        if (done) return; 
         next.state = (curr.state == 1) ? 2 : 1; // Assign opposite group to node
         
         // Visual transitions

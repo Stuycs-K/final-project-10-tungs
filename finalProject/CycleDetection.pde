@@ -65,6 +65,7 @@ public class CycleDetection extends Algorithm {
          cycle_found = true; 
          return; 
        } else if (next.state == 0) {
+         if (done) return; 
          next.state = 1; 
          
          // Visual Transitions
