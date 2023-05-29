@@ -118,6 +118,7 @@ public class TopoSort extends Algorithm {
          addTransition(node, state_colors[node.state], sortColor);
        }
      }
+     super.begin(); 
   }
   
   void reset(){

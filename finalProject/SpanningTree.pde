@@ -161,6 +161,7 @@ class SpanningTree extends Algorithm {
   for (Node node : nodes){
     println("Component of node = " + node.id + ": " + dsu.get(node.id)); 
   }
+  super.begin(); 
   
   
  }

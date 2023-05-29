@@ -24,6 +24,8 @@ class Algorithm {
   color[] state_colors;
   ArrayList<Integer> active_colors; // active colors 
   
+  String resultText = ""; 
+  
   
   int delay = 0, start = 0; 
   boolean waiting = false; 
@@ -64,9 +66,8 @@ class Algorithm {
  
   // Algorithm utility methods
   
-  // This should be completed by specific algorithm
   void begin(){
-    
+    // addMessage("Algorithm done!"); 
   }
   
  
@@ -85,6 +86,8 @@ class Algorithm {
     // Reset state of nodes
     for (Node node : nodes)
       node.state = 0; 
+      
+    resultText = ""; 
   }
  
   // ------------
@@ -134,5 +137,6 @@ class Algorithm {
     while (!messages.isEmpty())
       target.addLast(messages.removeFirst()); 
   }
+  
   // -------
 }

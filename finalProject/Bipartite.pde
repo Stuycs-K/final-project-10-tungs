@@ -10,6 +10,7 @@ class Bipartite extends Algorithm {
   color badColor = color(0, 255, 0); 
   
   
+  
   // int tag[];
   
   // --------------------
@@ -52,7 +53,7 @@ class Bipartite extends Algorithm {
         
         // Visual transitions
         addState(next, 0, next.state); 
-        addMessage("Travel from node " + i + " -> node " + j);
+        addMessage("Travel from node " + i + " -> node " + j + ", Assign group of " + j + " = " + next.state);
         // -----
         
         dfs(j); 
@@ -65,6 +66,8 @@ class Bipartite extends Algorithm {
         println("Odd cycle detected in bipartite"); 
         addTransition(next, state_colors[next.state], badColor); 
         addMessage("At node " + i + ": Odd cycle detected, bipartite coloring cannot exist"); 
+        
+        resultText = "Bipartite coloring cannot exist in graph"; 
         return; 
       }
     }
@@ -92,8 +95,13 @@ class Bipartite extends Algorithm {
       if (done) break; // Terminate process if a odd cycle is found
       node.state = 1 + (int) (random(2)); 
       addState(node, 0, node.state);
+      addMessage("Started search from node " + node.id + ", Assign group of " + node.id + " = " + node.state); 
       dfs(node.id); 
     }
+    super.begin(); 
+    
+    if (!done) println("Bipartite coloring exists in graph"); 
+    if (!done) resultText = "Completed bipartite coloring of graph";
   }
   
   void reset(){

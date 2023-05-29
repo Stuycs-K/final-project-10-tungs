@@ -109,6 +109,7 @@ public class CycleDetection extends Algorithm {
        batchProcessing = true;
        addBatch();
      }
+     super.begin(); 
   }
   
   void reset(){

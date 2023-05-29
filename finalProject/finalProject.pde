@@ -56,6 +56,8 @@ Algorithm center;
 // Textbox variables
 TextBox info; 
 ArrayDeque<String> messages;
+String resultText = ""; 
+
 // Setup
 
 /*
@@ -105,8 +107,8 @@ void setup(){
   
   
   // Textbox
-  info = new TextBox(width/2, height/2, 100, 100); 
-  messages = new ArrayDeque<String>(); 
+  info = new TextBox(width/2, height/2, 200, 100); 
+  messages = new ArrayDeque<String>();
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -177,6 +179,14 @@ void draw(){
     processing = transitions.removeFirst();
     assert(processing.size() > 0); 
     
+    // Update text messages
+      if (!messages.isEmpty()){
+        info.text = messages.removeFirst();
+        println("Current processing: " + transitions.size() +  " " + info.text); 
+      }
+      
+        
+        
     
     for (Transition t : processing){
       // println(t); 
@@ -218,10 +228,14 @@ void draw(){
         }
       }
       
+      if (transitions.isEmpty())
+        info.text = resultText; 
+      /*
       // Update text messages
       if (!messages.isEmpty())
         info.text = messages.removeFirst(); 
-     
+      */ 
+      
       processing.clear(); 
       
       start = millis(); 
@@ -253,6 +267,9 @@ void draw(){
 void resetTransitions(){
   processing.clear();
   transitions.clear();
+  messages.clear(); 
+  info.text = ""; 
+  resultText = ""; 
   
   // Hopefully these work as intended
   started = false;
@@ -294,6 +311,10 @@ public void mousePressed(){
    // Mode 3: delete Node 
    // May want to test this method later 
    if (currentMode == deleteNode){
+    if (processing.size() > 0 || transitions.size() > 0){
+      println("Can't delete node while graph visualization is occuring"); 
+      return; 
+    }
     for (int i = nodes.size() - 1; i >= 0; i--)
       if (nodes.get(i).inPosition(mouseX, mouseY)){
         Node node = nodes.get(i); 
@@ -355,6 +376,11 @@ public void mousePressed(){
   
   // Mode 5: delete Edge
   if (currentMode == deleteEdge){
+    if (processing.size() > 0 || transitions.size() > 0){
+      println("Can't delete edge while graph visualization is occuring"); 
+      return; 
+    }
+    
     for (int i = edges.size() - 1; i >= 0; i--){
       Edge e = edges.get(i); 
       if (e.inPosition(mouseX, mouseY)){
@@ -377,6 +403,7 @@ public void mousePressed(){
     
     algorithm.pushTransitions(transitions);
     algorithm.pushMessages(messages); 
+    resultText = algorithm.resultText; 
   }
  
   // Maybe more methods later 
