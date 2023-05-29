@@ -112,8 +112,8 @@ class SpanningTree extends Algorithm {
        return 1; 
       }
     });
-    Collections.shuffle(edges); 
-    
+    if (!graph.weighted) Collections.shuffle(edges); 
+ 
     for (Node node : nodes){
       addTransition(node, node.DEFAULT, component_colors[node.id]); 
     }

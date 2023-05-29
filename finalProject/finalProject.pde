@@ -14,6 +14,7 @@ int initialSize = 50;
 
 // Mode/Algorithm variables
 boolean bidirectional = true; 
+boolean weighted = false;
 
 // Essential variables
 ArrayList<Node> nodes;
@@ -25,13 +26,11 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 
 // Numerical variables
 int tag = 0;
-int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
-int bipartiteAlgorithm = 5, cycleDetectionAlgorithm = 6, topoSortAlgorithm = 7;
-int spanningTreeAlgorithm = 8; 
+int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4, resetGraph = 5;
 
 // String variables
-String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm", "Cycle detection algorithm", "Topological sort algorithm", "Spanning tree algorithm"};
-
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge"};
+String[] algorithm_names = {"Bipartite coloring", "Cycle detection", "Topological sort", "Spanning tree"};
 // State variables
 Node current, selected; // current/selected nodes 
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
@@ -49,6 +48,9 @@ Bipartite bipartite;
 CycleDetection cycle;
 TopoSort topoSort;
 SpanningTree minTree; 
+
+ArrayList<Algorithm> algorithms;
+Algorithm center;
 // Setup
 
 /*
@@ -74,7 +76,7 @@ Current plan (stage 1.5):
 void setup(){
   size(1000, 500);
   
-  graph = new Graph(bidirectional); 
+  graph = new Graph(bidirectional, weighted); 
   nodes = graph.nodes;
   edges = graph.edges;
   edge_pair = new ArrayList<Node>();
@@ -87,6 +89,14 @@ void setup(){
   cycle = new CycleDetection(graph);
   topoSort = new TopoSort(graph); 
   minTree = new SpanningTree(graph);
+  
+  algorithms = new ArrayList<Algorithm>();
+  algorithms.add(bipartite);
+  algorithms.add(cycle);
+  algorithms.add(topoSort);
+  algorithms.add(minTree); 
+  
+  center = new Algorithm(graph); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -131,7 +141,17 @@ void draw(){
   
    // Display text
   fill(0); 
-  text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
+  String current = (mode < mode_names.length) ? (mode_names[mode]) : 
+  (algorithm_names[mode - mode_names.length]);
+  
+  String extra = (mode < mode_names.length) ? ("\n(Utility, " + 
+  (mode+1) + " / " + (mode_names.length)) : 
+  ("\n(Algorithm, " + (mode - mode_names.length + 1) + " / " + algorithm_names.length);
+  extra += ")"; 
+  
+  text("Current mode: " + current, 10, 10, 100, 100);
+  text(extra, 10, 40, 100, 140);
+  
   
   // Process graph visual transitions 
   // Note to self: Might be helpful to implement handling multithreading requests
@@ -147,7 +167,7 @@ void draw(){
     
     
     for (Transition t : processing){
-      println(t); 
+      // println(t); 
       if (t.node != null){
          // assert(t.node.processing == false); 
          t.node.processing = true;
@@ -313,6 +333,7 @@ public void mousePressed(){
     return; 
   }
   
+  
   // Mode 5: delete Edge
   if (currentMode == deleteEdge){
     for (int i = edges.size() - 1; i >= 0; i--){
@@ -325,53 +346,19 @@ public void mousePressed(){
     }
   }
   
-  // Mode 6 (testing): Bipartite algorithm
-  if (currentMode == bipartiteAlgorithm){
+  
+   // If an algorithm is selected
+  if (currentMode >= mode_names.length){
     resetTransitions();
+    Algorithm algorithm = algorithms.get(currentMode - mode_names.length);
     
-    bipartite.reset(); 
-    bipartite.begin(); 
-    assert(bipartite.list.size() > 0); 
-    println("Done with bipartite algorithm"); 
+    algorithm.reset();
+    algorithm.begin();
+    println("Done with: " + algorithm_names[currentMode - mode_names.length]);
     
-    bipartite.pushTransitions(transitions); 
-    assert(transitions.size() > 0); 
+    algorithm.pushTransitions(transitions);
   }
-  
-  // Mode 6 (testing): Cycle detection algorithm
-  if (currentMode == cycleDetectionAlgorithm){
-    resetTransitions();
-    
-    cycle.reset();
-    cycle.begin();
-    println("Done with cycle detection algorithm");
-    
-    cycle.pushTransitions(transitions);
-    assert(transitions.size() > 0); 
-  }
-  
-  // Mode 7 (testing): Topological sort algorithm
-  if (currentMode == topoSortAlgorithm){
-    resetTransitions();
-    
-    topoSort.reset();
-    topoSort.begin();
-    
-    topoSort.pushTransitions(transitions); 
-  }
-  
-  // Mode 8 (testing): Spanning tree algorithm
-  if (currentMode == spanningTreeAlgorithm){
-    resetTransitions();
-    
-    minTree.reset();
-    minTree.begin(); 
-    
-    minTree.pushTransitions(transitions); 
-    
-  }
-  
-  
+ 
   // Maybe more methods later 
 }
 
@@ -398,33 +385,26 @@ public void keyPressed(){
     edge_pair.clear(); 
   }
   
-  mode = (mode + 1) % mode_names.length; 
   
-  
-  // Test graph visual transitioning 
-  if (1 + 1 == 2) return; 
-  int i = (int)(random(1) * nodes.size());
-  if (nodes.get(i).processing == true){
-    println("Node already transitioning: " + i);
-    println("States: ");
-    if (started) print("Started ");
-    if (paused) print("Paused ");
-    return; 
+ 
+  if (key == '1'){
+    mode = 0; 
+  } else if (key == '2'){
+    mode = mode_names.length; 
+  } else if (key != 'r') {
+    int len = mode_names.length + algorithm_names.length;
+    mode = (mode + 1) % len; 
   }
   
-  if (!(nodes.get(i).c == color(255, 0, 0) || nodes.get(i).c == color(0, 0, 255)))
-    println("Color of node: " + red(nodes.get(i).c) + " " + green(nodes.get(i).c)  + " " + blue(nodes.get(i).c)); 
-    
-  color q = (nodes.get(i).c == color(255, 0, 0)) ? color(0, 0, 255) : color(255, 0, 0); 
+  if (key == 'r'){
+    if (mode >= mode_names.length){
+      algorithms.get(mode - mode_names.length).reset(); 
+      resetTransitions(); 
+      println("Reset"); 
+    } else {
+      center.reset(); 
+    }
+  }
   
-  
-  ArrayList<Transition> p = new ArrayList<Transition>(); 
-  p.add(new Transition(nodes.get(i), nodes.get(i).c, q)); 
-  int j = i;
-  // while (j == i) j = (int)(random(1) * nodes.size()); 
-  // p.add(new Transition(nodes.get(j), nodes.get(j).c, (nodes.get(j).c == color(255, 0, 0) ? color(0, 0, 255) : color(255, 0, 0)))); 
-  transitions.addFirst(p);
- 
-  nodes.get(i).processing = true; 
   
 }

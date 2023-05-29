@@ -12,6 +12,7 @@ class Graph {
   
   // Initial states of the graph 
   boolean undirected = true; 
+  boolean weighted = false; 
   
   // Constructor
   public Graph(){
@@ -33,6 +34,12 @@ class Graph {
   public Graph(boolean undirected){
     this(); 
     this.undirected = undirected;
+  }
+  
+  public Graph(boolean undirected, boolean weighted){
+    this(); 
+    this.undirected = undirected;
+    this.weighted = weighted; 
   }
   // --------------
   
