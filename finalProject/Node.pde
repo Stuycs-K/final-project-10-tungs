@@ -49,7 +49,7 @@ class Node {
     circle(position.x, position.y, size); 
     
     fill(TEXT_COLOR);
-    text(id + " ", position.x, position.y); 
+    text(id + "", position.x, position.y, 100, 100); 
     fill(DEFAULT); 
     
     stroke(STROKE_COLOR); 

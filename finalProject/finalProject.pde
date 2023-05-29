@@ -8,6 +8,7 @@ color hoverColor = color(0, 0, 255);
 color clickedColor = color(0, 0, 255); 
 
 int border_thickness = 2;  
+int textSize = 14; 
 
 int initialSize = 50; 
 // --------------------
@@ -51,6 +52,9 @@ SpanningTree minTree;
 
 ArrayList<Algorithm> algorithms;
 Algorithm center;
+
+// Textbox variables
+TextBox info; 
 // Setup
 
 /*
@@ -98,11 +102,17 @@ void setup(){
   
   center = new Algorithm(graph); 
   
+  
+  // Textbox
+  info = new TextBox(width/2, height/2, 100, 100); 
+  
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
   textMode(CENTER); 
-  textAlign(CENTER); 
+  textAlign(CENTER, CENTER); 
+  
+  rectMode(CENTER); 
  
   
   // Test node/edge visibility
@@ -123,6 +133,10 @@ void setup(){
 void draw(){
   background(backgroundColor);
   
+  // Process textboxes
+  info.display(); 
+  
+  
   // Display nodes
   for (int i = 0; i < nodes.size(); i++){
     Node node = nodes.get(i);
@@ -141,6 +155,7 @@ void draw(){
   
    // Display text
   fill(0); 
+  textSize(textSize); 
   String current = (mode < mode_names.length) ? (mode_names[mode]) : 
   (algorithm_names[mode - mode_names.length]);
   
@@ -149,16 +164,11 @@ void draw(){
   ("\n(Algorithm, " + (mode - mode_names.length + 1) + " / " + algorithm_names.length);
   extra += ")"; 
   
-  text("Current mode: " + current, 10, 10, 100, 100);
-  text(extra, 10, 40, 100, 140);
+  text("Current mode: " + current, 10 + 100, 10 + 20, 100 + 100, 100);
+  text(extra, 10 + 100, 40 + 20, 100 + 100, 140);
   
   
   // Process graph visual transitions 
-  // Note to self: Might be helpful to implement handling multithreading requests
-  
-  
-  // Currently: Trying to debug transitions and making sure every transition occurs properly
-  // Okay, debug is done
   if (!transitions.isEmpty() && !started && !paused){
     // println("Starting"); 
     started = true;
@@ -250,6 +260,9 @@ void resetTransitions(){
 public void mousePressed(){
   mouseDown = true;
   int currentMode = mode; // make reference in case mode changes
+  
+  // Textbox
+  if (info.inPosition(mouseX, mouseY)) println("Clicked on text box"); 
   
   // If you can click on the node 
   // Mode 1: Default
