@@ -51,7 +51,6 @@ class TextBox {
     
     // Note order of fill/stroke might affect output of other visual aspects
     // (Probably wont be an issue though)
-    
   }
   // ---------
 }

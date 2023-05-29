@@ -55,6 +55,7 @@ Algorithm center;
 
 // Textbox variables
 TextBox info; 
+ArrayDeque<String> messages;
 // Setup
 
 /*
@@ -105,6 +106,7 @@ void setup(){
   
   // Textbox
   info = new TextBox(width/2, height/2, 100, 100); 
+  messages = new ArrayDeque<String>(); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -215,6 +217,10 @@ void draw(){
           t.edge.c = t.c2; 
         }
       }
+      
+      // Update text messages
+      if (!messages.isEmpty())
+        info.text = messages.removeFirst(); 
      
       processing.clear(); 
       
@@ -370,6 +376,7 @@ public void mousePressed(){
     println("Done with: " + algorithm_names[currentMode - mode_names.length]);
     
     algorithm.pushTransitions(transitions);
+    algorithm.pushMessages(messages); 
   }
  
   // Maybe more methods later 

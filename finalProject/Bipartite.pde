@@ -52,6 +52,7 @@ class Bipartite extends Algorithm {
         
         // Visual transitions
         addState(next, 0, next.state); 
+        addMessage("Travel from node " + i + " -> node " + j);
         // -----
         
         dfs(j); 
@@ -63,6 +64,7 @@ class Bipartite extends Algorithm {
         
         println("Odd cycle detected in bipartite"); 
         addTransition(next, state_colors[next.state], badColor); 
+        addMessage("At node " + i + ": Odd cycle detected, bipartite coloring cannot exist"); 
         return; 
       }
     }
