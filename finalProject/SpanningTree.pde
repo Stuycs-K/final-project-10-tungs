@@ -15,6 +15,10 @@ struct DSU {
         if (e[x] > e[y]) swap(x, y);
         e[x] += e[y]; e[y] = x; return true;// Merge y into x 
     }
+    
+    bool unite_manually(int x, int y){
+      
+    
 };
 */
 class DSU {
@@ -48,6 +52,10 @@ class DSU {
      e[x] += e[y]; e[y] = x; return true;// Merge y into x 
   }
   
+  boolean unite_manually(int x, int y){
+    e[x] += e[y]; e[y] = x; return true; 
+  }
+  
   void reset(){
     for (int i = 0; i < e.length; i++)
       e[i] = -1; 
@@ -64,6 +72,7 @@ class SpanningTree extends Algorithm {
   // Graph visualizer variables
   color treeColor = color(255, 255, 0); 
   color edgeColor = color(0, 255, 0); 
+  color baseEdgeColor = color(220, 220, 220); 
   // int tag[];
   color[] component_colors; 
   
@@ -103,29 +112,63 @@ class SpanningTree extends Algorithm {
        return 1; 
       }
     });
+    Collections.shuffle(edges); 
+    
+    for (Node node : nodes){
+      addTransition(node, node.DEFAULT, component_colors[node.id]); 
+    }
+    for (Edge e : edges)
+      addTransition(e, e.DEFAULT, baseEdgeColor); 
+    addBatch(); 
+    
+
     
     for (Edge e : edges){
       if (done) break; 
       if (!dsu.same_set(e.a.id, e.b.id)){
         weight_sum += e.weight;
         
-        int rep = (dsu.size(e.a.id) < dsu.size(e.b.id)) ? e.a.id : e.b.id; 
-        int target = (rep == e.a.id) ? e.b.id : e.a.id;
+        int repA = dsu.get(e.a.id), repB = dsu.get(e.b.id);
+        if (dsu.e[repA] > dsu.e[repB]){
+          int data = repA;
+          repA = repB; repB = data; 
+          // repA is larger component 
+          // Now e[repA] <= e[repB]
+        }
+        int rep = repB, target = repA; 
+       
         for (Node node : nodes){
           if (dsu.get(node.id) == rep)
-            addTransition(node, component_colors[rep], component_colors[target]);
+            // addTransition(node, component_colors[rep], component_colors[target]);
+            addTransition(node, color(255, 255, 255), component_colors[target]);
         }
-        addTransition(e, e.DEFAULT, edgeColor);
+        addTransition(e, e.EDGE_COLOR, edgeColor);
         addBatch(); 
+        println("United: " + rep + " " + target);
         
-        if (dsu.size(target) == nodes.size())
+        dsu.unite_manually(target, rep); 
+        if (target != dsu.get(e.a.id)){
+          println("Check: " + target + " " + dsu.get(e.a.id)); 
+        }
+        //assert(target == dsu.get(e.a.id)); 
+        if (dsu.size(target) == nodes.size()){
           done = true;
+          println("Done finding MST"); 
+        }
+     
     }
   }
+  for (Node node : nodes){
+    println("Component of node = " + node.id + ": " + dsu.get(node.id)); 
+  }
+  
   
  }
   // ---------------
-  
+  void begin(){
+    assert(batchProcessing == false); 
+    calculateTree(); 
+  }
 
   void reset(){
     super.reset();

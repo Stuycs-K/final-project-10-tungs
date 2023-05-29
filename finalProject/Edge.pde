@@ -1,6 +1,6 @@
 
 class Edge {
-  color DEFAULT = color(255, 255, 255);
+  color DEFAULT = color(0, 0, 0); 
   color EDGE_COLOR = color(0, 0, 0); 
   float ARROW_SIZE = 10, BUFFER = 0; 
   float TEXT_BUFFER = 10; 
@@ -21,7 +21,7 @@ class Edge {
     this.b = b; 
     this.weight = 0; 
     this.undirected = true; 
-    c = DEFAULT; 
+    c = EDGE_COLOR; 
     processing = false; 
     weighted = false; 
   }
@@ -40,11 +40,12 @@ class Edge {
   
   // Display methods
   public void display(){
-    fill(EDGE_COLOR); 
+    fill(255, 255, 255);
     float dx = b.position.x - a.position.x, dy = b.position.y - a.position.y; 
     float mag = sqrt(sq(dx) + sq(dy)); 
     dx /= mag; dy /= mag; 
     
+    stroke(c); 
     line(a.position.x + dx * a.size / 2, a.position.y + dy * a.size / 2,
          b.position.x - dx * b.size / 2, b.position.y - dy * b.size / 2); 
     
@@ -78,6 +79,8 @@ class Edge {
     }
          
     fill(DEFAULT); 
+    
+    stroke(EDGE_COLOR); 
   }
   
   // ----------------

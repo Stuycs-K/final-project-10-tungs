@@ -7,13 +7,13 @@ color selectedColor = color(0, 0, 0); // color(0, 255, 0);
 color hoverColor = color(0, 0, 255); 
 color clickedColor = color(0, 0, 255); 
 
-int border_thickness = 2; 
+int border_thickness = 2;  
 
 int initialSize = 50; 
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = false; 
+boolean bidirectional = true; 
 
 // Essential variables
 ArrayList<Node> nodes;
@@ -26,10 +26,11 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 // Numerical variables
 int tag = 0;
 int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
-int bipartiteAlgorithm = 5, cycleDetectionAlgorithm = 6, topoSortAlgorithm = 7; 
+int bipartiteAlgorithm = 5, cycleDetectionAlgorithm = 6, topoSortAlgorithm = 7;
+int spanningTreeAlgorithm = 8; 
 
 // String variables
-String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm", "Cycle detection algorithm", "Topological sort algorithm"};
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm", "Cycle detection algorithm", "Topological sort algorithm", "Spanning tree algorithm"};
 
 // State variables
 Node current, selected; // current/selected nodes 
@@ -47,6 +48,7 @@ Graph graph;
 Bipartite bipartite;
 CycleDetection cycle;
 TopoSort topoSort;
+SpanningTree minTree; 
 // Setup
 
 /*
@@ -80,10 +82,11 @@ void setup(){
   transitions = new ArrayDeque<ArrayList<Transition>>(); 
   processing = new ArrayList<Transition>(); 
   
+  
   bipartite = new Bipartite(graph); 
   cycle = new CycleDetection(graph);
   topoSort = new TopoSort(graph); 
-  
+  minTree = new SpanningTree(graph);
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -137,7 +140,7 @@ void draw(){
   // Currently: Trying to debug transitions and making sure every transition occurs properly
   // Okay, debug is done
   if (!transitions.isEmpty() && !started && !paused){
-    println("Starting"); 
+    // println("Starting"); 
     started = true;
     processing = transitions.removeFirst();
     assert(processing.size() > 0); 
@@ -155,13 +158,13 @@ void draw(){
       }
     }
     start = millis(); 
-    println("Set inactive transitions to active"); 
+    //println("Set inactive transitions to active"); 
   }
   
   if (paused){
     if (millis() - start > pause_time){
       paused = false;
-      println("Set active transitions to not active"); 
+      //println("Set active transitions to not active"); 
     }
   }
   
@@ -356,6 +359,19 @@ public void mousePressed(){
     
     topoSort.pushTransitions(transitions); 
   }
+  
+  // Mode 8 (testing): Spanning tree algorithm
+  if (currentMode == spanningTreeAlgorithm){
+    resetTransitions();
+    
+    minTree.reset();
+    minTree.begin(); 
+    
+    minTree.pushTransitions(transitions); 
+    
+  }
+  
+  
   // Maybe more methods later 
 }
 
