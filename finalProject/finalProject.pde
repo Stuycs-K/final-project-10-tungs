@@ -450,6 +450,7 @@ public void keyPressed(){
       println("Reset"); 
     } else {
       center.reset(); 
+      resetTransitions(); 
     }
   }
   
