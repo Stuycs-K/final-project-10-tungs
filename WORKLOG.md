@@ -104,10 +104,6 @@ Classwork: N/A (it's the weekend)
 
 Homework (I did a bunch of stuff, so I'm just going to reiterate what I mentioned in my git commits):
 
-Merge #3: (This was when I only supported Bipartite coloring algorithm)
-- Merged to main branch since I had written 3 algorithms and one of them was visually compatible.
-- Also removed old code from main program
-
 Algorithm classes:
 - Rewrote Bipartite coloring algorithm's DFS - I also decided, at this point, to rely entirely on node instance variables to determine node states,
   e.g. visited or unvisited, and so on
@@ -141,6 +137,11 @@ Classwork: N/A (it's the weekend)
 
 Homework:
 - Made processing transitions in draw() more efficient
+
+Merge #3: (This was when I only supported Bipartite coloring algorithm)
+- Merged to main branch since I had written 3 algorithms and one of them was visually compatible.
+- Also removed old code from main program
+
 
 - Graph visualizations:
 - Added support for Bipartite graph visualization and tested it -- now this algorithm can be
