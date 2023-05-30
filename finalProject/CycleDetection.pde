@@ -61,6 +61,9 @@ public class CycleDetection extends Algorithm {
          cycle.addFirst(next);
          stack.clear();
          
+         // Visual Transitions
+         addMessage("Cycle detected at node " + i); 
+         // ----------
          done = true; 
          cycle_found = true; 
          return; 
@@ -70,6 +73,7 @@ public class CycleDetection extends Algorithm {
          
          // Visual Transitions
          addState(next, 0, 1); 
+         addMessage("Travel from node " + i + " -> node " + j); 
          // ---------
          dfs(j, i); 
        }
@@ -109,8 +113,13 @@ public class CycleDetection extends Algorithm {
        // Nodes in cycle should be displayed simultaneously 
        batchProcessing = true;
        addBatch();
+      
      }
-     super.begin(); 
+  
+     if (!done) 
+       resultText = "No cycles detected in the graph";
+     else
+       resultText = "A cycle was detected in the graph"; 
   }
   
   void reset(){

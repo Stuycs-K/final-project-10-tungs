@@ -14,7 +14,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = true; 
+boolean bidirectional = false; 
 boolean weighted = false;
 
 // Essential variables
@@ -81,7 +81,8 @@ Current plan (stage 1.5):
 // I am rewriting the stuff that I commented out (involving user input to customize graph), but using
 // the methods that I moved to my Graph class.
 void setup(){
-  size(1000, 500);
+  // size(1000, 500);
+  size(2000, 1000);
   
   graph = new Graph(bidirectional, weighted); 
   nodes = graph.nodes;

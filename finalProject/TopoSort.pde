@@ -60,6 +60,10 @@ public class TopoSort extends Algorithm {
          cycle.addFirst(next);
          stack.clear();
          
+         // Visual Transitions
+
+         // -----------
+         
          done = true; 
          valid = false;
          return; 
@@ -68,6 +72,7 @@ public class TopoSort extends Algorithm {
          
          // Visual Transitions
          addState(next, 0, 1); 
+         addMessage("Travel from node " + i + "-> node " + j + " (Node " + j + ": State = processing)"); 
          // ---------
          
          dfs(j, i); 
@@ -84,6 +89,9 @@ public class TopoSort extends Algorithm {
      // Push node into topological ordering 
      order.addLast(curr);
      assert(stack.getFirst() == curr);
+     // Visual Transitions
+        addMessage("Node " + curr.id + ": Mark as done processing"); 
+     // --------
      stack.removeFirst(); 
    }
    
@@ -103,6 +111,10 @@ public class TopoSort extends Algorithm {
      if (!valid){
        assert(cycle.size() > 0);
        batchProcessing = false; 
+       
+       // Add text message
+       addMessage("Cycle detected in the graph"); 
+       
        while (!cycle.isEmpty()){
          Node node = cycle.removeFirst();
          addTransition(node, state_colors[node.state], cycleColor);
@@ -113,12 +125,22 @@ public class TopoSort extends Algorithm {
        batchProcessing = true;
        addBatch();
      } else {
+       // add text message
+       addMessage("Topological sort found. Now displaying the sort order: ");
+       
        while (order.size() > 0){
          Node node = order.removeFirst(); 
          addTransition(node, state_colors[node.state], sortColor);
+         
+         addMessage("Current node in topological sort: Node: " + node.id); 
        }
      }
-     super.begin(); 
+     
+     if (valid) 
+       resultText = "Topological sort successfully displayed in order";
+     else
+       resultText = "Topological sort cannot exist, since a cycle was found";
+       
   }
   
   void reset(){

@@ -54,7 +54,7 @@ class Bipartite extends Algorithm {
         
         // Visual transitions
         addState(next, 0, next.state); 
-        addMessage("Travel from node " + i + " -> node " + j + ", Assign group of " + j + " = " + next.state);
+        addMessage("Travel from node " + i + " -> node " + j + ", Assign group of node " + j + " = " + next.state);
         // -----
         
         dfs(j); 
