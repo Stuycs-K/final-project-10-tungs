@@ -52,7 +52,7 @@ public class TopoSort extends Algorithm {
        if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Processing / 2: Already visited
-       if (next.state == 1){
+       if (next.state == 1 && prev != -1){
          if (done) return; 
          while (!stack.isEmpty() && stack.getFirst() != next)
            cycle.addFirst(stack.removeFirst());

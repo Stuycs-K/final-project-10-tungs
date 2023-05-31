@@ -8,13 +8,13 @@ color hoverColor = color(0, 0, 255);
 color clickedColor = color(0, 0, 255); 
 
 int border_thickness = 2;  
-int textSize = 14; 
+int textSize = 18; 
 
 int initialSize = 50; 
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = true; 
+boolean bidirectional = false; 
 boolean weighted = false;
 
 // Essential variables
@@ -57,6 +57,8 @@ Algorithm center;
 TextBox info; 
 ArrayDeque<String> messages;
 String resultText = ""; 
+
+TextBox info_label;
 
 // Setup
 
@@ -108,8 +110,12 @@ void setup(){
   
   
   // Textbox
-  info = new TextBox(width/2, height/2, 200, 100); 
+  info = new TextBox(100 + 10 + 40, 100 + 20 + 100, 250, 100); 
   messages = new ArrayDeque<String>();
+  
+  info_label = new TextBox(100 + 10 + 40, 100 + 20 + 30, 200, 90); 
+  info_label.transparent = true;
+  info_label.text = "Output of graph algorithm"; 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -140,6 +146,7 @@ void draw(){
   
   // Process textboxes
   info.display(); 
+  info_label.display(); 
   
   
   // Display nodes

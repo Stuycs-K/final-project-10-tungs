@@ -8,13 +8,15 @@ class TextBox {
   color TEXT_COLOR = color(0, 0, 0); 
   String text; 
   
+  boolean transparent = false; 
+  
   // Constructors
   public TextBox(PVector position, int sizeX, int sizeY){
     this.position = position;
     x = position.x; y = position.y;
     this.sizeX = sizeX;
     this.sizeY = sizeY; 
-    text = "Hello pizza"; 
+    text = ""; 
   }
   
   public TextBox(float x, float y, int sizeX, int sizeY){
@@ -44,11 +46,13 @@ class TextBox {
     fill(DEFAULT);
     stroke(STROKE_COLOR);
     
-    rect(x, y, sizeX, sizeY);
+    if (!transparent)
+      rect(x, y, sizeX, sizeY);
+    
     
     fill(TEXT_COLOR); 
     text(text, x, y, sizeX, sizeY);
-    
+   
     // Note order of fill/stroke might affect output of other visual aspects
     // (Probably wont be an issue though)
   }

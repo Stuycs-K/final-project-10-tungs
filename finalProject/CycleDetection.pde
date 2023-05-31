@@ -50,7 +50,7 @@ public class CycleDetection extends Algorithm {
        if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Visited 
-       if (next.state == 1){
+       if (next.state == 1 && prev != -1){
          if (done) return; // Guard clause in case unexpected behavior occurs
          
          while (!stack.isEmpty() && stack.getFirst() != next)
