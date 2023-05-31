@@ -60,6 +60,11 @@ String resultText = "";
 
 TextBox info_label;
 
+TextBox note;
+TextBox note_label;
+
+ArrayList<TextBox> text;
+
 // Setup
 
 /*
@@ -111,11 +116,24 @@ void setup(){
   
   // Textbox
   info = new TextBox(100 + 10 + 40, 100 + 20 + 100, 250, 100); 
+  text = new ArrayList<TextBox>(); 
   messages = new ArrayDeque<String>();
   
   info_label = new TextBox(100 + 10 + 40, 100 + 20 + 30, 200, 90); 
   info_label.transparent = true;
   info_label.text = "Output of graph algorithm"; 
+  
+  note = new TextBox(100 + 10 + 40, 100 + 20 + 130 + 200, 250, 200); 
+  note.text = "1: Go to utility modes \n 2: Go to algorithm modes \n 3: Press 'r' to reset graph visuals"; 
+  
+  note_label = new TextBox(100 + 10 + 40, 100 + 20 + 210, 250, 200);
+  note_label.transparent = true; 
+  note_label.text = "Some useful key shortcuts"; 
+  
+  text.add(info); 
+  text.add(info_label);
+  text.add(note); 
+  text.add(note_label); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -145,9 +163,8 @@ void draw(){
   background(backgroundColor);
   
   // Process textboxes
-  info.display(); 
-  info_label.display(); 
-  
+  for (TextBox t : text) t.display(); 
+
   
   // Display nodes
   for (int i = 0; i < nodes.size(); i++){
