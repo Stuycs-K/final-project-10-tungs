@@ -14,7 +14,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = false; 
+boolean bidirectional = true; 
 boolean weighted = false;
 
 // Essential variables

@@ -120,6 +120,8 @@ class SpanningTree extends Algorithm {
     for (Edge e : edges)
       addTransition(e, e.DEFAULT, baseEdgeColor); 
     addBatch(); 
+    // Text output 
+    addMessage("Initialize: Set nodes to represent separate components"); 
     
 
     
@@ -147,6 +149,9 @@ class SpanningTree extends Algorithm {
         println("United: " + rep + " " + target);
         
         dsu.unite_manually(target, rep); 
+        // Text output
+        addMessage("United nodes of components: " + target + " and " + rep); 
+        // ---
         if (target != dsu.get(e.a.id)){
           println("Check: " + target + " " + dsu.get(e.a.id)); 
         }
@@ -161,9 +166,8 @@ class SpanningTree extends Algorithm {
   for (Node node : nodes){
     println("Component of node = " + node.id + ": " + dsu.get(node.id)); 
   }
-  super.begin(); 
   
-  
+  resultText = "Spanning tree (forest) has been found in the graph";
  }
   // ---------------
   void begin(){
