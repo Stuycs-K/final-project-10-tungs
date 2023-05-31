@@ -181,3 +181,22 @@ Homework:
 - Improved messages for Bipartite coloring algorithm by modifying DFS code
 - I didn't do anything else today, since I had other things to do. 
 
+## Day 9: Tuesday, May 30th
+Classwork:
+- Fixed issue with graph visualization not being reset when you press 'r' key, and you are currently in a mode that is not an Algorithm
+- Added text message support for Cycle detection and topological sort -- They now output messages of what's going on,
+as
+- Updated worklog for Monday, May 29th (Day 8) 
+
+Homework:
+- I was very tired, so I did not work (in terms of HW) on this day.
+
+## Day 10: Wednesday, May 31st
+Classwork:
+Main branch: Merge #4:
+- Merged to main branch: At this point, I support graph visualization and text output for 4 algorithms: Bipartite coloring,
+Cycle detection, Topological sort, and Spanning Tree
+
+
+
+
