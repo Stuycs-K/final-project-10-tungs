@@ -2,6 +2,7 @@
 class Node {
   color DEFAULT = color(255, 0, 0); 
   color TEXT_COLOR = color(0, 0, 0); 
+  color STROKE_COLOR = color(0, 0, 0); 
   int size, id, label, number, state; // I'm just going to list some variables 
   PVector position;
   boolean mouseDown, selected, visited, processing;
@@ -48,9 +49,10 @@ class Node {
     circle(position.x, position.y, size); 
     
     fill(TEXT_COLOR);
-    text(id + " ", position.x, position.y); 
+    text(id + "", position.x, position.y, 100, 100); 
     fill(DEFAULT); 
     
+    stroke(STROKE_COLOR); 
     
   }
 }

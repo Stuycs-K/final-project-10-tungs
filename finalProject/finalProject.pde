@@ -7,13 +7,15 @@ color selectedColor = color(0, 0, 0); // color(0, 255, 0);
 color hoverColor = color(0, 0, 255); 
 color clickedColor = color(0, 0, 255); 
 
-int border_thickness = 2; 
+int border_thickness = 2;  
+int textSize = 14; 
 
 int initialSize = 50; 
 // --------------------
 
 // Mode/Algorithm variables
 boolean bidirectional = true; 
+boolean weighted = false;
 
 // Essential variables
 ArrayList<Node> nodes;
@@ -25,12 +27,11 @@ int mode = 0; // might be used later for node add/remove, edge add/remove
 
 // Numerical variables
 int tag = 0;
-int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4; 
-int bipartiteAlgorithm = 5; 
+int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4, resetGraph = 5;
 
 // String variables
-String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge", "Bipartite coloring algorithm"};
-
+String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge"};
+String[] algorithm_names = {"Bipartite coloring", "Cycle detection", "Topological sort", "Spanning tree"};
 // State variables
 Node current, selected; // current/selected nodes 
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
@@ -45,6 +46,18 @@ ArrayList<Transition> processing;
 // The graph
 Graph graph;
 Bipartite bipartite;
+CycleDetection cycle;
+TopoSort topoSort;
+SpanningTree minTree; 
+
+ArrayList<Algorithm> algorithms;
+Algorithm center;
+
+// Textbox variables
+TextBox info; 
+ArrayDeque<String> messages;
+String resultText = ""; 
+
 // Setup
 
 /*
@@ -68,9 +81,10 @@ Current plan (stage 1.5):
 // I am rewriting the stuff that I commented out (involving user input to customize graph), but using
 // the methods that I moved to my Graph class.
 void setup(){
-  size(1000, 500);
+  // size(1000, 500);
+  size(2000, 1000);
   
-  graph = new Graph(bidirectional); 
+  graph = new Graph(bidirectional, weighted); 
   nodes = graph.nodes;
   edges = graph.edges;
   edge_pair = new ArrayList<Node>();
@@ -78,14 +92,32 @@ void setup(){
   transitions = new ArrayDeque<ArrayList<Transition>>(); 
   processing = new ArrayList<Transition>(); 
   
-  bipartite = new Bipartite(graph); 
   
+  bipartite = new Bipartite(graph); 
+  cycle = new CycleDetection(graph);
+  topoSort = new TopoSort(graph); 
+  minTree = new SpanningTree(graph);
+  
+  algorithms = new ArrayList<Algorithm>();
+  algorithms.add(bipartite);
+  algorithms.add(cycle);
+  algorithms.add(topoSort);
+  algorithms.add(minTree); 
+  
+  center = new Algorithm(graph); 
+  
+  
+  // Textbox
+  info = new TextBox(width/2, height/2, 200, 100); 
+  messages = new ArrayDeque<String>();
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
   shapeMode(CENTER);
   textMode(CENTER); 
-  textAlign(CENTER); 
+  textAlign(CENTER, CENTER); 
+  
+  rectMode(CENTER); 
  
   
   // Test node/edge visibility
@@ -106,6 +138,10 @@ void setup(){
 void draw(){
   background(backgroundColor);
   
+  // Process textboxes
+  info.display(); 
+  
+  
   // Display nodes
   for (int i = 0; i < nodes.size(); i++){
     Node node = nodes.get(i);
@@ -124,40 +160,54 @@ void draw(){
   
    // Display text
   fill(0); 
-  text("Current mode: " + mode_names[mode], 10, 10, 100, 100);
+  textSize(textSize); 
+  String current = (mode < mode_names.length) ? (mode_names[mode]) : 
+  (algorithm_names[mode - mode_names.length]);
+  
+  String extra = (mode < mode_names.length) ? ("\n(Utility, " + 
+  (mode+1) + " / " + (mode_names.length)) : 
+  ("\n(Algorithm, " + (mode - mode_names.length + 1) + " / " + algorithm_names.length);
+  extra += ")"; 
+  
+  text("Current mode: " + current, 10 + 100, 10 + 20, 100 + 100, 100);
+  text(extra, 10 + 100, 40 + 20, 100 + 100, 140);
+  
   
   // Process graph visual transitions 
-  // Note to self: Might be helpful to implement handling multithreading requests
-  
-  
-  // Currently: Trying to debug transitions and making sure every transition occurs properly
-  // Okay, debug is done
   if (!transitions.isEmpty() && !started && !paused){
-    println("Starting"); 
+    // println("Starting"); 
     started = true;
     processing = transitions.removeFirst();
     assert(processing.size() > 0); 
     
+    // Update text messages
+      if (!messages.isEmpty()){
+        info.text = messages.removeFirst();
+        println("Current processing: " + transitions.size() +  " " + info.text); 
+      }
+      
+        
+        
     
     for (Transition t : processing){
-      println(t); 
+      // println(t); 
       if (t.node != null){
          // assert(t.node.processing == false); 
          t.node.processing = true;
       } 
       if (t.edge != null){
-        assert(t.edge.processing == false); 
+        // assert(t.edge.processing == false); 
         t.edge.processing = true; 
       }
     }
     start = millis(); 
-    println("Set inactive transitions to active"); 
+    //println("Set inactive transitions to active"); 
   }
   
   if (paused){
     if (millis() - start > pause_time){
       paused = false;
-      println("Set active transitions to not active"); 
+      //println("Set active transitions to not active"); 
     }
   }
   
@@ -178,7 +228,15 @@ void draw(){
           t.edge.c = t.c2; 
         }
       }
-     
+      
+      if (transitions.isEmpty())
+        info.text = resultText; 
+      /*
+      // Update text messages
+      if (!messages.isEmpty())
+        info.text = messages.removeFirst(); 
+      */ 
+      
       processing.clear(); 
       
       start = millis(); 
@@ -210,6 +268,9 @@ void draw(){
 void resetTransitions(){
   processing.clear();
   transitions.clear();
+  messages.clear(); 
+  info.text = ""; 
+  resultText = ""; 
   
   // Hopefully these work as intended
   started = false;
@@ -223,6 +284,9 @@ void resetTransitions(){
 public void mousePressed(){
   mouseDown = true;
   int currentMode = mode; // make reference in case mode changes
+  
+  // Textbox
+  if (info.inPosition(mouseX, mouseY)) println("Clicked on text box"); 
   
   // If you can click on the node 
   // Mode 1: Default
@@ -248,6 +312,10 @@ public void mousePressed(){
    // Mode 3: delete Node 
    // May want to test this method later 
    if (currentMode == deleteNode){
+    if (processing.size() > 0 || transitions.size() > 0){
+      println("Can't delete node while graph visualization is occuring"); 
+      return; 
+    }
     for (int i = nodes.size() - 1; i >= 0; i--)
       if (nodes.get(i).inPosition(mouseX, mouseY)){
         Node node = nodes.get(i); 
@@ -306,8 +374,14 @@ public void mousePressed(){
     return; 
   }
   
+  
   // Mode 5: delete Edge
   if (currentMode == deleteEdge){
+    if (processing.size() > 0 || transitions.size() > 0){
+      println("Can't delete edge while graph visualization is occuring"); 
+      return; 
+    }
+    
     for (int i = edges.size() - 1; i >= 0; i--){
       Edge e = edges.get(i); 
       if (e.inPosition(mouseX, mouseY)){
@@ -318,17 +392,21 @@ public void mousePressed(){
     }
   }
   
-  // Mode 6 (testing): Bipartite algorithm
-  if (currentMode == bipartiteAlgorithm){
-    bipartite.reset(); 
-    bipartite.begin(); 
-    assert(bipartite.list.size() > 0); 
-    println("Done with bipartite algorithm"); 
+  
+   // If an algorithm is selected
+  if (currentMode >= mode_names.length){
+    resetTransitions();
+    Algorithm algorithm = algorithms.get(currentMode - mode_names.length);
     
-    bipartite.pushTransitions(transitions); 
-    assert(transitions.size() > 0); 
+    algorithm.reset();
+    algorithm.begin();
+    println("Done with: " + algorithm_names[currentMode - mode_names.length]);
+    
+    algorithm.pushTransitions(transitions);
+    algorithm.pushMessages(messages); 
+    resultText = algorithm.resultText; 
   }
-   
+ 
   // Maybe more methods later 
 }
 
@@ -355,33 +433,27 @@ public void keyPressed(){
     edge_pair.clear(); 
   }
   
-  mode = (mode + 1) % mode_names.length; 
   
-  
-  // Test graph visual transitioning 
-  if (1 + 1 == 2) return; 
-  int i = (int)(random(1) * nodes.size());
-  if (nodes.get(i).processing == true){
-    println("Node already transitioning: " + i);
-    println("States: ");
-    if (started) print("Started ");
-    if (paused) print("Paused ");
-    return; 
+ 
+  if (key == '1'){
+    mode = 0; 
+  } else if (key == '2'){
+    mode = mode_names.length; 
+  } else if (key != 'r') {
+    int len = mode_names.length + algorithm_names.length;
+    mode = (mode + 1) % len; 
   }
   
-  if (!(nodes.get(i).c == color(255, 0, 0) || nodes.get(i).c == color(0, 0, 255)))
-    println("Color of node: " + red(nodes.get(i).c) + " " + green(nodes.get(i).c)  + " " + blue(nodes.get(i).c)); 
-    
-  color q = (nodes.get(i).c == color(255, 0, 0)) ? color(0, 0, 255) : color(255, 0, 0); 
+  if (key == 'r'){
+    if (mode >= mode_names.length){
+      algorithms.get(mode - mode_names.length).reset(); 
+      resetTransitions(); 
+      println("Reset"); 
+    } else {
+      center.reset(); 
+      resetTransitions(); 
+    }
+  }
   
-  
-  ArrayList<Transition> p = new ArrayList<Transition>(); 
-  p.add(new Transition(nodes.get(i), nodes.get(i).c, q)); 
-  int j = i;
-  // while (j == i) j = (int)(random(1) * nodes.size()); 
-  // p.add(new Transition(nodes.get(j), nodes.get(j).c, (nodes.get(j).c == color(255, 0, 0) ? color(0, 0, 255) : color(255, 0, 0)))); 
-  transitions.addFirst(p);
- 
-  nodes.get(i).processing = true; 
   
 }

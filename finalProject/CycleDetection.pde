@@ -7,6 +7,8 @@ public class CycleDetection extends Algorithm {
   ArrayDeque<Node> stack, cycle; // Nodes in topological sort
   boolean cycle_found = false; // If a cycle was found 
   
+  color cycleColor = color(0, 255, 0); 
+  
   // ---------
   
   // Constructor
@@ -44,26 +46,89 @@ public class CycleDetection extends Algorithm {
      for (Edge e : adj){
        Node next = e.b;
        int j = next.id;
-       if (j == prev) continue; 
+       // If graph is undirected, this is not a cycle 
+       if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Visited 
        if (next.state == 1){
+         if (done) return; // Guard clause in case unexpected behavior occurs
+         
          while (!stack.isEmpty() && stack.getFirst() != next)
            cycle.addFirst(stack.removeFirst());
-           
+         // Node should be in stack at this point 
+         // assert(stack.getFirst() == next);
+         
          cycle.addFirst(next);
          stack.clear();
          
+         // Visual Transitions
+         addMessage("Cycle detected at node " + i); 
+         // ----------
          done = true; 
+         cycle_found = true; 
          return; 
        } else if (next.state == 0) {
+         if (done) return; 
          next.state = 1; 
+         
+         // Visual Transitions
+         addState(next, 0, 1); 
+         addMessage("Travel from node " + i + " -> node " + j); 
+         // ---------
          dfs(j, i); 
        }
      }
+     // Another guard clause
+     if (done) return;
+     // node.state = 2;
+     
      // Remove the node from stack 
      // Note: node should be first in stack at this moment 
      assert(stack.getFirst() == curr);
      stack.removeFirst(); 
   }
+  
+  // ---------------
+  
+  // Utility methods
+  void begin() {
+    for (Node node : nodes){
+       if (node.state != 0) continue;
+       if (done) break;
+       node.state = 1;
+       addState(node, 0, node.state);
+       dfs(node.id, -1); 
+    }
+     
+     // If a cycle is found, label nodes as in cycle
+     if (cycle_found){
+       assert(cycle.size() > 0);
+       batchProcessing = false; 
+       while (!cycle.isEmpty()){
+         Node node = cycle.removeFirst();
+         addTransition(node, state_colors[node.state], cycleColor);
+       }
+       
+       // Set batch processing back to true 
+       // Nodes in cycle should be displayed simultaneously 
+       batchProcessing = true;
+       addBatch();
+      
+     }
+  
+     if (!done) 
+       resultText = "No cycles detected in the graph";
+     else
+       resultText = "A cycle was detected in the graph"; 
+  }
+  
+  void reset(){
+    super.reset();
+    cycle_found = false; 
+    
+    // Clear stacks 
+    stack.clear();
+    cycle.clear(); 
+  }
+  // ---------
 }

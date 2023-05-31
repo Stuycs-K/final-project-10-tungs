@@ -137,9 +137,47 @@ Classwork: N/A (it's the weekend)
 
 Homework:
 - Made processing transitions in draw() more efficient
+
+Merge #3: (This was when I only supported Bipartite coloring algorithm)
+- Merged to main branch since I had written 3 algorithms and one of them was visually compatible.
+- Also removed old code from main program
+
+
+- Graph visualizations:
 - Added support for Bipartite graph visualization and tested it -- now this algorithm can be
   visualized on the graph!
     - The graph colors nodes with 2 colors such that no node has neighbors of the same color
     - If a bipartite coloring does not exist, the last node will be colored as green 
 
+- Added support for Cycle detection graph visualization
+  - Visited nodes are colored blue, and if a cycle exists, the cycle is simultaneously colored green
+  
+- Added support for Topological sort graph visualization
+  - The code is similar to cycle detection; visited nodes are colored (purple), and if a cycle exist,
+   it is labeled green. The catch here is that if a topological sort exists, then nodes will be colored
+   in the order of the topological sort at the end of the graph visualization.
+
+- Added support for Minimum Spanning Tree graph visualization
+ - This uses Disjoint-Set Union to merge connected components together while the spanning tree is constructed
+ - Different components have different colors; when a component merges into another, all of its nodes' colors
+   are replaced with the larger component's colors
+ - Edges that are in the MST are marked green
+ 
+ - The colors that I decide to use are arbitrary, and I might include support for color customization (probably not, though)
+   if I have enough time to do so.
+ 
+ Text labels:
+ - Added support (kind of, I'm still testing it to make it work) for displaying weight labels of edges, although my code
+ currently does not let users determine weight of edges
+ 
+ - Made TextBox class to display what's going on in algorithm as the graph visualization occurs
+   - Added pushMessage() and addMessage() in Algorithm class, which is similar to Transition class
+   - Then, I added support for displaying text messages of Bipartite coloring algorithm as the graph runs
+
+### Day 8: Monday, May 29th
+Classwork: N/A (it's Memorial Day)
+
+Homework: 
+- Improved messages for Bipartite coloring algorithm by modifying DFS code
+- I didn't do anything else today, since I had other things to do. 
 

@@ -9,6 +9,7 @@ class Algorithm {
   
   ArrayDeque<ArrayList<Transition>> list; // List of visual transitions to be processed 
   ArrayList<Transition> current; // current transition arraylist
+  ArrayDeque<String> messages; // current message arraylist 
   
   // Algorithm state variables
   boolean batchProcessing = true; 
@@ -16,11 +17,14 @@ class Algorithm {
   
   // Graph visualizer variables
   color initialColor = color(255, 0, 0);
-  color processingColor = color(0, 255, 0);
+  color processingColor = color(255, 0, 255); 
   color visitedColor = color(0, 0, 255); 
   
   color visited_color = color(0, 0, 255);
   color[] state_colors;
+  ArrayList<Integer> active_colors; // active colors 
+  
+  String resultText = ""; 
   
   
   int delay = 0, start = 0; 
@@ -43,8 +47,10 @@ class Algorithm {
     
     list = new ArrayDeque<ArrayList<Transition>>(); 
     current = new ArrayList<Transition>(); 
+    messages = new ArrayDeque<String>(); 
     
     state_colors = new color[MAX_NODES]; 
+    active_colors = new ArrayList<Integer>();
     
     // Initial colors for states
     // These may (or may not) be updated in specific algorithms 
@@ -52,15 +58,16 @@ class Algorithm {
     state_colors[1] = processingColor;
     state_colors[2] = visitedColor; 
     
+    active_colors.add(0);
+    
   }
   
   // ---------
  
   // Algorithm utility methods
   
-  // This should be completed by specific algorithm
   void begin(){
-    
+    // addMessage("Algorithm done!"); 
   }
   
  
@@ -70,6 +77,7 @@ class Algorithm {
     
     list.clear();
     current.clear();
+    messages.clear();
     for (Node node : nodes)
       node.c = node.DEFAULT;
     for (Edge e : edges)
@@ -78,6 +86,8 @@ class Algorithm {
     // Reset state of nodes
     for (Node node : nodes)
       node.state = 0; 
+      
+    resultText = ""; 
   }
  
   // ------------
@@ -116,7 +126,17 @@ class Algorithm {
     while (!list.isEmpty())
       target.addLast(list.removeFirst()); 
   }
+  // ------------
   
+  // Message methods
+  void addMessage(String s){
+    messages.addLast(s); 
+  }
+  
+  void pushMessages(ArrayDeque<String> target){
+    while (!messages.isEmpty())
+      target.addLast(messages.removeFirst()); 
+  }
   
   // -------
 }
