@@ -66,6 +66,9 @@ TextBox note_label;
 TextBox undirectedOption;
 TextBox undirectedOption_label; 
 
+TextBox removeEdges;
+TextBox removeGraph;
+
 ArrayList<TextBox> text;
 
 // Setup
@@ -127,7 +130,7 @@ void setup(){
   info_label.text = "Output of graph algorithm"; 
   
   note = new TextBox(100 + 10 + 40, 100 + 20 + 130 + 200, 250, 200); 
-  note.text = "1: Go to utility modes \n 2: Go to algorithm modes \n Press 'r' to reset graph visuals"; 
+  note.text = "Press any key: Change mode \n 1: Go to utility modes \n 2: Go to algorithm modes \n Press 'r' to reset graph visuals"; 
   
   note_label = new TextBox(100 + 10 + 40, 100 + 20 + 210, 250, 200);
   note_label.transparent = true; 
@@ -139,12 +142,22 @@ void setup(){
   undirectedOption_label = new TextBox(width - (100 + 10 + 40), 100 + 5 + 30, 200, 90); 
   undirectedOption_label.text = "Click to change edge type (Resets entire graph)"; 
   undirectedOption_label.transparent = true; 
+  
+  removeEdges = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100 + 120, 200, 90);
+  removeEdges.text = "Click to remove all edges from graph";
+  
+  removeGraph = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100 + 120 + 120, 200, 90);
+  removeGraph.text = "Click to reset the graph"; 
+  
+  
   text.add(info); 
   text.add(info_label); 
   text.add(note); 
   text.add(note_label); 
   text.add(undirectedOption); 
   text.add(undirectedOption_label); 
+  text.add(removeEdges); 
+  text.add(removeGraph); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -320,6 +333,11 @@ void resetGraph(){
   
   nodes.clear(); 
   edges.clear();
+  
+  // Clear adjacency list 
+  for (ArrayList<Edge> Edges : graph.adj)
+    Edges.clear();
+  
 }
 
 // Utility functions: Updated to be compatible with graph class
@@ -342,6 +360,18 @@ public void mousePressed(){
     println(graph); 
     println("Changed mode of edge"); 
     return;
+  } else if (removeEdges.inPosition(mouseX, mouseY)){
+    // resetGraph(), but without removing the nodes
+    resetTransitions();
+    
+    edges.clear();
+    for (ArrayList<Edge> Edges : graph.adj)
+      Edges.clear(); 
+    
+    return; 
+  } else if (removeGraph.inPosition(mouseX, mouseY)){
+    resetGraph(); 
+    return; 
   }
   
   // If you can click on the node 
