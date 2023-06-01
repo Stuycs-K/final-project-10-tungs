@@ -137,7 +137,7 @@ void setup(){
   undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
   
   undirectedOption_label = new TextBox(width - (100 + 10 + 40), 100 + 5 + 30, 200, 90); 
-  undirectedOption_label.text = "Click to change edge type"; 
+  undirectedOption_label.text = "Click to change edge type (Resets entire graph)"; 
   undirectedOption_label.transparent = true; 
   text.add(info); 
   text.add(info_label); 
@@ -315,6 +315,13 @@ void resetTransitions(){
 
 // -----------------
 
+void resetGraph(){
+  resetTransitions();
+  
+  nodes.clear(); 
+  edges.clear();
+}
+
 // Utility functions: Updated to be compatible with graph class
 public void mousePressed(){
   mouseDown = true;
@@ -322,44 +329,14 @@ public void mousePressed(){
   
   // Textbox
   if (info.inPosition(mouseX, mouseY)) println("Clicked on text box"); 
+  
   if (undirectedOption.inPosition(mouseX, mouseY)){
     bidirectional = !bidirectional;
     graph.undirected = !graph.undirected; 
-    for (Edge e : edges) e.undirected = !e.undirected; 
+    //for (Edge e : edges) e.undirected = graph.undirected; 
     
-    // Now add edges to the graph, if going from undirected -> directed
+    resetGraph();
     
-    // If the graph is undirected, consider adding additional edges 
-    if (graph.undirected)
-      for (ArrayList<Edge> edges : graph.adj){
-        for (Edge e : edges){
-          // assert(graph.findEdge_specific(e.a, e.b, graph.edges) != null); 
-          if (graph.findEdge(e.b, e.a, graph.adj.get(e.b.id)) == null){
-            Edge edgeFront = new Edge(e.b, e.a); 
-            
-            if (graph.findEdge_specific(e.b, e.a, graph.edges) == null){
-              graph.edges.add(edgeFront); 
-
-              Edge a = graph.findEdge_specific(e.a, e.b, graph.edges);
-              a.hide = true; 
-            }
-            
-             graph.adj.get(e.b.id).add(edgeFront);
-            // Dont add additional edge in edges list, since one already exists 
-            // Actually, adding an additional edge in edges list shouldn't be that much of an issue
-            // if (graph.findEdge_specific(e.a, e.b, graph.edges) == null) graph.edges.add(edgeFront); 
-          }
-        }
-      }
-    
-    for (ArrayList<Edge> edges : graph.adj){
-      for (Edge e : edges){
-        Edge a = graph.findEdge_specific(e.a, e.b, graph.edges);
-        if (a == null) graph.edges.add(e); 
-      }
-    }
-    
-     
     undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
       
     println(graph); 
@@ -521,8 +498,18 @@ public void keyPressed(){
   } else if (key != 'r') {
     int len = mode_names.length + algorithm_names.length;
     mode = (mode + 1) % len; 
+ 
   }
   
+  if (mode >= mode_names.length){
+      Algorithm a = algorithms.get(mode - mode_names.length);
+      info.text = (a.works_directed && a.works_undirected) ? (algorithm_names[mode - mode_names.length] + " works for both undirected/directed graphs")
+      : (algorithm_names[mode - mode_names.length] + " may produce unexpected results for the mode: " + (!a.works_directed ? "Directed" : "Undirected")); 
+  } else {
+    if (messages.isEmpty()) info.text = ""; 
+  }
+
+ 
   if (key == 'r'){
     if (mode >= mode_names.length){
       algorithms.get(mode - mode_names.length).reset(); 

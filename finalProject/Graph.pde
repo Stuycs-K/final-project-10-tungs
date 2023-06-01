@@ -202,7 +202,7 @@ public Edge findEdge_general(Node a, Node b, ArrayList<Edge> edges){
     // Remove edge from adjacency list 
     // Also account for undirected/directed edges 
     Edge eFront = findEdge(e.a, e.b, adj.get(e.a.id));
-    Edge eBack = findEdge(e.a, e.b, adj.get(e.b.id));
+    Edge eBack = findEdge(e.b, e.a, adj.get(e.b.id));
     if (eFront == null || (undirected && eBack == null)){
       throw new IllegalStateException("Error: Either node a or b does not contain edge to be deleted in adjacency list");
     }
