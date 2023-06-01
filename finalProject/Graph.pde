@@ -120,6 +120,26 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
   }
   return null; 
 }
+public Edge findEdge_specific(Node a, Node b, ArrayList<Edge> edges){
+  for (int i = edges.size() - 1; i >= 0; i--){
+    Edge e = edges.get(i);
+    
+    // Find a specific edge 
+    if (e.a == a && e.b == b) return e;
+  }
+  return null; 
+}
+
+public Edge findEdge_general(Node a, Node b, ArrayList<Edge> edges){
+   for (int i = edges.size() - 1; i >= 0; i--){
+    Edge e = edges.get(i);
+    
+    // Find a specific edge 
+    if (e.a == a && e.b == b) return e;
+    if (e.b == a && e.a == b) return e; 
+  }
+  return null; 
+}
 
 
   // ---------------
@@ -191,6 +211,9 @@ public Edge findEdge(Node a, Node b, ArrayList<Edge> edges){
    
     // The edge in edge list is not redundant, i.e. if (a, b) exists, then (b, a) should not exist 
     edges.remove(e); 
+    Edge a = findEdge_general(e.a, e.b, edges);
+    if (a != null) a.hide = false; 
+    
     
     // Return edge's reference if needed 
     return e; 

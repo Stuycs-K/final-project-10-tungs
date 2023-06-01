@@ -126,6 +126,7 @@ class SpanningTree extends Algorithm {
 
     
     for (Edge e : edges){
+      if (e.undirected && e.hide) continue; 
       if (done) break; 
       if (!dsu.same_set(e.a.id, e.b.id)){
         weight_sum += e.weight;

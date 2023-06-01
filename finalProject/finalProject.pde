@@ -322,6 +322,42 @@ public void mousePressed(){
   
   // Textbox
   if (info.inPosition(mouseX, mouseY)) println("Clicked on text box"); 
+  if (undirectedOption.inPosition(mouseX, mouseY)){
+    bidirectional = !bidirectional;
+    graph.undirected = !graph.undirected; 
+    for (Edge e : edges) e.undirected = !e.undirected; 
+    
+    // Now add edges to the graph, if going from undirected -> directed
+    
+    // If the graph is undirected, consider adding additional edges 
+    if (graph.undirected)
+      for (ArrayList<Edge> edges : graph.adj){
+        for (Edge e : edges){
+          // assert(graph.findEdge_specific(e.a, e.b, graph.edges) != null); 
+          if (graph.findEdge(e.b, e.a, graph.adj.get(e.b.id)) == null){
+            Edge edgeFront = new Edge(e.b, e.a); 
+            
+            if (graph.findEdge_specific(e.b, e.a, graph.edges) == null){
+              graph.edges.add(edgeFront); 
+              
+              Edge a = graph.findEdge_specific(e.a, e.b, graph.edges);
+              a.hide = true; 
+            }; 
+             graph.adj.get(e.b.id).add(edgeFront);
+            // Dont add additional edge in edges list, since one already exists 
+            // Actually, adding an additional edge in edges list shouldn't be that much of an issue
+            // if (graph.findEdge_specific(e.a, e.b, graph.edges) == null) graph.edges.add(edgeFront); 
+          }
+        }
+      }
+      
+    
+    undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
+      
+    println(graph); 
+    println("Changed mode of edge"); 
+    return;
+  }
   
   // If you can click on the node 
   // Mode 1: Default

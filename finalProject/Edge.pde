@@ -14,6 +14,7 @@ class Edge {
   float SQRT_3 = sqrt(3); 
   boolean processing; 
   boolean weighted; 
+  boolean hide = false; 
   
   // Constructor 
   public Edge(Node a, Node b){
@@ -40,6 +41,7 @@ class Edge {
   
   // Display methods
   public void display(){
+    if (undirected && hide) return;
     fill(255, 255, 255);
     float dx = b.position.x - a.position.x, dy = b.position.y - a.position.y; 
     float mag = sqrt(sq(dx) + sq(dy)); 
