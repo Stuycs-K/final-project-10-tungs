@@ -90,6 +90,8 @@ class SpanningTree extends Algorithm {
       component_colors[i] = color(random(255), random(255), random(255)); 
     
     batchProcessing = false; 
+    
+    works_directed = false; 
   }
   // ------------
   

@@ -18,6 +18,8 @@ public class TopoSort extends Algorithm {
      
      order = new ArrayDeque<Node>(); stack = new ArrayDeque<Node>();
      cycle = new ArrayDeque<Node>(); 
+     
+     works_undirected = false; 
    }
    
    // ----------

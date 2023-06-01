@@ -21,6 +21,7 @@ class Bipartite extends Algorithm {
     
     state_colors[1] = group1Color; 
     state_colors[2] = group2Color; 
+    works_directed = false; 
   }
   // ------------
   
