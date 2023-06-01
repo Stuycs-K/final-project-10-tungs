@@ -337,12 +337,7 @@ public void mousePressed(){
           if (graph.findEdge(e.b, e.a, graph.adj.get(e.b.id)) == null){
             Edge edgeFront = new Edge(e.b, e.a); 
             
-            if (graph.findEdge_specific(e.b, e.a, graph.edges) == null){
-              graph.edges.add(edgeFront); 
-              
-              Edge a = graph.findEdge_specific(e.a, e.b, graph.edges);
-              a.hide = true; 
-            }; 
+            
              graph.adj.get(e.b.id).add(edgeFront);
             // Dont add additional edge in edges list, since one already exists 
             // Actually, adding an additional edge in edges list shouldn't be that much of an issue
@@ -350,8 +345,15 @@ public void mousePressed(){
           }
         }
       }
-      
     
+    for (ArrayList<Edge> edges : graph.adj){
+      for (Edge e : edges){
+        Edge a = graph.findEdge_specific(e.a, e.b, graph.edges);
+        if (a == null) graph.edges.add(e); 
+      }
+    }
+    
+     
     undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
       
     println(graph); 
