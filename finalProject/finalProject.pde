@@ -8,13 +8,13 @@ color hoverColor = color(0, 0, 255);
 color clickedColor = color(0, 0, 255); 
 
 int border_thickness = 2;  
-int textSize = 14; 
+int textSize = 18; 
 
 int initialSize = 50; 
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = true; 
+boolean bidirectional = false; 
 boolean weighted = false;
 
 // Essential variables
@@ -57,6 +57,19 @@ Algorithm center;
 TextBox info; 
 ArrayDeque<String> messages;
 String resultText = ""; 
+
+TextBox info_label;
+
+TextBox note;
+TextBox note_label;
+
+TextBox undirectedOption;
+TextBox undirectedOption_label; 
+
+TextBox removeEdges;
+TextBox removeGraph;
+
+ArrayList<TextBox> text;
 
 // Setup
 
@@ -108,8 +121,43 @@ void setup(){
   
   
   // Textbox
-  info = new TextBox(width/2, height/2, 200, 100); 
+  info = new TextBox(100 + 10 + 40, 100 + 20 + 100, 250, 100); 
+  text = new ArrayList<TextBox>(); 
   messages = new ArrayDeque<String>();
+  
+  info_label = new TextBox(100 + 10 + 40, 100 + 5 + 30, 200, 90); 
+  info_label.transparent = true;
+  info_label.text = "Output of graph algorithm"; 
+  
+  note = new TextBox(100 + 10 + 40, 100 + 20 + 130 + 200, 250, 200); 
+  note.text = "Press any key: Change mode, Click mouse: activate mode \n \n 1: Go to utility modes \n 2: Go to algorithm modes \n Press 'r' to reset graph visuals"; 
+  
+  note_label = new TextBox(100 + 10 + 40, 100 + 20 + 210, 250, 200);
+  note_label.transparent = true; 
+  note_label.text = "Some useful key shortcuts"; 
+  
+  undirectedOption = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100, 200, 90);
+  undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
+  
+  undirectedOption_label = new TextBox(width - (100 + 10 + 40), 100 + 5 + 20, 200, 90); 
+  undirectedOption_label.text = "Click to change edge type (Resets entire graph)"; 
+  undirectedOption_label.transparent = true; 
+  
+  removeEdges = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100 + 120, 200, 90);
+  removeEdges.text = "Click to remove all edges from graph";
+  
+  removeGraph = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100 + 120 + 120, 200, 90);
+  removeGraph.text = "Click to reset the graph"; 
+  
+  
+  text.add(info); 
+  text.add(info_label); 
+  text.add(note); 
+  text.add(note_label); 
+  text.add(undirectedOption); 
+  text.add(undirectedOption_label); 
+  text.add(removeEdges); 
+  text.add(removeGraph); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -139,8 +187,8 @@ void draw(){
   background(backgroundColor);
   
   // Process textboxes
-  info.display(); 
-  
+  for (TextBox t : text) t.display(); 
+
   
   // Display nodes
   for (int i = 0; i < nodes.size(); i++){
@@ -183,7 +231,7 @@ void draw(){
     // Update text messages
       if (!messages.isEmpty()){
         info.text = messages.removeFirst();
-        println("Current processing: " + transitions.size() +  " " + info.text); 
+        // println("Current processing: " + transitions.size() +  " " + info.text); 
       }
       
         
@@ -280,6 +328,18 @@ void resetTransitions(){
 
 // -----------------
 
+void resetGraph(){
+  resetTransitions();
+  
+  nodes.clear(); 
+  edges.clear();
+  
+  // Clear adjacency list 
+  for (ArrayList<Edge> Edges : graph.adj)
+    Edges.clear();
+  
+}
+
 // Utility functions: Updated to be compatible with graph class
 public void mousePressed(){
   mouseDown = true;
@@ -287,6 +347,33 @@ public void mousePressed(){
   
   // Textbox
   if (info.inPosition(mouseX, mouseY)) println("Clicked on text box"); 
+  
+  if (undirectedOption.inPosition(mouseX, mouseY)){
+    bidirectional = !bidirectional;
+    graph.undirected = !graph.undirected; 
+    assert(bidirectional == graph.undirected); 
+    //for (Edge e : edges) e.undirected = graph.undirected; 
+    
+    resetGraph();
+    
+    undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
+      
+    println(graph); 
+    println("Changed mode of edge"); 
+    return;
+  } else if (removeEdges.inPosition(mouseX, mouseY)){
+    // resetGraph(), but without removing the nodes
+    resetTransitions();
+    
+    edges.clear();
+    for (ArrayList<Edge> Edges : graph.adj)
+      Edges.clear(); 
+    
+    return; 
+  } else if (removeGraph.inPosition(mouseX, mouseY)){
+    resetGraph(); 
+    return; 
+  }
   
   // If you can click on the node 
   // Mode 1: Default
@@ -442,8 +529,18 @@ public void keyPressed(){
   } else if (key != 'r') {
     int len = mode_names.length + algorithm_names.length;
     mode = (mode + 1) % len; 
+ 
   }
   
+  if (mode >= mode_names.length){
+      Algorithm a = algorithms.get(mode - mode_names.length);
+      info.text = (a.works_directed && a.works_undirected) ? (algorithm_names[mode - mode_names.length] + " works for both undirected/directed graphs")
+      : (algorithm_names[mode - mode_names.length] + " may produce unexpected results for the mode: " + (!a.works_directed ? "Directed" : "Undirected")); 
+  } else {
+    if (messages.isEmpty()) info.text = ""; 
+  }
+
+ 
   if (key == 'r'){
     if (mode >= mode_names.length){
       algorithms.get(mode - mode_names.length).reset(); 

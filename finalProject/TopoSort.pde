@@ -18,6 +18,8 @@ public class TopoSort extends Algorithm {
      
      order = new ArrayDeque<Node>(); stack = new ArrayDeque<Node>();
      cycle = new ArrayDeque<Node>(); 
+     
+     works_undirected = false; 
    }
    
    // ----------
@@ -52,7 +54,7 @@ public class TopoSort extends Algorithm {
        if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Processing / 2: Already visited
-       if (next.state == 1){
+       if (next.state == 1 && prev != -1){
          if (done) return; 
          while (!stack.isEmpty() && stack.getFirst() != next)
            cycle.addFirst(stack.removeFirst());
@@ -104,6 +106,7 @@ public class TopoSort extends Algorithm {
        if (done) break;
        node.state = 1;
        addState(node, 0, node.state);
+       addMessage("Start DFS from node " + node.id); 
        dfs(node.id, -1); 
     }
      

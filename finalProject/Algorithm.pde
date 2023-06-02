@@ -30,6 +30,8 @@ class Algorithm {
   int delay = 0, start = 0; 
   boolean waiting = false; 
   
+  boolean works_directed = true, works_undirected = true; 
+  
   // Pause execution for this many milliseconds
   // Necessary condition: Synchronize this with the draw() function
   // to allow for "multithread execution"

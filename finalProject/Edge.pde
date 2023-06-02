@@ -14,6 +14,7 @@ class Edge {
   float SQRT_3 = sqrt(3); 
   boolean processing; 
   boolean weighted; 
+  boolean hide = false; 
   
   // Constructor 
   public Edge(Node a, Node b){
@@ -40,6 +41,7 @@ class Edge {
   
   // Display methods
   public void display(){
+    if (undirected && hide) return;
     fill(255, 255, 255);
     float dx = b.position.x - a.position.x, dy = b.position.y - a.position.y; 
     float mag = sqrt(sq(dx) + sq(dy)); 
@@ -49,6 +51,7 @@ class Edge {
     line(a.position.x + dx * a.size / 2, a.position.y + dy * a.size / 2,
          b.position.x - dx * b.size / 2, b.position.y - dy * b.size / 2); 
     
+    
     if (!undirected){
       PVector line = (new PVector(b.position.x - a.position.x, b.position.y - a.position.y)).normalize(); 
       PVector normal = line.copy().rotate(PI/2); 
@@ -56,6 +59,7 @@ class Edge {
       PVector p1 = new PVector(b.position.x - dx * (b.size / 2 + BUFFER), b.position.y - dy * (b.size / 2 + BUFFER));
       PVector p2 = PVector.add(p1, PVector.add(PVector.mult(line, -ARROW_SIZE * SQRT_3 / 2), PVector.mult(normal, -ARROW_SIZE * 1/2)));
       PVector p3 = PVector.add(p1, PVector.add(PVector.mult(line, -ARROW_SIZE * SQRT_3 / 2), PVector.mult(normal, +ARROW_SIZE * 1/2)));
+      // fill(EDGE_COLOR); 
       triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y); 
     }
     

@@ -50,7 +50,7 @@ public class CycleDetection extends Algorithm {
        if (j == prev && graph.undirected) continue; 
        
        // State: 0: Not visited / 1: Visited 
-       if (next.state == 1){
+       if (next.state == 1 && prev != -1){
          if (done) return; // Guard clause in case unexpected behavior occurs
          
          while (!stack.isEmpty() && stack.getFirst() != next)
@@ -72,14 +72,17 @@ public class CycleDetection extends Algorithm {
          next.state = 1; 
          
          // Visual Transitions
-         addState(next, 0, 1); 
          addMessage("Travel from node " + i + " -> node " + j); 
+         addState(next, 0, 1); 
+ 
+         println("Travel from node " + i + " -> node " + j); 
          // ---------
          dfs(j, i); 
        }
      }
      // Another guard clause
      if (done) return;
+     curr.state = 2; // This is necessary 
      // node.state = 2;
      
      // Remove the node from stack 
@@ -97,6 +100,7 @@ public class CycleDetection extends Algorithm {
        if (done) break;
        node.state = 1;
        addState(node, 0, node.state);
+       addMessage("Start DFS from node " + node.id); 
        dfs(node.id, -1); 
     }
      
