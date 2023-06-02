@@ -197,6 +197,42 @@ Main branch: Merge #4:
 - Merged to main branch: At this point, I support graph visualization and text output for 4 algorithms: Bipartite coloring,
 Cycle detection, Topological sort, and Spanning Tree
 
+Homework:
+- Wrote a textbox that allows uers to change edge types (from directed/undirected and vice versa), but ran into some issues
+  - For one, it was pretty buggy to turn directed edges into undirected edges
+  - I was trying to debug it, but I figured it would be better if I just reset the entire graph to make things convenient 
+  
+## Day 11, Thursday, June 1st
+Classwork: N/A (it's Regents)
+
+Homework:
+- Fixed textbox so that it lets user change edge types without any issues 
+  - The graph is reset when this occurs, to avoid technical issues
+  - 
+- Also added two additional textboxes:
+ - One textbox allows you to reset the graph without changing edge modes
+ - Another textbox allows you to delete all the edges in the graph
+
+- Fixed an issue with cycle detection in directed graphs
+  - It turns out I need to mark nodes are "done" after it is done processing; otherwise, extraneous "cycles" might be detected.
+ 
+ Main Branch: Merge #5:
+- At this point, I've added text boxes so the user can:
+   - Know what's going on in the algorithm
+   - Change type of edges (directed or undirected)
+   - Reset graph or remove all edges from graph
+   - And a textbox is there to tell reader about keyboard short cuts
+
+- I've also finished my graph visualizations for the 4 algorithms that
+I've described previously.
+
+- So I think I'm pretty much done with all the essential things
+that I need to include in my graph visualizer. I'll be focusing on more
+of "miscellaneous" things if I have the time to do so, in terms of adding
+more to my graph visualizer project.
+
+
+
 
 
 
