@@ -1,5 +1,6 @@
 # APCS Final Project
-THIS DOCUMENT IS REQUIRED
+Group name: Depth-first visualizer
+
 ## Group Info
 Period 10 APCS
 Group members: Stanley Tung (I am working by myself)
