@@ -231,6 +231,10 @@ that I need to include in my graph visualizer. I'll be focusing on more
 of "miscellaneous" things if I have the time to do so, in terms of adding
 more to my graph visualizer project.
 
+Additional note: I think with Merge #5, that's going to be my demo for this project.
+I might add more stuff later, but I think what I have so far includes all the things that
+I need to include in my project.
+
 
 
 
