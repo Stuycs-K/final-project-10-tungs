@@ -106,6 +106,7 @@ public class TopoSort extends Algorithm {
        if (done) break;
        node.state = 1;
        addState(node, 0, node.state);
+       addMessage("Start DFS from node " + node.id); 
        dfs(node.id, -1); 
     }
      

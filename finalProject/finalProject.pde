@@ -130,7 +130,7 @@ void setup(){
   info_label.text = "Output of graph algorithm"; 
   
   note = new TextBox(100 + 10 + 40, 100 + 20 + 130 + 200, 250, 200); 
-  note.text = "Press any key: Change mode \n 1: Go to utility modes \n 2: Go to algorithm modes \n Press 'r' to reset graph visuals"; 
+  note.text = "Press any key: Change mode, Click mouse: activate mode \n \n 1: Go to utility modes \n 2: Go to algorithm modes \n Press 'r' to reset graph visuals"; 
   
   note_label = new TextBox(100 + 10 + 40, 100 + 20 + 210, 250, 200);
   note_label.transparent = true; 
@@ -351,6 +351,7 @@ public void mousePressed(){
   if (undirectedOption.inPosition(mouseX, mouseY)){
     bidirectional = !bidirectional;
     graph.undirected = !graph.undirected; 
+    assert(bidirectional == graph.undirected); 
     //for (Edge e : edges) e.undirected = graph.undirected; 
     
     resetGraph();
