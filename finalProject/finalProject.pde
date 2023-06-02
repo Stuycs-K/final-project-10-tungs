@@ -139,7 +139,7 @@ void setup(){
   undirectedOption = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100, 200, 90);
   undirectedOption.text = "Current edge type: " + ( (bidirectional) ? "Undirected" : "Directed"); 
   
-  undirectedOption_label = new TextBox(width - (100 + 10 + 40), 100 + 5 + 30, 200, 90); 
+  undirectedOption_label = new TextBox(width - (100 + 10 + 40), 100 + 5 + 20, 200, 90); 
   undirectedOption_label.text = "Click to change edge type (Resets entire graph)"; 
   undirectedOption_label.transparent = true; 
   
@@ -231,7 +231,7 @@ void draw(){
     // Update text messages
       if (!messages.isEmpty()){
         info.text = messages.removeFirst();
-        println("Current processing: " + transitions.size() +  " " + info.text); 
+        // println("Current processing: " + transitions.size() +  " " + info.text); 
       }
       
         
