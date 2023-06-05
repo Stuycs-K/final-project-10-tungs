@@ -84,7 +84,7 @@ ArrayList<TextBox> text;
 // And call compressText() AFTER the textboxes are initialized!
 void setup(){
   //size(1000, 500); Call this size (or some other size) if 2000 x 1000 doesn't fit
-  //size(2000, 1000); 
+  size(2000, 1000); 
   
   graph = new Graph(bidirectional, weighted); 
   nodes = graph.nodes;
@@ -381,7 +381,8 @@ public void mousePressed(){
   } else if (randomColors.inPosition(mouseX, mouseY)){
     for (Algorithm a : algorithms)
       a.randomizeColors(); 
-      return; 
+    
+    return; 
   }
   
   // If you can click on the node 

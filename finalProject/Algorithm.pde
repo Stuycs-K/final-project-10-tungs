@@ -150,6 +150,7 @@ class Algorithm {
       int brightness = (int)(random(8)); 
       state_colors[i] = color(random(brightness * 255), random(brightness * 255), random(brightness * 255)); 
     }
+  
 
   }
   
