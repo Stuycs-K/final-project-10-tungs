@@ -61,6 +61,8 @@ class Algorithm {
     state_colors[2] = visitedColor; 
     
     active_colors.add(0);
+    active_colors.add(1);
+    active_colors.add(2);
     
   }
   
@@ -144,7 +146,7 @@ class Algorithm {
   
   // ----- Miscellaneous methods
   void randomizeColors(){
-    for (int i : state_colors){
+    for (int i : active_colors){
       int brightness = (int)(random(8)); 
       state_colors[i] = color(random(brightness * 255), random(brightness * 255), random(brightness * 255)); 
     }
