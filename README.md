@@ -5,6 +5,15 @@ Group name: Depth-first visualizer
 Period 10 APCS
 Group members: Stanley Tung (I am working by myself)
 
+## Some technicalities that I should address
+- In my code, I don't use private variables (variables in processing are public by default)
+, because it would be really inconvenient, as I rely on using public variables from instances in 
+my main program.
+
+- I just noticed my git merge commit messages aren't displayed on screen when they first appear.
+(i.e. they have a {...}, so you need to click on the message to see my messages, which I do for every git merge into
+the main branch.)
+
 ## Overview
 I've created a graph visualizer, where users can customize their own graph network by adding nodes and edges
 (connected between nodes) on the graph. Users have access to 5 "utility modes": move nodes around, add node,
@@ -81,7 +90,8 @@ Tips to avoid technical errors:
 ## A note on text/screen size (user options) 
 - While I was working on the project, I set the screen size to be 2000 x 1000 because I was working on a mac computer (whose screen size was approximately that). 
 I know that this size might not fit for all devices, so if it does not, then please do the following:
-- Go to the processing file finalProject.pde, and call compressText() in the setup() after text boxes have been initialized and added to the arraylist.
+- Go to the processing file finalProject.pde, and change size(sizeX, sizeY) as you need to. 
+- Then, call compressText() in the setup() after text boxes have been initialized and added to the arraylist.
 - You can change the scaling constants in compressText() if not every text box shows up. These text boxes are:
   - Info on what's happening in current algorithm
   - Some keyboard shortcuts
