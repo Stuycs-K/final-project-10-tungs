@@ -241,6 +241,10 @@ I need to include in my project.
 - However, I did notice one issue with my code as I was running my demo code.
    - I need to call deleteNodes() to remove nodes from arraylist, in my method for resetting the graph.
 - Hopefully I'll have some time to work on the project next week, but I'll see.   
+
+- An update, since I did some work on Sunday:
+ - Added textbox option for users to randomize state colors of nodes
+ - Added method in main program to let users scale size of textboxes if they want to change size of the screen
    
 
 
