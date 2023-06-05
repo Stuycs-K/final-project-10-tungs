@@ -69,7 +69,12 @@ TextBox undirectedOption_label;
 TextBox removeEdges;
 TextBox removeGraph;
 
+TextBox title;
+
+TextBox randomColors;
+TextBox randomColors_label; 
 ArrayList<TextBox> text;
+
 
 // Setup
 
@@ -149,6 +154,12 @@ void setup(){
   removeGraph = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100 + 120 + 120, 200, 90);
   removeGraph.text = "Click to reset the graph"; 
   
+  title = new TextBox(width/2, 100, width/2, 100);
+  title.text = "Graph Visualizer -- See your favorite algorithms firsthand!"; 
+  title.transparent = true;
+  
+  randomColors = new TextBox(100 + 10 + 40, 100 + 20 + 210 + 200 + 100, 250, 100);
+  randomColors.text = "Click to randomize colors of node states of all algorithms";
   
   text.add(info); 
   text.add(info_label); 
@@ -158,6 +169,8 @@ void setup(){
   text.add(undirectedOption_label); 
   text.add(removeEdges); 
   text.add(removeGraph); 
+  text.add(title); 
+  text.add(randomColors);
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
