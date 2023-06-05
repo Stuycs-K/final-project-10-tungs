@@ -78,7 +78,19 @@ Tips to avoid technical errors:
 
 - As mentioned in my note above, try not to use algorithms if they are not compatible with a certain edge type, and you are currently in that edge type. 
 
+## A note on text/screen size (user options) 
+- While I was working on the project, I set the screen size to be 2000 x 1000 because I was working on a mac computer (whose screen size was approximately that). 
+I know that this size might not fit for all devices, so if it does not, then please do the following:
+- Go to the processing file finalProject.pde, and call compressText() in the setup() after text boxes have been initialized and added to the arraylist.
+- You can change the scaling constants in compressText() if not every text box shows up. These text boxes are:
+  - Info on what's happening in current algorithm
+  - Some keyboard shortcuts
+  - Option to randomize node colors in graph and algorithms
+  - Reset graph, remove all edges
+  - Change directionality of the graph
 
+- Moreover, if you want to change anything like default color of nodes, text size, etc., you can edit the variables in the main program. 
+ 
 ## How the Algorithms work
 For people that are confused about how a certain algorithm works, here is some information:
 1. Bipartite coloring (undirected)

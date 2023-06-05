@@ -236,6 +236,19 @@ I might add more stuff later, but I think what I have so far includes all the th
 I need to include in my project.
 
 
+## Days 12-14: From Friday, June 2nd to Sunday, June 4th
+- I didn't have any time to work on the project on these days. (I have a bunch of tests coming up!!!)
+- However, I did notice one issue with my code as I was running my demo code.
+   - I need to call deleteNodes() to remove nodes from arraylist, in my method for resetting the graph.
+- Hopefully I'll have some time to work on the project next week, but I'll see.   
+
+- An update, since I did some work on Sunday:
+ - Added textbox option for users to randomize state colors of nodes
+ - Added method in main program to let users scale size of textboxes if they want to change size of the screen
+   
+
+
+
 
 
 

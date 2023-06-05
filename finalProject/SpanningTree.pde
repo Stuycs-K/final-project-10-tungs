@@ -186,4 +186,12 @@ class SpanningTree extends Algorithm {
     num_nodes = 0; 
   }
   // ---------
+  
+  void randomizeColors(){
+    super.randomizeColors();
+    for (Node node : nodes){
+      component_colors[node.id] = color(random(255), random(255), random(255)); 
+    }
+  }
+  
 }

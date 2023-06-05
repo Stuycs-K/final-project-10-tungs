@@ -14,7 +14,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = false; 
+boolean bidirectional = true; 
 boolean weighted = false;
 
 // Essential variables
@@ -69,33 +69,22 @@ TextBox undirectedOption_label;
 TextBox removeEdges;
 TextBox removeGraph;
 
+TextBox title;
+
+TextBox randomColors;
+TextBox randomColors_label; 
 ArrayList<TextBox> text;
 
+
 // Setup
-
-/*
-Current plan (stage 1):
-- First test how edges and nodes work
-- I'll be using arraylists for both as well
-- When I make the graph class, edge and node addition/deletion
-will be done implicitly by calling graph methods, as opposed to directly
-editing an arraylist in the main program
-
-Current things done:
-- Wrote display function for nodes and edges
-- Wrote all modes (see github commits for info)
-- Wrote graph class
-
-Current plan (stage 1.5):
-- Test graph class and make sure that it works as intended
-*/
-
-// Everything below here:
-// I am rewriting the stuff that I commented out (involving user input to customize graph), but using
-// the methods that I moved to my Graph class.
+// IMPORTANT NOTE:
+// Call compressText() if the text does not fit your screen!
+// And feel free to change the constants in compressText() for this reason. 
+// (I've set the constants to fit better for 1000 x 500 screens, initially)
+// And call compressText() AFTER the textboxes are initialized!
 void setup(){
-  // size(1000, 500);
-  size(2000, 1000);
+  //size(1000, 500); Call this size (or some other size) if 2000 x 1000 doesn't fit
+  size(2000, 1000); 
   
   graph = new Graph(bidirectional, weighted); 
   nodes = graph.nodes;
@@ -149,6 +138,12 @@ void setup(){
   removeGraph = new TextBox(width - (100 + 10 + 40), 100 + 20 + 100 + 120 + 120, 200, 90);
   removeGraph.text = "Click to reset the graph"; 
   
+  title = new TextBox(width/2, 100, width/2, 100);
+  title.text = "Graph Visualizer -- See your favorite algorithms firsthand!"; 
+  title.transparent = true;
+  
+  randomColors = new TextBox(100 + 10 + 40, 100 + 20 + 210 + 200 + 100, 250, 100);
+  randomColors.text = "Click to randomize colors of node states of all algorithms";
   
   text.add(info); 
   text.add(info_label); 
@@ -158,6 +153,11 @@ void setup(){
   text.add(undirectedOption_label); 
   text.add(removeEdges); 
   text.add(removeGraph); 
+  text.add(title); 
+  text.add(randomColors);
+  
+  // call compressText() if necessary here
+  //compressText(); 
   
   strokeWeight(border_thickness);
   ellipseMode(CENTER);
@@ -331,13 +331,18 @@ void resetTransitions(){
 void resetGraph(){
   resetTransitions();
   
+  // Call delete nodes
+  for (int i = nodes.size() - 1; i >= 0; i--){
+    Node node = nodes.get(i);
+    graph.deleteNode(node); 
+  }
+  
   nodes.clear(); 
   edges.clear();
   
   // Clear adjacency list 
   for (ArrayList<Edge> Edges : graph.adj)
     Edges.clear();
-  
 }
 
 // Utility functions: Updated to be compatible with graph class
@@ -372,6 +377,11 @@ public void mousePressed(){
     return; 
   } else if (removeGraph.inPosition(mouseX, mouseY)){
     resetGraph(); 
+    return; 
+  } else if (randomColors.inPosition(mouseX, mouseY)){
+    for (Algorithm a : algorithms)
+      a.randomizeColors(); 
+    
     return; 
   }
   
@@ -553,4 +563,29 @@ public void keyPressed(){
   }
   
   
+}
+
+
+public void compressText(){
+  // Feel free to change the scale factors,
+  // depending on the size of your screen. 
+  // e.g. you can define a variable such as
+  // scale_Y or scale_X, etc.
+  // The constants below work better for a 1000 x 500 screen size.
+  
+  for (TextBox t : text){
+    if (t != info){
+      t.sizeX /= 2; 
+    } else {
+      t.sizeX = t.sizeX * 3/4; 
+    }
+    t.sizeY /= 2; 
+    
+    t.y = t.y * 3/4; 
+  }
+  textSize = textSize * 3/4; 
+  for (Node node : nodes)
+    node.size = node.size * 3/4;
+    
+  initialSize = initialSize * 3/4; 
 }
