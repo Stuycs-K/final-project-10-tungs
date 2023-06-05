@@ -14,7 +14,7 @@ int initialSize = 50;
 // --------------------
 
 // Mode/Algorithm variables
-boolean bidirectional = false; 
+boolean bidirectional = true; 
 boolean weighted = false;
 
 // Essential variables
@@ -331,13 +331,18 @@ void resetTransitions(){
 void resetGraph(){
   resetTransitions();
   
+  // Call delete nodes
+  for (int i = nodes.size() - 1; i >= 0; i--){
+    Node node = nodes.get(i);
+    graph.deleteNode(node); 
+  }
+  
   nodes.clear(); 
   edges.clear();
   
   // Clear adjacency list 
   for (ArrayList<Edge> Edges : graph.adj)
     Edges.clear();
-  
 }
 
 // Utility functions: Updated to be compatible with graph class
