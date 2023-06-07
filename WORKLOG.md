@@ -246,8 +246,20 @@ I need to include in my project.
  - Added textbox option for users to randomize state colors of nodes
  - Added method in main program to let users scale size of textboxes if they want to change size of the screen
    
+## Day 15: Tuesday, June 5th
+Classwork: N/A (Class presentations)
 
-
+Homework: 
+- Started working on Convex Hull class
+  - Wrote demo code (in a different coding language) as a reference for my convex hull code
+  - Wrote utility methods (cross product, length of vector)
+  - Wrote constructor and some algorithm variables (e.g. arraylist for convex hull)  
+  - Finished writing sortPoints(), which sorts points in counterclockwise order
+   - (My convex hull algorithm, if I have enough time, is going to use a stack to find the convex hull.)
+  
+## Day 16: Wednesday, June 6th
+- I didn't have any time to work on the project, as I needed to study for other assessments. 
+- I'll likely implement convex hull (if I have time) on Thursday, when there's a day off from school. 
 
 
 
