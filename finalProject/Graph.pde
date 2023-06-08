@@ -1,6 +1,6 @@
 
 class Graph {
-  int MAX_NODES = 100; 
+  int MAX_NODES = 1000; 
   int N = 0; 
   
   ArrayList<ArrayList<Edge>> adj; 
