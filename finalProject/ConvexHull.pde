@@ -88,6 +88,7 @@ class ConvexHull extends Algorithm {
   public ConvexHull(Graph graph){
     super(graph);
     hull = new ArrayList<Node>();
+    edgeList = new ArrayList<Edge>(); 
   }
   // ------------
   
@@ -164,6 +165,7 @@ class ConvexHull extends Algorithm {
     batchProcessing = false; 
     for (Edge e: edges)
       addTransition(e, e.DEFAULT, defaultColor);
+    addMessage("Sorting points in counterclockwise order"); 
     addBatch();
     batchProcessing = true;
       
@@ -171,6 +173,7 @@ class ConvexHull extends Algorithm {
     Node origin = hull.get(0);
     PVector hinge = origin.position;
     addTransition(origin, origin.DEFAULT, activeColor); 
+    addMessage("Start from node " + origin.id); 
     
     batchProcessing = false;
     for (int i = 1; i < nodes.size(); i++){
@@ -182,10 +185,13 @@ class ConvexHull extends Algorithm {
         if (edgeList.size() > 0){
           Edge e = edgeList.get(edgeList.size() - 1);
           addTransition(e, edgeColor, defaultColor); 
+          
+          edgeList.remove(edgeList.size() - 1); 
         }
          
         hull.remove(hull.size() - 1); 
-        edgeList.remove(edgeList.size() - 1); 
+        addMessage("Removed node " + node.id + " from convex hull"); 
+        addBatch(); 
       }
       
       // Push the point into convex hull
@@ -199,6 +205,8 @@ class ConvexHull extends Algorithm {
       hull.add(node);
       edgeList.add(e); 
       addBatch(); 
+      
+      addMessage("Added node " + node.id + " to the convex hull"); 
     }
     batchProcessing = true; 
     
@@ -208,8 +216,7 @@ class ConvexHull extends Algorithm {
        addTransition(e, defaultColor, edgeColor); 
        edgeList.add(e); 
     }
-   
-    
+    resultText = "Generated convex hull for graph"; 
   }
   
   // ----------

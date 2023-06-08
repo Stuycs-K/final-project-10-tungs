@@ -326,6 +326,8 @@ void resetTransitions(){
   info.text = ""; 
   resultText = ""; 
   
+  convexHull.edgeList.clear(); 
+  
   // Hopefully these work as intended
   started = false;
   paused = false; 
