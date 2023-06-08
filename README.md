@@ -4,8 +4,8 @@ Group name: Depth-first visualizer
 ## Group Info
 Period 10 APCS
 Group members: Stanley Tung (I am working by myself)
-See my updated project planner here: https://docs.google.com/document/d/1eLPfnbbbFlSupLofqKisawQsjjbZgH_5ptykyuCg0Jw/edit
-Here's my original planner: https://docs.google.com/document/d/1fiUxm2_And5JgNx6-8jnjluo5q7tKGMZjtssJb-djuQ/edit
+- See my updated project planner here: https://docs.google.com/document/d/1eLPfnbbbFlSupLofqKisawQsjjbZgH_5ptykyuCg0Jw/edit
+- Here's my original planner: https://docs.google.com/document/d/1fiUxm2_And5JgNx6-8jnjluo5q7tKGMZjtssJb-djuQ/edit
 
 ## Some technicalities that I should address
 - In my code, I don't use private variables (variables in processing are public by default)
