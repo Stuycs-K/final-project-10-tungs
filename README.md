@@ -25,11 +25,12 @@ To add an edge, users select two nodes (highlighted) with the mouse,
 and they can deselect a node if they want to by reclicking on the node. 
 
 After they customize their graph, they can select a certain algorithm to simulate. My graph visualizer currently
-supports four algorithms. These are the "algorithm modes" the user has access to:
+supports five algorithms. These are the "algorithm modes" the user has access to:
 - Bipartite coloring (undirected graphs)
 - Cycle detection (undirected/directed graphs)
 - Topological sort (directed graphs)
 - Spanning tree (directed graphs)
+- Convex hull (undirected/directed graphs)
 - See the instructions for details about the specifics of how these algorithms work.
 
 When the user is currently in an algorithm mode and they click their mouse, the graph simulation 
