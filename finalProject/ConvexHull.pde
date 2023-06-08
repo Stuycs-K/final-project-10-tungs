@@ -3,6 +3,7 @@ import java.util.Collections;
 // but if I have enough time this week, I'll try to implement this algorithm.
 
 /* Demo code I wrote 
+Credit to USACO.guide for describing the Convex hull algorithm to me
 // This is reference for the java algorithm 
 vector<Point> points;
 
@@ -146,6 +147,7 @@ class ConvexHull extends Algorithm {
   }
   
   void generateHull(){
+    if (nodes.size() == 0) return; 
     // Sort points
     sortPoints();
     
