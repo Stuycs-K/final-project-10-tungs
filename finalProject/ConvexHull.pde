@@ -160,6 +160,7 @@ class ConvexHull extends Algorithm {
     batchProcessing = true;
     */
     
+    
     batchProcessing = false; 
     for (Edge e: edges)
       addTransition(e, e.DEFAULT, defaultColor);
@@ -177,14 +178,38 @@ class ConvexHull extends Algorithm {
         // Remove point from convex hull if it forms concave polygon 
         Node node = hull.get(hull.size() - 1);
         addTransition(node, activeColor, node.DEFAULT); 
+        
+        if (edgeList.size() > 0){
+          Edge e = edgeList.get(edgeList.size() - 1);
+          addTransition(e, edgeColor, defaultColor); 
+        }
+         
         hull.remove(hull.size() - 1); 
+        edgeList.remove(edgeList.size() - 1); 
       }
       
       // Push the point into convex hull
       Node node = nodes.get(i); 
-      hull.add(node); 
       addTransition(node, node.DEFAULT, activeColor); 
+      
+      Edge e = new Edge(hull.get(hull.size() - 1), node);
+      e.c = defaultColor; 
+      addTransition(e, defaultColor, edgeColor);
+      
+      hull.add(node);
+      edgeList.add(e); 
+      addBatch(); 
     }
+    batchProcessing = true; 
+    
+    if (hull.size() > 1){
+       Edge e = new Edge(hull.get(hull.size() - 1), hull.get(0)); 
+       e.c = defaultColor;
+       addTransition(e, defaultColor, edgeColor); 
+       edgeList.add(e); 
+    }
+   
+    
   }
   
   // ----------
