@@ -31,7 +31,7 @@ int movable = 0, addNode = 1, deleteNode = 2, addEdge = 3, deleteEdge = 4, reset
 
 // String variables
 String[] mode_names = {"Move edge/node (Default)", "Add node", "Delete node", "Add edge", "Delete edge"};
-String[] algorithm_names = {"Bipartite coloring", "Cycle detection", "Topological sort", "Spanning tree"};
+String[] algorithm_names = {"Bipartite coloring", "Cycle detection", "Topological sort", "Spanning tree", "Convex hull"};
 // State variables
 Node current, selected; // current/selected nodes 
 ArrayList<Node> edge_pair; // pair of nodes to add an edge between 
@@ -49,6 +49,7 @@ Bipartite bipartite;
 CycleDetection cycle;
 TopoSort topoSort;
 SpanningTree minTree; 
+ConvexHull convexHull;
 
 ArrayList<Algorithm> algorithms;
 Algorithm center;
@@ -99,12 +100,14 @@ void setup(){
   cycle = new CycleDetection(graph);
   topoSort = new TopoSort(graph); 
   minTree = new SpanningTree(graph);
+  convexHull = new ConvexHull(graph); 
   
   algorithms = new ArrayList<Algorithm>();
   algorithms.add(bipartite);
   algorithms.add(cycle);
   algorithms.add(topoSort);
   algorithms.add(minTree); 
+  algorithms.add(convexHull); 
   
   center = new Algorithm(graph); 
   
@@ -205,6 +208,9 @@ void draw(){
   
   // Display edges
   for (Edge e : edges) e.display();
+  
+  // Display convex hull edges
+  for (Edge e : convexHull.edgeList) e.display(); 
   
    // Display text
   fill(0); 
@@ -319,6 +325,8 @@ void resetTransitions(){
   messages.clear(); 
   info.text = ""; 
   resultText = ""; 
+  
+  convexHull.edgeList.clear(); 
   
   // Hopefully these work as intended
   started = false;

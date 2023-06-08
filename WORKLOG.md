@@ -245,11 +245,47 @@ I need to include in my project.
 - An update, since I did some work on Sunday:
  - Added textbox option for users to randomize state colors of nodes
  - Added method in main program to let users scale size of textboxes if they want to change size of the screen
-   
 
 
+## Day 15: Monday, June 5th
+Classwork: N/A (Class presentations)
 
+Homework: 
+- Started working on Convex Hull class
+  - Wrote demo code (in a different coding language) as a reference for my convex hull code
+  - Wrote utility methods (cross product, length of vector)
+  - Wrote constructor and some algorithm variables (e.g. arraylist for convex hull)  
+  - Finished writing sortPoints(), which sorts points in counterclockwise order
+   - (My convex hull algorithm, if I have enough time, is going to use a stack to find the convex hull.)
+  
+## Day 16: Tuesday, June 6th
+- I didn't have any time to work on the project, as I needed to study for other assessments. 
+- I'll likely implement convex hull (if I have time) on Thursday, when there's a day off from school. 
 
+## Day 17: Wednesday, June 7th
+- I will start off by noting that Days 15-16 are should actually be days 16-17, since I I started "Day 15"'s work
+after 12:00 AM, but I decided to call Day 15 "Monday" anyways. 
 
+Classwork: N/A (Class presentations)
 
+Homework:
+- Finished writing code for Convex Hull class
+  - Wrote begin(), reset() for Convex Hull
+   - Tested if methods (sortPoints() and generateHull()) worked with visual transitions
+  - Added code to visualize points and edges in convex hull
+  - Added text message support for Convex HUll algorithm
+
+## Day 18: Thursday, June 8th
+Classwork: N/A (no school today)
+
+Homework:
+- Modified convex hull algorithm to return if there's no nodes in the graph
+ -  Credit to USACO.guide for teaching me the idea of Convex Hull
+- Modified README to explain how convex hull algorithm works
+
+Merge #6:
+- At this point, I've implemented five algorithms to be visualized, and I have text boxes where users
+can customize the graph (e.g. randomize colors of node colors, reset graph, change directionality of graph),
+so I think I am about done with the project. I will be merging my demo branch into the main branch (possibly
+more than once if I find some bugs in my code).
 
