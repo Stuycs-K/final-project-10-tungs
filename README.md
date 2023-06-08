@@ -14,6 +14,8 @@ my main program.
 (i.e. they have a {...}, so you need to click on the message to see my messages, which I do for every git merge into
 the main branch.)
 
+- The maximum number of nodes in the graph is 1000, but you can change that variable. 
+
 ## Overview
 I've created a graph visualizer, where users can customize their own graph network by adding nodes and edges
 (connected between nodes) on the graph. Users have access to 5 "utility modes": move nodes around, add node,
