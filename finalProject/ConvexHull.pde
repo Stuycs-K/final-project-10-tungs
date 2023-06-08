@@ -75,11 +75,13 @@ class ConvexHull extends Algorithm {
   
   // State variables specific to algorithm
    ArrayList<Node> hull;
+   ArrayList<Edge> edgeList; 
    // Point list is just nodes 
    
   // Graph visualizer variables
   color activeColor = color(255, 255, 0);
-  
+  color edgeColor = color(0, 255, 0); 
+  color defaultColor = color(255, 255, 255); 
   // --------------------
   
   // Constructor
@@ -147,20 +149,41 @@ class ConvexHull extends Algorithm {
     sortPoints();
     
     // Test to see if points are in counterclockwise order
+    /*
     for (Node node : nodes)
       addTransition(node, node.DEFAULT, activeColor);
     
+    batchProcessing = false;
+    for (Node node : nodes)
+      addTransition(node, activeColor, node.DEFAULT);
+    addBatch();
+    batchProcessing = true;
+    */
+    
+    batchProcessing = false; 
+    for (Edge e: edges)
+      addTransition(e, e.DEFAULT, defaultColor);
+    addBatch();
+    batchProcessing = true;
+      
     // Generate convex hull 
     Node origin = hull.get(0);
     PVector hinge = origin.position;
+    addTransition(origin, origin.DEFAULT, activeColor); 
     
+    batchProcessing = false;
     for (int i = 1; i < nodes.size(); i++){
       while (hull.size() > 1 && cross(hull.get(hull.size() - 2), hull.get(hull.size() - 1), nodes.get(i)) < 0){
         // Remove point from convex hull if it forms concave polygon 
+        Node node = hull.get(hull.size() - 1);
+        addTransition(node, activeColor, node.DEFAULT); 
         hull.remove(hull.size() - 1); 
       }
+      
       // Push the point into convex hull
-      hull.add(nodes.get(i)); 
+      Node node = nodes.get(i); 
+      hull.add(node); 
+      addTransition(node, node.DEFAULT, activeColor); 
     }
   }
   
@@ -175,6 +198,7 @@ class ConvexHull extends Algorithm {
   void reset(){
     super.reset();
     hull.clear();
+    edgeList.clear(); 
   }
   
   // ------------
@@ -182,5 +206,6 @@ class ConvexHull extends Algorithm {
   void randomizeColors(){
     super.randomizeColors();
     activeColor = color(random(255), random(255), random(255)); 
+    edgeColor = color(random(255), random(255), random(255)); 
   }
 }

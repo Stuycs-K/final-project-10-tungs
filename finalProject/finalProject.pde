@@ -209,6 +209,9 @@ void draw(){
   // Display edges
   for (Edge e : edges) e.display();
   
+  // Display convex hull edges
+  for (Edge e : convexHull.edgeList) e.display(); 
+  
    // Display text
   fill(0); 
   textSize(textSize); 
