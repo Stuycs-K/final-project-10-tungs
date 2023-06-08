@@ -138,11 +138,17 @@ class ConvexHull extends Algorithm {
         return 1;
       }
     });
+    
+    
   }
   
   void generateHull(){
     // Sort points
     sortPoints();
+    
+    // Test to see if points are in counterclockwise order
+    for (Node node : nodes)
+      addTransition(node, node.DEFAULT, activeColor);
     
     // Generate convex hull 
     Node origin = hull.get(0);
@@ -158,10 +164,20 @@ class ConvexHull extends Algorithm {
     }
   }
   
+  // ----------
+  
+  // Utility functions
+  
+  void begin(){
+    generateHull();
+  }
+  
   void reset(){
     super.reset();
     hull.clear();
   }
+  
+  // ------------
   
   void randomizeColors(){
     super.randomizeColors();
