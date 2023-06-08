@@ -158,5 +158,13 @@ class ConvexHull extends Algorithm {
     }
   }
   
+  void reset(){
+    super.reset();
+    hull.clear();
+  }
   
+  void randomizeColors(){
+    super.randomizeColors();
+    activeColor = color(random(255), random(255), random(255)); 
+  }
 }
