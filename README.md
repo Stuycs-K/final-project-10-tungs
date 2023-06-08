@@ -99,7 +99,7 @@ I know that this size might not fit for all devices, so if it does not, then ple
   - Reset graph, remove all edges
   - Change directionality of the graph
 
-- Moreover, if you want to change anything like default color of nodes, text size, etc., you can edit the variables in the main program. 
+- Moreover, if you want to change anything like default color of nodes, the size of nodes, text size, etc., you can edit the variables in the main program. 
  
 ## How the Algorithms work
 For people that are confused about how a certain algorithm works, here is some information:
@@ -131,3 +131,10 @@ For people that are confused about how a certain algorithm works, here is some i
  is formed. 
  
  - Technically a "Spanning forest", since the graph could consist of disjoint components of nodes 
+
+5. Convex Hull
+- A convex hull, of a set of points, is a subset such that the convex polygons formed by the points of the subset contain the entire set of points in its interior.
+To calculate a convex hull, there's an algorithm known as the "Graham Scan." You first pick a pivot point, and then sort the points counterclockwise relative
+to the pivot. Afterwards, we build the convex hull with a stack. If the current point, when connected to the previous points, turns the polygon concave, then
+we remove points from the convex hull until the polygon is convex again, and then add the current point. If we repeat the entire process, then eventually
+we get the convex hull of the set of points.
