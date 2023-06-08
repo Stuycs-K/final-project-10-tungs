@@ -63,6 +63,10 @@ class ConvexHull extends Algorithm {
      return cross(PVector.sub(b, a), PVector.sub(c, a)); 
    }
    
+   float cross(Node a, Node b, Node c){
+     return cross(a.position, b.position, c.position); 
+   }
+   
    float dist(PVector p){
      return sq(p.x) + sq(p.y); 
    }
@@ -119,7 +123,7 @@ class ConvexHull extends Algorithm {
     Node hinge = nodes.get(0);
     hull.add(hinge);
     
-    Collections.sort(nodes, new Comparator<Node>()){
+    Collections.sort(nodes, new Comparator<Node>(){
       public int compare(Node A, Node B){
         PVector hinge = hull.get(0).position; 
         PVector a = A.position, b = B.position;
@@ -133,11 +137,25 @@ class ConvexHull extends Algorithm {
         if (dist(x) < dist(y)) return -1;
         return 1;
       }
-    }); 
+    });
   }
   
   void generateHull(){
+    // Sort points
+    sortPoints();
     
+    // Generate convex hull 
+    Node origin = hull.get(0);
+    PVector hinge = origin.position;
+    
+    for (int i = 1; i < nodes.size(); i++){
+      while (hull.size() > 1 && cross(hull.get(hull.size() - 2), hull.get(hull.size() - 1), nodes.get(i)) < 0){
+        // Remove point from convex hull if it forms concave polygon 
+        hull.remove(hull.size() - 1); 
+      }
+      // Push the point into convex hull
+      hull.add(nodes.get(i)); 
+    }
   }
   
   
