@@ -4,6 +4,8 @@ import java.util.Collections;
 
 /* Demo code I wrote 
 Credit to USACO.guide for describing the Convex hull algorithm to me
+I submitted the c++ code to cses.fi, so you may see the code there if you're checking for "plagiarism"
+FYI: My username is cses.fi is Coding Sucks
 // This is reference for the java algorithm 
 vector<Point> points;
 
