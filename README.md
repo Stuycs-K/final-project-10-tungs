@@ -19,6 +19,10 @@ the main branch.)
 
 - The maximum number of nodes in the graph is 1000, but you can change that variable. 
 
+- I had some c++ code, written by myself, in my convex hull class (as a comment) for reference while coding the java version. 
+If you see it on the internet, it's probably on CSES (an online coding judge) because I submitted that code to test my c++ convex hull code,
+before I coded the java version. (My username is Coding Sucks, for reference)
+
 ## Overview
 I've created a graph visualizer, where users can customize their own graph network by adding nodes and edges
 (connected between nodes) on the graph. Users have access to 5 "utility modes": move nodes around, add node,
