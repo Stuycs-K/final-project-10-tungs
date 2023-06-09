@@ -21,7 +21,8 @@ the main branch.)
 
 - I had some c++ code, written by myself, in my convex hull class (as a comment) for reference while coding the java version. 
 If you see it on the internet, it's probably on CSES (an online coding judge) because I submitted that code to test my c++ convex hull code,
-before I coded the java version. (My username is Coding Sucks, for reference)
+before I coded the java version. (My username is Coding Sucks, for reference). Here's a link to my code submission for the convex hull question:
+https://cses.fi/problemset/result/6185951/
 
 ## Overview
 I've created a graph visualizer, where users can customize their own graph network by adding nodes and edges
