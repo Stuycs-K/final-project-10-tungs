@@ -289,3 +289,12 @@ can customize the graph (e.g. randomize colors of node colors, reset graph, chan
 so I think I am about done with the project. I will be merging my demo branch into the main branch (possibly
 more than once if I find some bugs in my code).
 
+## Day 19: Friday, June 9th
+- Drew updated UML diagram
+- Wrote updated prototype document 
+- Made a note about how my C++ reference code (that I wrote) for convex hull in the Convex Hull class,
+might be detected as "plagiarism" (again, I wrote the code) on the internet. In particular I submitted
+the code to cses.fi to test if the reference code is correct or not. See my code submission link in the README. (Username: Coding Sucks)
+
+My project is pretty much done at this point, so I don't expect to do much work over the weekend! 
+
