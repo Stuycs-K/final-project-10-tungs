@@ -2,7 +2,9 @@ import java.util.Collections;
 import java.util.Comparator; 
 
 /*
-Credit to USACO.guide for the idea of DSU.
+Credit to USACO.guide for the idea and C++ code snippet of DSU.
+Here's the link: https://usaco.guide/gold/dsu?lang=cpp
+
 I also used this code snippet for the following CSES problemsets:
 (My username is Coding Sucks)
 https://cses.fi/problemset/result/5413923/
