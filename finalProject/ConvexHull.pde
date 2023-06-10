@@ -4,6 +4,8 @@ import java.util.Collections;
 
 /* Demo code I wrote 
 Credit to USACO.guide for describing the Convex hull algorithm to me
+Here's the link: https://usaco.guide/plat/convex-hull?lang=cpp
+
 I submitted the c++ code to cses.fi, so you may see the code there if you're checking for "plagiarism"
 FYI: My username is cses.fi is Coding Sucks
 Here's a link to my code submission for the convex hull question:
