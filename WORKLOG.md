@@ -281,6 +281,11 @@ Classwork: N/A (no school today)
 Homework:
 - Modified convex hull algorithm to return if there's no nodes in the graph
  -  Credit to USACO.guide for teaching me the idea of Convex Hull
+ -  Credit to USACO.guide for teaching me idea of DSU, which is used in Spanning Tree
+ -  NOTE: See the classes for more info concerning the fact that the code snippets that I have for these
+ respective classes are on cses.fi (online judge where you submit code to problems), as I used these
+ code snippets to submit code on cses.fi. FYI, My username is Coding Sucks.
+ 
 - Modified README to explain how convex hull algorithm works
 
 Merge #6:
