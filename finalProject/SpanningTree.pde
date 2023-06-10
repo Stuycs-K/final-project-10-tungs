@@ -2,6 +2,12 @@ import java.util.Collections;
 import java.util.Comparator; 
 
 /*
+Credit to USACO.guide for the idea of DSU.
+I also used this code snippet for the following CSES problemsets:
+(My username is Coding Sucks)
+https://cses.fi/problemset/result/5413923/
+https://cses.fi/problemset/result/6155448/
+
 struct DSU {
     vector<int> e;
     DSU(int N) {e = vector<int>(N, -1);}
@@ -21,6 +27,7 @@ struct DSU {
     
 };
 */
+
 class DSU {
   int[] e;
   public DSU(int N) {
