@@ -132,7 +132,7 @@ public class TopoSort extends Algorithm {
        addMessage("Topological sort found. Now displaying the sort order: ");
        
        while (order.size() > 0){
-         Node node = order.removeFirst(); 
+         Node node = order.removeLast(); 
          addTransition(node, state_colors[node.state], sortColor);
          
          addMessage("Current node in topological sort: Node: " + node.id); 
