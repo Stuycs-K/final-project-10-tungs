@@ -24,6 +24,8 @@ If you see it on the internet, it's probably on CSES (an online coding judge) be
 before I coded the java version. (My username is Coding Sucks, for reference). Here's a link to my code submission for the convex hull question:
 https://cses.fi/problemset/result/6185951/
 
+- In reference to above, the same note applies for my C++ code snippet on DSU in the SpanningTree class. See the SpanningTree class for more info.
+
 ## Overview
 I've created a graph visualizer, where users can customize their own graph network by adding nodes and edges
 (connected between nodes) on the graph. Users have access to 5 "utility modes": move nodes around, add node,
