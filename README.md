@@ -27,6 +27,8 @@ https://cses.fi/problemset/result/6185951/
 
 - In reference to above, the same note applies for my C++ code snippet on DSU in the SpanningTree class. See the SpanningTree class for more info.
 
+- I edited from the main branch the weekend before the project was due to make some very minor changes, like updating README and giving credit to USACO.guide for teaching me how the algorithms work. 
+
 ## Overview
 I've created a graph visualizer, where users can customize their own graph network by adding nodes and edges
 (connected between nodes) on the graph. Users have access to 5 "utility modes": move nodes around, add node,
