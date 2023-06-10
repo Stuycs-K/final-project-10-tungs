@@ -7,6 +7,7 @@ Group members: Stanley Tung (I am working by myself)
 - See my updated project planner here: https://docs.google.com/document/d/1eLPfnbbbFlSupLofqKisawQsjjbZgH_5ptykyuCg0Jw/edit
 - Here's my original planner: https://docs.google.com/document/d/1fiUxm2_And5JgNx6-8jnjluo5q7tKGMZjtssJb-djuQ/edit
 - Here's my updated UML diagram: https://drive.google.com/file/d/1cPDvwPd3R3B2CaZoJknVhbpqBjJFCdLh/view?usp=sharing
+- My devlog is in the same document as the updated project planner. 
 
 ## Some technicalities that I should address
 - In my code, I don't use private variables (variables in processing are public by default)
