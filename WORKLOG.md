@@ -304,4 +304,7 @@ the code to cses.fi to test if the reference code is correct or not. See my code
 My project is pretty much done at this point, so I don't expect to do much work over the weekend! 
 
 ## Days 20-21: Saturday/Sunday
+- I realized my topological sort was displayed in the opposite order, so I fixed that
+- NOTE: I only edited from the main branch from Days 19-21 because I was done with the code aspect of my project. All the edits were to
+update the README, worklog, or give credit to sources like USACO.guide.
 - Tested code for bugs (doesn't seem to be any, at least from my side) 
