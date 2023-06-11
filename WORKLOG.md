@@ -303,3 +303,5 @@ the code to cses.fi to test if the reference code is correct or not. See my code
 
 My project is pretty much done at this point, so I don't expect to do much work over the weekend! 
 
+## Days 20-21: Saturday/Sunday
+- Tested code for bugs (doesn't seem to be any, at least from my side) 
