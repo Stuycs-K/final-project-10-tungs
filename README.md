@@ -7,7 +7,7 @@ Group name: Depth-first visualizer
 ## Group Info
 Period 10 APCS
 Group members: Stanley Tung (I am working by myself)
-- **Note: I edited from the main branch the weekend before the project was due to make some very minor changes, like updating README and giving credit to USACO.guide for teaching me how the algorithms work.** 
+- **Note: I edited from the main branch the weekend before the project was due to make some very minor changes, like updating README and giving credit to USACO.guide for teaching me how the algorithms work. If I really had any major changes to my code, I would've used my demo branch and then merged, but I didn't feel the need to.** 
 - See my updated project planner here: https://docs.google.com/document/d/1eLPfnbbbFlSupLofqKisawQsjjbZgH_5ptykyuCg0Jw/edit
 - Here's my original planner: https://docs.google.com/document/d/1fiUxm2_And5JgNx6-8jnjluo5q7tKGMZjtssJb-djuQ/edit
 - Here's my updated UML diagram: https://drive.google.com/file/d/1cPDvwPd3R3B2CaZoJknVhbpqBjJFCdLh/view?usp=sharing
