@@ -309,3 +309,5 @@ My project is pretty much done at this point, so I don't expect to do much work 
 - NOTE: I only edited from the main branch from Days 19-21 because I was done with the code aspect of my project. All the edits were to
 update the README, worklog, or give credit to sources like USACO.guide.
 - Tested code for bugs (doesn't seem to be any, at least from my side) 
+
+**For my devlog (all working features, etc..) as well as my updated prototype, please see "Group Info."** 
