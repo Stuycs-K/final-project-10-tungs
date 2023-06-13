@@ -1,7 +1,7 @@
 # Work Log
 
 ## Dev Log (this is 3 pages on google docs, so scroll down for my commit history
-Part 1: Working features
+*Part 1: Working features*
 
 - Key Controls
   - Press any key, aside from ‘r’, to go to the “next mode.” Modes are as follows:
@@ -35,8 +35,7 @@ Users can also reset the graph or delete all edges, or change the directionality
 Other technical features
   - All edges are either directed or undirected, and the user can switch edge types whenever they want to, via a text button. 
 
-
- - Part 2: Broken features/bugs
+*Part 2: Broken features/bugs*
   - I’ve tested my code pretty thoroughly, and I haven’t detected any “broken” features or bugs. Of course, this doesn’t mean that my code definitely does not have any bugs; it’s just that I haven’t seen any bugs. 
 
 - Which brings me to these two points:
@@ -54,7 +53,7 @@ Other technical features
   - 3) You might encounter bugs if you use an algorithm that may produce unexpected results for a certain edge type (for example, a bipartite coloring is meant for undirected graphs, and can produce unexpected results for a directed graph). This is mentioned in the text box of my graph visualizer.
 
 
-Part 3: Resources that I used
+*Part 3: Resources that I used*
  - I mentioned the below in my prototype, my README, and the Convex Hull and Algorithm classes (as comments):
 
 
@@ -66,9 +65,9 @@ Part 3: Resources that I used
 
 
 - As an another note that I’ve mentioned a lot of times already (see README for info):
- - The c++ code for DSU and Convex Hull that I have commented out in these two classes (which I used as a reference to write my java code) were used by me when I submitted code to cses.fi, an online problem judge.
+  - The c++ code for DSU and Convex Hull that I have commented out in these two classes (which I used as a reference to write my java code) were used by me when I submitted code to cses.fi, an online problem judge.
 
-- This means that the code snippets may or may not be detected as “plagiarism,” which I definitely am not doing. My username on cses.fi is Coding Sucks, and here are the links to specific problems that I submitted code for, in which I used either DSU or Convex hull code snippets:
+  - This means that the code snippets may or may not be detected as “plagiarism,” which I definitely am not doing. My username on cses.fi is Coding Sucks, and here are the links to specific problems that I submitted code for, in which I used either DSU or Convex hull code snippets:
 
 - Spanning Tree
  - https://cses.fi/problemset/result/5413923/
