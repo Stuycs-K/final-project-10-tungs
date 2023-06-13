@@ -27,12 +27,12 @@ How the visuals appear depends on the specific algorithm, but for all algorithms
  - Press 2 to go to the first algorithm mode, as a keyboard shortcut.
 
 
- - Text Boxes and User Options
+Text Boxes and User Options
   - In addition to the visuals, I've also included a "text box" that tells the user what's currently occuring in the algorithm as the algorithm is visualized for the user. (e.g. nodes being visited, or a cycle was detected, etc.)
 Users can also reset the graph or delete all edges, or change the directionality of edges via text buttons. They can also randomize the colors of node states of all algorithms (via text button), if that is something that they are interested in. 
 
 
- - Other technical features
+Other technical features
   - All edges are either directed or undirected, and the user can switch edge types whenever they want to, via a text button. 
 
 
@@ -54,7 +54,7 @@ Users can also reset the graph or delete all edges, or change the directionality
   - 3) You might encounter bugs if you use an algorithm that may produce unexpected results for a certain edge type (for example, a bipartite coloring is meant for undirected graphs, and can produce unexpected results for a directed graph). This is mentioned in the text box of my graph visualizer.
 
 
-- Part 3: Resources that I used
+Part 3: Resources that I used
  - I mentioned the below in my prototype, my README, and the Convex Hull and Algorithm classes (as comments):
 
 
