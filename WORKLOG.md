@@ -12,34 +12,34 @@ Part 1: Working features
   - 4: Add an edge between two nodes (you can deselect the first node) by clicking on two nodes  
   - 5: Remove an edge via mouse click, if an edge is located there
  
- - 6-10: Algorithm modes
-  - They are, in that order: Bipartite coloring, cycle detection, topological sort, spanning tree, and convex hull. See my README in my final project repo on details about how these algorithms work specifically.
+  - 6-10: Algorithm modes
+   - They are, in that order: Bipartite coloring, cycle detection, topological sort, spanning tree, and convex hull. See my README in my final project repo on details about how these algorithms work specifically.
 
 
-- If you click on the screen while in an algorithm mode, the algorithm is precomputed, and then the visualization of the algorithm automatically starts. As mentioned in my README:
+ - If you click on the screen while in an algorithm mode, the algorithm is precomputed, and then the visualization of the algorithm automatically starts. As mentioned in my README:
 How the visuals appear depends on the specific algorithm, but for all algorithms, a change in the color of a node represents a change in its "state", whether that's from being unvisited -> visited, processed -> finished (e.g. for topological sort), and so on and so forth. (And for convex hull / spanning tree, green edges = edges added).
 
 
-- Press ‘r’ to reset a graph visualization while it is currently being shown. (Resets all visual effects, in other words)
+ - Press ‘r’ to reset a graph visualization while it is currently being shown. (Resets all visual effects, in other words)
 
 
-- Press 1 to go to the first utility mode, as a keyboard shortcut.
-- Press 2 to go to the first algorithm mode, as a keyboard shortcut.
+ - Press 1 to go to the first utility mode, as a keyboard shortcut.
+ - Press 2 to go to the first algorithm mode, as a keyboard shortcut.
 
 
-- Text Boxes and User Options
- - In addition to the visuals, I've also included a "text box" that tells the user what's currently occuring in the algorithm as the algorithm is visualized for the user. (e.g. nodes being visited, or a cycle was detected, etc.)
+ - Text Boxes and User Options
+  - In addition to the visuals, I've also included a "text box" that tells the user what's currently occuring in the algorithm as the algorithm is visualized for the user. (e.g. nodes being visited, or a cycle was detected, etc.)
 Users can also reset the graph or delete all edges, or change the directionality of edges via text buttons. They can also randomize the colors of node states of all algorithms (via text button), if that is something that they are interested in. 
 
 
-- Other technical features
- - All edges are either directed or undirected, and the user can switch edge types whenever they want to, via a text button. 
+ - Other technical features
+  - All edges are either directed or undirected, and the user can switch edge types whenever they want to, via a text button. 
 
 
-- Part 2: Broken features/bugs
- - I’ve tested my code pretty thoroughly, and I haven’t detected any “broken” features or bugs. Of course, this doesn’t mean that my code definitely does not have any bugs; it’s just that I haven’t seen any bugs. 
+ - Part 2: Broken features/bugs
+  - I’ve tested my code pretty thoroughly, and I haven’t detected any “broken” features or bugs. Of course, this doesn’t mean that my code definitely does not have any bugs; it’s just that I haven’t seen any bugs. 
 
- - Which brings me to these two points:
+- Which brings me to these two points:
   - 1) Do things in order. In other words, try not to use another algorithm if an algorithm is already being visualized, and you haven’t reset it yet. 
   -> That being said, I did implement measures to override the current algorithm visualization if you decide to do this.
 
@@ -69,7 +69,6 @@ Users can also reset the graph or delete all edges, or change the directionality
  - The c++ code for DSU and Convex Hull that I have commented out in these two classes (which I used as a reference to write my java code) were used by me when I submitted code to cses.fi, an online problem judge.
 
 - This means that the code snippets may or may not be detected as “plagiarism,” which I definitely am not doing. My username on cses.fi is Coding Sucks, and here are the links to specific problems that I submitted code for, in which I used either DSU or Convex hull code snippets:
-
 
 - Spanning Tree
  - https://cses.fi/problemset/result/5413923/
