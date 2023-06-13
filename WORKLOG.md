@@ -3,6 +3,7 @@
 ## GROUP MEMBER 1
 Stanley Tung (I'm working by myself)
 For info on the specifics, check my commits: They mention what I mention in this worklog.
+**For my devlog (all working features, etc..) as well as my updated prototype, please see "Group Info."** 
 
 
 ### Day 1: Monday, May 22nd 
