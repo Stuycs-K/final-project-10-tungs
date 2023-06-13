@@ -4,13 +4,13 @@
 Part 1: Working features
 
 - Key Controls
- - Press any key, aside from ‘r’, to go to the “next mode.” Modes are as follows:
- - 1-5: Utility modes
+  - Press any key, aside from ‘r’, to go to the “next mode.” Modes are as follows:
+  - 1-5: Utility modes
   - 1: Move around nodes by mouse drag
   - 2: Add a node on screen by mouse click, the node will appear there
   - 3: Delete a node via mouse click, if a node is located there
   - 4: Add an edge between two nodes (you can deselect the first node) by clicking on two nodes  
-  - : Remove an edge via mouse click, if an edge is located there
+  - 5: Remove an edge via mouse click, if an edge is located there
  
  - 6-10: Algorithm modes
   - They are, in that order: Bipartite coloring, cycle detection, topological sort, spanning tree, and convex hull. See my README in my final project repo on details about how these algorithms work specifically.
