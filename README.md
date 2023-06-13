@@ -1,4 +1,4 @@
-## APCS Final Project
+## APCS Final Project (See google docs for updated prototype + devlog features) 
 Group name: Depth-first visualizer
 -**UPDATED PROJECT PLANNER (Protoype): See group info.**
 -**DEVLOG AND A BULLETIN LIST OF WORKING FEATURES: It's in the same document as the updated project planner.**
